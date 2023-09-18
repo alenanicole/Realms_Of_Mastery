@@ -6,10 +6,7 @@ import main.ScalingManager;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class TileManager {
     GamePanel panel;
@@ -21,7 +18,7 @@ public class TileManager {
         tile = new Tile[10];
         mapTileNum = new int[panel.maxWorldCol][panel.maxWorldRow];
         getTileImage();
-        loadMap("/maps/Map.txt");
+        loadMap("/maps/Dungeon_1.txt");
     }
 
     public void getTileImage(){
@@ -34,6 +31,7 @@ public class TileManager {
             loadImage(6, "floor", false);
             loadImage(7, "collision_grass", true);
             loadImage(8, "dirt", false);
+            loadImage(9, "blank", true);
     }
 
     public void loadImage(int idx, String fileName, boolean collision){
@@ -76,6 +74,23 @@ public class TileManager {
         }catch (Exception e){
 
         }
+
+//        DEBUGGING to make sure map loads correctly, delete later
+//        try {
+//            FileWriter myWriter = new FileWriter("filename.txt");
+//            for(int i = 0; i < panel.maxWorldCol; i++){
+//                for(int j = 0; j < panel.maxWorldRow; j++){
+//                    myWriter.write(mapTileNum[i][j] + " ");
+//                }
+//                myWriter.write("\n");
+//            }
+//            myWriter.close();
+//            System.out.println("Successfully wrote to the file.");
+//        } catch (IOException e) {
+//            System.out.println("An error occurred.");
+//            e.printStackTrace();
+//        }
+
     }
 
     public void draw(Graphics2D graphics2D){

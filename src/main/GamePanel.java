@@ -64,8 +64,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void setUpGame(){
         objectLoader.setObject();
         itemLoader.initializeItems();
-//        gameState = titleState;
-        gameState = treasureState;
+        gameState = titleState;
+//        gameState = treasureState;
     }
 
     public void startGameThread(){

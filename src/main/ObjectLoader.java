@@ -12,12 +12,12 @@ public class ObjectLoader {
     
     public void setObject(){
         panel.obj[0] = new Chest_obj();
-        panel.obj[0].worldX = 94 * panel.tileSize;
-        panel.obj[0].worldY = 40 * panel.tileSize;
+        panel.obj[0].worldX = 13 * panel.tileSize;
+        panel.obj[0].worldY = 19 * panel.tileSize;
 
         panel.obj[1] = new Door_obj();
-        panel.obj[1].worldX = 94 * panel.tileSize;
-        panel.obj[1].worldY = 44 * panel.tileSize;
+        panel.obj[1].worldX = 11 * panel.tileSize;
+        panel.obj[1].worldY = 18 * panel.tileSize;
 
 //        panel.obj[2] = new Key_obj();
 //        panel.obj[2].worldX = 69 * panel.tileSize;
