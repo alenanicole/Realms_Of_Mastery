@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Realms Of Mastery:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Realms_Of_Mastery_jar</output-path>
+    <root id="archive" name="Realms Of Mastery.jar">
+      <element id="module-output" name="Realms Of Mastery" />
+    </root>
+  </artifact>
+</component>
