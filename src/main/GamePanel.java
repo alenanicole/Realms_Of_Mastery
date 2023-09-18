@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyHandler = new KeyHandler(this);
     public Player player = new Player(this, keyHandler, "brown", "lightest", "green", "boy");
     public TileManager tileManager = new TileManager(this);
-    public SuperObject obj[] = new SuperObject[10];
+    public SuperObject obj[] = new SuperObject[20];
     public ObjectLoader objectLoader = new ObjectLoader(this);
     public SuperItem items[] = new SuperItem[15];
     public Weapon weapons[] = new Weapon[3];
@@ -64,8 +64,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void setUpGame(){
         objectLoader.setObject();
         itemLoader.initializeItems();
-//        gameState = titleState;
-        gameState = treasureState;
+        gameState = titleState;
+//        gameState = treasureState;
     }
 
     public void startGameThread(){

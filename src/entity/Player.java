@@ -57,8 +57,8 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues(){
-        worldX = panel.tileSize * 59;
-        worldY = panel.tileSize * 59;
+        worldX = panel.tileSize * 56;
+        worldY = panel.tileSize * 105;
         speed = 4;
         direction = "down";
     }
@@ -252,6 +252,9 @@ public class Player extends Entity{
         }
 
         graphics2D.drawImage(image, screenX, screenY, null);
+
+        System.out.println("x: " + worldX);
+        System.out.println("y: " + worldY);
 
     }
 }
