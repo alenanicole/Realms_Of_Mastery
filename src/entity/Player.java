@@ -29,6 +29,7 @@ public class Player extends Entity{
     public volatile int tierThreeDamage;
 
     public boolean successfulOpen;
+    public boolean answered;
 
     public Player(GamePanel panel, KeyHandler keyHandler, String hairColor, String skinColor, String shirtColor, String gender){
         this.panel = panel;
@@ -41,7 +42,7 @@ public class Player extends Entity{
         this.shirtColor = shirtColor;
         this.gender = gender;
 
-        collisionArea = new Rectangle(8, 16, 24, 24);
+        collisionArea = new Rectangle(8, 16, 20, 20);
         collisionAreaDefaultX = collisionArea.x;
         collisionAreaDefaultY = collisionArea.y;
 
@@ -110,6 +111,13 @@ public class Player extends Entity{
             int itemIdx = panel.collisionManager.checkItem(this, true);
             pickUpItem(itemIdx);
 
+            if(worldX >= 80 * panel.tileSize && worldX <= 81 * panel.tileSize && worldY >= 37 * panel.tileSize && worldY <= 38 * panel.tileSize){
+                worldX = 59 * panel.tileSize;
+                worldY = 69 * panel.tileSize;
+            }else if(worldX >= 59 * panel.tileSize && worldX <= 60 * panel.tileSize && worldY >= 70 * panel.tileSize && worldY <= 71 * panel.tileSize){
+                worldX = 77 * panel.tileSize;
+                worldY = 37 * panel.tileSize;
+            }
 
             if(!collision){
                 switch (direction) {
@@ -142,24 +150,26 @@ public class Player extends Entity{
                     try{
                         if(!panel.obj[idx].opened){
                           panel.gameState = panel.treasureState;
-                          if(successfulOpen) {
-                              panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/open_chest.png"));
-                              panel.obj[idx].opened = true;
-                              if (panel.ui.getDifficultyNum() == 0) {
-                                  panel.items[0].numHeld += (int) Math.floor(Math.random() * (10 - 1 + 1) + 1);
-                              }else if(panel.ui.getDifficultyNum() == 1) {
-                                  panel.items[0].numHeld += (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
+                          if(answered){
+                              if(successfulOpen) {
+                                  panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/open_chest.png"));
+                                  panel.obj[idx].opened = true;
+                                  if (panel.ui.getDifficultyNum() == 0) {
+                                      panel.items[0].numHeld += (int) Math.floor(Math.random() * (10 - 1 + 1) + 1);
+                                  }else if(panel.ui.getDifficultyNum() == 1) {
+                                      panel.items[0].numHeld += (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
+                                  }else{
+                                      panel.items[0].numHeld += (int) Math.floor(Math.random() * (20 - 10 + 1) + 10);
+                                      panel.items[(int) Math.floor(Math.random() * (5 - 2 + 1) + 2)].numHeld++;
+                                  }
+                                  successfulOpen = false;
                               }else{
-                                  panel.items[0].numHeld += (int) Math.floor(Math.random() * (20 - 10 + 1) + 10);
-                                  panel.items[(int) Math.floor(Math.random() * (5 - 2 + 1) + 2)].numHeld++;
+                                  panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/locked_chest.png"));
+                                  panel.obj[idx].opened = true;
+                                  panel.obj[idx].collision = true;
                               }
-                              successfulOpen = false;
-                          }else{
-                              panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/locked_chest.png"));
-                              panel.obj[idx].opened = true;
-                              panel.obj[idx].collision = true;
                           }
-
+                          answered = false;
                         }
                     }catch(IOException e){
                         e.printStackTrace();
@@ -186,6 +196,9 @@ public class Player extends Entity{
             String itemName = panel.items[idx].name;
 
             switch (itemName){
+                case "coin":
+                    panel.items[0].numHeld += 3;
+                    panel.items[idx].found = true;
                 case "key":
                     panel.items[1].numHeld++;
                     panel.items[idx].found = true;
@@ -252,9 +265,6 @@ public class Player extends Entity{
         }
 
         graphics2D.drawImage(image, screenX, screenY, null);
-
-        System.out.println("x: " + worldX);
-        System.out.println("y: " + worldY);
 
     }
 }

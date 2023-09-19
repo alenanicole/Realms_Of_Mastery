@@ -2,7 +2,7 @@ package questions.math;
 
 import main.GamePanel;
 
-public class Division extends Math{
+public class Division extends MathQuestion {
     public Division(GamePanel panel) {
         super(panel);
     }

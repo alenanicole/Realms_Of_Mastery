@@ -2,7 +2,9 @@ package questions.math;
 
 import main.GamePanel;
 
-public class Multiplication extends Math{
+import static java.lang.Math.*;
+
+public class Multiplication extends MathQuestion {
 
     public Multiplication(GamePanel panel) {
         super(panel);
@@ -10,24 +12,24 @@ public class Multiplication extends Math{
 
     public void drawTierOne(){
         if (!panel.ui.isAlreadyDrawn()) {
-            panel.ui.setNum1((int) java.lang.Math.floor(java.lang.Math.random() * (10 - 1 + 1) + 1));
-            panel.ui.setNum2((int) java.lang.Math.floor(java.lang.Math.random() * (10 - 1 + 1) + 1));
+            panel.ui.setNum1((int) floor(random() * (10 - 1 + 1) + 1));
+            panel.ui.setNum2((int) floor(random() * (10 - 1 + 1) + 1));
             panel.ui.setAlreadyDrawn(true);
         }
     }
 
     public void drawTierTwo(){
         if (!panel.ui.isAlreadyDrawn()) {
-            panel.ui.setNum1((int) java.lang.Math.floor(java.lang.Math.random() * (99 - 10 + 1) + 1));
-            panel.ui.setNum2((int) java.lang.Math.floor(java.lang.Math.random() * (10 - 1 + 1) + 1));
+            panel.ui.setNum1((int) floor(random() * (99 - 10 + 1) + 1));
+            panel.ui.setNum2((int) floor(random() * (10 - 1 + 1) + 1));
             panel.ui.setAlreadyDrawn(true);
         }
     }
 
     public void drawTierThree(){
         if (!panel.ui.isAlreadyDrawn()) {
-            panel.ui.setNum1((int) java.lang.Math.floor(java.lang.Math.random() * (99 - 10 + 1) + 10));
-            panel.ui.setNum2((int) java.lang.Math.floor(java.lang.Math.random() * (99 - 10 + 1) + 10));
+            panel.ui.setNum1((int) floor(random() * (99 - 10 + 1) + 10));
+            panel.ui.setNum2((int) floor(random() * (99 - 10 + 1) + 10));
             panel.ui.setAlreadyDrawn(true);
         }
     }

@@ -13,6 +13,7 @@ public class Key extends SuperItem{
     public Key(GamePanel panel){
         this.panel = panel;
         name = "key";
+        numHeld = 1;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/items/key.png"));
             image  = scalingManager.scaleImage(image, panel.tileSize, panel.tileSize);

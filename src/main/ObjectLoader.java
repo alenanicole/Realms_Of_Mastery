@@ -29,11 +29,11 @@ public class ObjectLoader {
 
         panel.obj[4] = new Chest_obj();
         panel.obj[4].worldX = 19 * panel.tileSize;
-        panel.obj[4].worldY = 36 * panel.tileSize;
+        panel.obj[4].worldY = 35 * panel.tileSize;
 
         panel.obj[5] = new Chest_obj();
         panel.obj[5].worldX = 21 * panel.tileSize;
-        panel.obj[5].worldY = 36 * panel.tileSize;
+        panel.obj[5].worldY = 35 * panel.tileSize;
 
         panel.obj[6] = new Door_obj();
         panel.obj[6].worldX = 74 * panel.tileSize;
@@ -54,5 +54,22 @@ public class ObjectLoader {
         panel.obj[10] = new Chest_obj();
         panel.obj[10].worldX = 105 * panel.tileSize;
         panel.obj[10].worldY = 48 * panel.tileSize;
+
+        panel.obj[11] = new Door_obj();
+        panel.obj[11].worldX = 87 * panel.tileSize;
+        panel.obj[11].worldY = 79 * panel.tileSize;
+
+        panel.obj[12] = new Chest_obj();
+        panel.obj[12].worldX = 87 * panel.tileSize;
+        panel.obj[12].worldY = 77 * panel.tileSize;
+
+        panel.obj[13] = new Chest_obj();
+        panel.obj[13].worldX = 59 * panel.tileSize;
+        panel.obj[13].worldY = 67 * panel.tileSize;
+
+        // Test chest
+//        panel.obj[14] = new Chest_obj();
+//        panel.obj[14].worldX = 59 * panel.tileSize;
+//        panel.obj[14].worldY = 103 * panel.tileSize;
     }
 }

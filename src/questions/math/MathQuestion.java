@@ -2,10 +2,10 @@ package questions.math;
 
 import main.GamePanel;
 
-public class Math {
+public class MathQuestion {
     GamePanel panel;
 
-    public Math(GamePanel panel) {
+    public MathQuestion(GamePanel panel) {
         this.panel = panel;
     }
 

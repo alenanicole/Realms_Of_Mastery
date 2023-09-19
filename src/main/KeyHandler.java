@@ -443,9 +443,8 @@ public class KeyHandler implements KeyListener {
             if(panel.ui.treasureScreen.multiplication.checkAns()){
                 panel.gameState = panel.playState;
                 panel.player.successfulOpen = true;
+                panel.player.answered = true;
                 panel.ui.setNumOfAttempts(0);
-                panel.ui.setAns("");
-                panel.ui.setAlreadyDrawn(false);
                 panel.ui.difficultyChosen = false;
             }else{
                 panel.ui.setAlreadyDrawn(false);

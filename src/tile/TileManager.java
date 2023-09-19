@@ -31,7 +31,6 @@ public class TileManager {
             loadImage(6, "floor", false);
             loadImage(7, "collision_grass", true);
             loadImage(8, "dirt", false);
-            loadImage(9, "blank", true);
     }
 
     public void loadImage(int idx, String fileName, boolean collision){
@@ -103,12 +102,14 @@ public class TileManager {
         for(int lr = leftMax; lr <= rightMax; lr++){
             for(int ud = upMax; ud <= downMax; ud++){
                 int tileNum = mapTileNum[lr][ud];
-                int worldX = lr * panel.tileSize;
-                int worldY = ud * panel.tileSize;
-                int screenX = worldX - panel.player.worldX + panel.player.screenX;
-                int screenY = worldY - panel.player.worldY + panel.player.screenY;
+                if(tileNum != 9) {
+                    int worldX = lr * panel.tileSize;
+                    int worldY = ud * panel.tileSize;
+                    int screenX = worldX - panel.player.worldX + panel.player.screenX;
+                    int screenY = worldY - panel.player.worldY + panel.player.screenY;
 
-                graphics2D.drawImage(tile[tileNum].image, screenX, screenY, null);
+                    graphics2D.drawImage(tile[tileNum].image, screenX, screenY, null);
+                }
             }
         }
     }

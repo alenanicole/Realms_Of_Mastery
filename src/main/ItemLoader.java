@@ -5,16 +5,20 @@ import weapon.Bow;
 import weapon.Staff;
 import weapon.Sword;
 
+import static java.lang.Math.floor;
+import static java.lang.Math.random;
+
 public class ItemLoader {
 
     GamePanel panel;
+    int randSelect, randX, randY;
+    int tileNum;
 
     public ItemLoader(GamePanel panel){
         this.panel = panel;
     }
 
     public void initializeItems(){
-
         panel.items[0] = new Coin(panel);
         panel.items[1] = new Key(panel);
         panel.items[2] = new HealthPotion(panel);
@@ -22,21 +26,31 @@ public class ItemLoader {
         panel.items[4] = new SpeedPotion(panel);
         panel.items[5] = new RerollPotion(panel);
 
-        panel.items[6] = new HealthPotion(panel);
-        panel.items[6].worldX = 69 * panel.tileSize;
-        panel.items[6].worldY = 56 * panel.tileSize;
+        // Distribute around map
 
-        panel.items[7] = new StrengthPotion(panel);
-        panel.items[7].worldX = 97 * panel.tileSize;
-        panel.items[7].worldY = 40 * panel.tileSize;
+        for(int i = 6; i < panel.items.length; i++){
+            if(i < 10){
+                panel.items[i] = new Key(panel);
+            }else {
+                randSelect = (int) floor(random() * (4 - 0 + 1) + 0);
+                switch (randSelect) {
+                    case 0 -> panel.items[i] = new Coin(panel);
+                    case 1 -> panel.items[i] = new HealthPotion(panel);
+                    case 2 -> panel.items[i] = new StrengthPotion(panel);
+                    case 3 -> panel.items[i] = new SpeedPotion(panel);
+                    case 4 -> panel.items[i] = new RerollPotion(panel);
+                }
+            }
 
-        panel.items[8] = new SpeedPotion(panel);
-        panel.items[8].worldX = 69 * panel.tileSize;
-        panel.items[8].worldY = 54 * panel.tileSize;
+            do{
+                randX = (int) floor(random() * (119 + 1) + 0);
+                randY = (int) floor(random() * (119 + 1) + 0);
+                tileNum = panel.tileManager.mapTileNum[randX][randY];
+            }while(tileNum == 9 || panel.tileManager.tile[tileNum].collision);
 
-        panel.items[9] = new Key(panel);
-        panel.items[9].worldX = 69 * panel.tileSize;
-        panel.items[9].worldY = 52 * panel.tileSize;
+            panel.items[i].worldX = randX * panel.tileSize;
+            panel.items[i].worldY = randY * panel.tileSize;
+        }
 
         panel.weapons[0] = new Sword(panel);
         panel.weapons[1] = new Staff(panel);

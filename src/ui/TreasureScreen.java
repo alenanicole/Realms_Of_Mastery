@@ -2,7 +2,6 @@ package ui;
 
 import main.GamePanel;
 import main.ScalingManager;
-import questions.math.Math;
 import questions.math.Multiplication;
 
 import javax.imageio.ImageIO;
@@ -111,6 +110,7 @@ public class TreasureScreen extends UI{
             panel.gameState = panel.playState;
             panel.ui.setNumOfAttempts(0);
             panel.ui.difficultyChosen = false;
+            panel.player.answered = true;
             return;
         }
         graphics2D.setFont(joystix_small);

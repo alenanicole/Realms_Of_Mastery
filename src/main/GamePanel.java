@@ -45,7 +45,8 @@ public class GamePanel extends JPanel implements Runnable{
     public TileManager tileManager = new TileManager(this);
     public SuperObject obj[] = new SuperObject[20];
     public ObjectLoader objectLoader = new ObjectLoader(this);
-    public SuperItem items[] = new SuperItem[15];
+
+    public SuperItem items[] = new SuperItem[26];
     public Weapon weapons[] = new Weapon[3];
     public ItemLoader itemLoader = new ItemLoader(this);
     public CollisionManager collisionManager = new CollisionManager(this);
@@ -54,7 +55,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.black);
+        this.setBackground(new Color(39, 53, 54));
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
