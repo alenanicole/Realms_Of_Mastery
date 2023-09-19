@@ -40,11 +40,11 @@ public class ObjectLoader {
         panel.obj[6].worldY = 28 * panel.tileSize;
 
         panel.obj[7] = new Door_obj();
-        panel.obj[7].worldX = 50 * panel.tileSize;
+        panel.obj[7].worldX = 51 * panel.tileSize;
         panel.obj[7].worldY = 21 * panel.tileSize;
 
-        panel.obj[8] = new Door_obj();
-        panel.obj[8].worldX = 50 * panel.tileSize;
+        panel.obj[8] = new Chest_obj();
+        panel.obj[8].worldX = 51 * panel.tileSize;
         panel.obj[8].worldY = 19 * panel.tileSize;
 
         panel.obj[9] = new Door_obj();
