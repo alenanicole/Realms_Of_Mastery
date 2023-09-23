@@ -15,7 +15,7 @@ public class RerollPotion extends SuperItem{
         numHeld = 0;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/items/rerollPotion.png"));
-            image  = scalingManager.scaleImage(image, panel.tileSize, panel.tileSize);
+            image  = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);
         }catch (IOException e){
             e.printStackTrace();
         }

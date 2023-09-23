@@ -25,15 +25,15 @@ public class TreasureScreen extends UI{
         this.panel = panel;
         try {
             tier1 = ImageIO.read(getClass().getResourceAsStream("/popups/key_one.png"));
-            tier1 = scalingManager.scaleImage(tier1, panel.tileSize * 2, panel.tileSize * 2);
+            tier1 = scalingManager.toCompatibleImage(tier1, panel.tileSize * 2, panel.tileSize * 2);
             tier2 = ImageIO.read(getClass().getResourceAsStream("/popups/key_two.png"));
-            tier2 = scalingManager.scaleImage(tier2, panel.tileSize * 2, panel.tileSize * 2);
+            tier2 = scalingManager.toCompatibleImage(tier2, panel.tileSize * 2, panel.tileSize * 2);
             tier3 = ImageIO.read(getClass().getResourceAsStream("/popups/key_three.png"));
-            tier3 = scalingManager.scaleImage(tier3, panel.tileSize * 2, panel.tileSize * 2);
+            tier3 = scalingManager.toCompatibleImage(tier3, panel.tileSize * 2, panel.tileSize * 2);
             grayX = ImageIO.read(getClass().getResourceAsStream("/popups/gray_x.png"));
-            grayX = scalingManager.scaleImage(grayX, panel.tileSize, panel.tileSize);
+            grayX = scalingManager.toCompatibleImage(grayX, panel.tileSize, panel.tileSize);
             redX = ImageIO.read(getClass().getResourceAsStream("/popups/red_x.png"));
-            redX = scalingManager.scaleImage(redX, panel.tileSize, panel.tileSize);
+            redX = scalingManager.toCompatibleImage(redX, panel.tileSize, panel.tileSize);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

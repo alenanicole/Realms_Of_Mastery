@@ -65,6 +65,7 @@ public class Player extends Entity{
 
     public void getPlayerImage(){
         ScalingManager scalingManager = new ScalingManager();
+
         try {
             sprite_sheet = ImageIO.read(getClass().getResourceAsStream("/player/" + gender + "/" + hairColor + "/" + skinColor + "/" + shirtColor + "/sprite_sheet.png"));
 
@@ -77,14 +78,15 @@ public class Player extends Entity{
             up1 = sprite_sheet.getSubimage(0, 32, panel.originalTileSize, panel.originalTileSize);
             up2 = sprite_sheet.getSubimage(16, 32, panel.originalTileSize, panel.originalTileSize);
 
-            up1 = scalingManager.scaleImage(up1, panel.tileSize, panel.tileSize);
-            up2 = scalingManager.scaleImage(up2, panel.tileSize, panel.tileSize);
-            down1 = scalingManager.scaleImage(down1, panel.tileSize, panel.tileSize);
-            down2 = scalingManager.scaleImage(down2, panel.tileSize, panel.tileSize);
-            left1 = scalingManager.scaleImage(left1, panel.tileSize, panel.tileSize);
-            left2 = scalingManager.scaleImage(left2, panel.tileSize, panel.tileSize);
-            right1 = scalingManager.scaleImage(right1, panel.tileSize, panel.tileSize);
-            right2 = scalingManager.scaleImage(right2, panel.tileSize, panel.tileSize);
+//            up1 = scalingManager.scaleImage(up1, panel.tileSize, panel.tileSize);
+            up1 = scalingManager.toCompatibleImage(up1, panel.tileSize, panel.tileSize);
+            up2 = scalingManager.toCompatibleImage(up2, panel.tileSize, panel.tileSize);
+            down1 = scalingManager.toCompatibleImage(down1, panel.tileSize, panel.tileSize);
+            down2 = scalingManager.toCompatibleImage(down2, panel.tileSize, panel.tileSize);
+            left1 = scalingManager.toCompatibleImage(left1, panel.tileSize, panel.tileSize);
+            left2 = scalingManager.toCompatibleImage(left2, panel.tileSize, panel.tileSize);
+            right1 = scalingManager.toCompatibleImage(right1, panel.tileSize, panel.tileSize);
+            right2 = scalingManager.toCompatibleImage(right2, panel.tileSize, panel.tileSize);
 
         }catch(IOException e) {
             e.printStackTrace();

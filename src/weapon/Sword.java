@@ -14,7 +14,13 @@ public class Sword extends Weapon{
         name = "sword";
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/weapons/sword/sword.png"));
-            image = scalingManager.scaleImage(image, panel.tileSize, panel.tileSize);
+            image = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);
+            tier1 = ImageIO.read(getClass().getResourceAsStream("/weapons/sword/tier_one.png"));
+            tier1 = scalingManager.toCompatibleImage(tier1, panel.tileSize * 2, panel.tileSize * 2);
+            tier2 = ImageIO.read(getClass().getResourceAsStream("/weapons/sword/tier_two.png"));
+            tier2 = scalingManager.toCompatibleImage(tier2, panel.tileSize * 2, panel.tileSize * 2);
+            tier3 = ImageIO.read(getClass().getResourceAsStream("/weapons/sword/tier_three.png"));
+            tier3 = scalingManager.toCompatibleImage(tier3, panel.tileSize * 2, panel.tileSize * 2);
 
         }catch (IOException e){
             e.printStackTrace();

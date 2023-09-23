@@ -81,19 +81,19 @@ public class UI {
     private void initializePopups(GamePanel panel) {
         try {
             questionMark = ImageIO.read(getClass().getResource("/popups/questionmark.png"));
-            questionMark = scalingManager.scaleImage(questionMark, panel.tileSize, panel.tileSize);
+            questionMark = scalingManager.toCompatibleImage(questionMark, panel.tileSize, panel.tileSize);
             frame = ImageIO.read(getClass().getResource("/popups/frame.png"));
-            frame = scalingManager.scaleImage(frame, panel.tileSize, panel.tileSize);
+            frame = scalingManager.toCompatibleImage(frame, panel.tileSize, panel.tileSize);
             fullHeart = ImageIO.read(getClass().getResource("/popups/full_heart.png"));
-            fullHeart = scalingManager.scaleImage(fullHeart, panel.tileSize, panel.tileSize);
+            fullHeart = scalingManager.toCompatibleImage(fullHeart, panel.tileSize, panel.tileSize);
             halfHeart = ImageIO.read(getClass().getResource("/popups/half_heart.png"));
-            halfHeart = scalingManager.scaleImage(halfHeart, panel.tileSize, panel.tileSize);
+            halfHeart = scalingManager.toCompatibleImage(halfHeart, panel.tileSize, panel.tileSize);
             emptyHeart = ImageIO.read(getClass().getResource("/popups/empty_heart.png"));
-            emptyHeart = scalingManager.scaleImage(emptyHeart, panel.tileSize, panel.tileSize);
+            emptyHeart = scalingManager.toCompatibleImage(emptyHeart, panel.tileSize, panel.tileSize);
             boot = ImageIO.read(getClass().getResource("/popups/boot.png"));
-            boot = scalingManager.scaleImage(boot, panel.tileSize, panel.tileSize);
+            boot = scalingManager.toCompatibleImage(boot, panel.tileSize, panel.tileSize);
             dumbbell = ImageIO.read(getClass().getResource("/popups/dumbbell.png"));
-            dumbbell = scalingManager.scaleImage(dumbbell, panel.tileSize, panel.tileSize);
+            dumbbell = scalingManager.toCompatibleImage(dumbbell, panel.tileSize, panel.tileSize);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

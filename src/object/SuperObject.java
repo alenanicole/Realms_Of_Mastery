@@ -25,7 +25,7 @@ public class SuperObject {
            worldX < panel.player.worldX + panel.player.screenX + panel.tileSize &&
            worldY > panel.player.worldY - panel.player.screenY - panel.tileSize &&
            worldY < panel.player.worldY + panel.player.screenY + panel.tileSize ){
-            graphics2D.drawImage(image, screenX, screenY, panel.tileSize, panel.tileSize, null);
+            graphics2D.drawImage(image, screenX, screenY, null);
         }
     }
 }

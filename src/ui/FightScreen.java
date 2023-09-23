@@ -3,6 +3,7 @@ package ui;
 import main.GamePanel;
 import main.ScalingManager;
 import questions.math.Multiplication;
+import weapon.Weapon;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class FightScreen extends UI{
     int difficulty;
     public Multiplication multiplication;
 
-    String equipped = "";
+    Weapon equipped;
 
 
     ScalingManager scalingManager = new ScalingManager();
@@ -27,27 +28,16 @@ public class FightScreen extends UI{
         this.panel = panel;
 
         if(panel.weapons[0].equipped){
-            equipped = panel.weapons[0].name;
+            equipped = panel.weapons[0];
         }else if(panel.weapons[1].equipped){
-            equipped = panel.weapons[1].name;
+            equipped = panel.weapons[1];
         }else{
-            equipped = panel.weapons[2].name;
+            equipped = panel.weapons[2];
         }
 
-        try {
-            tier1 = ImageIO.read(getClass().getResourceAsStream("/weapons/" + equipped + "/tier_one.png"));
-            tier1 = scalingManager.scaleImage(tier1, panel.tileSize * 2, panel.tileSize * 2);
-            tier2 = ImageIO.read(getClass().getResourceAsStream("/weapons/" + equipped + "/tier_two.png"));
-            tier2 = scalingManager.scaleImage(tier2, panel.tileSize * 2, panel.tileSize * 2);
-            tier3 = ImageIO.read(getClass().getResourceAsStream("/weapons/" + equipped + "/tier_three.png"));
-            tier3 = scalingManager.scaleImage(tier3, panel.tileSize * 2, panel.tileSize * 2);
-//            grayX = ImageIO.read(getClass().getResourceAsStream("/weapons/" + + " /gray_x.png"));
-//            grayX = scalingManager.scaleImage(grayX, panel.tileSize, panel.tileSize);
-//            redX = ImageIO.read(getClass().getResourceAsStream("/weapons/" + + " /red_x.png"));
-//            redX = scalingManager.scaleImage(redX, panel.tileSize, panel.tileSize);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        tier1 = equipped.tier1;
+        tier2 = equipped.tier2;
+        tier3 = equipped.tier3;
 
     }
 
