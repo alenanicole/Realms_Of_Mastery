@@ -183,4 +183,110 @@ public class CollisionManager {
 
         return index;
     }
+
+    public int checkEntity(Entity entity, Entity[] targetArray){
+        int index = 999;
+
+        for(int i = 0; i < targetArray.length; i++){
+            if(targetArray[i] != null && !targetArray[i].dead){
+                entity.collisionArea.x = entity.worldX + entity.collisionArea.x;
+                entity.collisionArea.y = entity.worldY + entity.collisionArea.y;
+
+                targetArray[i].collisionArea.x = targetArray[i].worldX + targetArray[i].collisionArea.x;
+                targetArray[i].collisionArea.y = targetArray[i].worldY + targetArray[i].collisionArea.y;
+
+                switch (entity.direction) {
+                    case "up" -> {
+                        entity.collisionArea.y -= entity.speed;
+                        if (entity.collisionArea.intersects(targetArray[i].collisionArea)) {
+                            entity.collision = true;
+                            index = i;
+                        }
+                    }
+                    case "down" -> {
+                        entity.collisionArea.y += entity.speed;
+                        if (entity.collisionArea.intersects(targetArray[i].collisionArea)) {
+                            entity.collision = true;
+                            index = i;
+                        }
+                    }
+                    case "left" -> {
+                        entity.collisionArea.x -= entity.speed;
+                        if (entity.collisionArea.intersects(targetArray[i].collisionArea)) {
+                            entity.collision = true;
+                            index = i;
+                        }
+                    }
+                    case "right" -> {
+                        entity.collisionArea.x += entity.speed;
+                        if (entity.collisionArea.intersects(targetArray[i].collisionArea)) {
+                            entity.collision = true;
+                            index = i;
+                        }
+                    }
+                }
+
+                entity.collisionArea.x = entity.collisionAreaDefaultX;
+                entity.collisionArea.y = entity.collisionAreaDefaultY;
+
+                targetArray[i].collisionArea.x = targetArray[i].collisionAreaDefaultX;
+                targetArray[i].collisionArea.y = targetArray[i].collisionAreaDefaultY;
+            }
+        }
+
+        return index;
+    }
+
+    public void checkPlayer(Entity entity, boolean  isMonster, int idx){
+        entity.collisionArea.x = entity.worldX + entity.collisionArea.x;
+        entity.collisionArea.y = entity.worldY + entity.collisionArea.y;
+
+        panel.player.collisionArea.x = panel.player.worldX + panel.player.collisionArea.x;
+        panel.player.collisionArea.y = panel.player.worldY + panel.player.collisionArea.y;
+
+        switch (entity.direction) {
+            case "up" -> {
+                entity.collisionArea.y -= entity.speed;
+                if (entity.collisionArea.intersects(panel.player.collisionArea)) {
+                    entity.collision = true;
+                    if(isMonster){
+                        panel.player.fightMonster(idx);
+                    }
+                }
+            }
+            case "down" -> {
+                entity.collisionArea.y += entity.speed;
+                if (entity.collisionArea.intersects(panel.player.collisionArea)) {
+                    entity.collision = true;
+                    if(isMonster){
+                        panel.player.fightMonster(idx);
+                    }
+                }
+            }
+            case "left" -> {
+                entity.collisionArea.x -= entity.speed;
+                if (entity.collisionArea.intersects(panel.player.collisionArea)) {
+                    entity.collision = true;
+                    if(isMonster){
+                        panel.player.fightMonster(idx);
+                    }
+                }
+            }
+            case "right" -> {
+                entity.collisionArea.x += entity.speed;
+                if (entity.collisionArea.intersects(panel.player.collisionArea)) {
+                    entity.collision = true;
+                    if(isMonster){
+                        panel.player.fightMonster(idx);
+                    }
+                }
+            }
+        }
+
+        entity.collisionArea.x = entity.collisionAreaDefaultX;
+        entity.collisionArea.y = entity.collisionAreaDefaultY;
+
+        panel.player.collisionArea.x = panel.player.collisionAreaDefaultX;
+        panel.player.collisionArea.y = panel.player.collisionAreaDefaultY;
+    }
 }

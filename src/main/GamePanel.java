@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
 import item.StrengthPotion;
 import item.SuperItem;
@@ -33,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int inventoryState = 4;
     public final int useState = 5;
     public final int treasureState = 6;
+    public final int fightState = 7;
 
     public boolean inEncounter = false;
     public int numOfFight = 0;
@@ -53,6 +55,10 @@ public class GamePanel extends JPanel implements Runnable{
 
     public UI ui = new UI(this);
 
+    public Entity monster[] = new Entity[10];
+    public MonsterLoader monsterLoader = new MonsterLoader(this);
+
+
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(new Color(39, 53, 54));
@@ -65,8 +71,9 @@ public class GamePanel extends JPanel implements Runnable{
     public void setUpGame(){
         objectLoader.setObject();
         itemLoader.initializeItems();
-        gameState = titleState;
-//        gameState = treasureState;
+        monsterLoader.intializeMonsters();
+//        gameState = titleState;
+        gameState = playState;
     }
 
     public void startGameThread(){
@@ -102,7 +109,13 @@ public class GamePanel extends JPanel implements Runnable{
     public void update() {
 
         if (gameState == playState) {
-            player.update();
+            player.update(0);
+
+            for(int i = 0; i < monster.length; i++){
+                if(monster[i] != null && !monster[i].dead){
+                    monster[i].update(i);
+                }
+            }
         }
 
         if (((StrengthPotion) items[3]).strengthThread != null) {
@@ -136,6 +149,12 @@ public class GamePanel extends JPanel implements Runnable{
             for(int i = 0; i < items.length; i++){
                 if(items[i] != null && !items[i].found){
                     items[i].draw(graphics2D, this);
+                }
+            }
+
+            for(int i = 0; i < monster.length; i++){
+                if(monster[i] != null && !monster[i].dead){
+                    monster[i].draw(graphics2D, this);
                 }
             }
 

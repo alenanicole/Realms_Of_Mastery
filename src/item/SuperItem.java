@@ -21,7 +21,7 @@ public class SuperItem {
     public boolean encounterOnly = false;
     public boolean adventureOnly = false;
 
-    public void draw(Graphics2D graphic2, GamePanel panel){
+    public void draw(Graphics2D graphics2D, GamePanel panel){
         int screenX = worldX - panel.player.worldX + panel.player.screenX;
         int screenY = worldY - panel.player.worldY + panel.player.screenY;
 
@@ -29,7 +29,7 @@ public class SuperItem {
                 worldX < panel.player.worldX + panel.player.screenX + panel.tileSize &&
                 worldY > panel.player.worldY - panel.player.screenY - panel.tileSize &&
                 worldY < panel.player.worldY + panel.player.screenY + panel.tileSize){
-            graphic2.drawImage(image, screenX, screenY, panel.tileSize, panel.tileSize, null);
+            graphics2D.drawImage(image, screenX, screenY, panel.tileSize, panel.tileSize, null);
         }
     }
 

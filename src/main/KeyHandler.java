@@ -10,6 +10,8 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
     public boolean upPressed, downPressed, leftPressed, rightPressed;
 
+    public int previousState;
+
     GamePanel panel;
 
     public KeyHandler(GamePanel panel){
@@ -38,8 +40,9 @@ public class KeyHandler implements KeyListener {
             useStateKeyHandler(code);
         }else if(panel.gameState == panel.treasureState){
             treasureStateKeyHandler(code);
+        }else if(panel.gameState == panel.fightState) {
+            fightStateKeyHandler(code);
         }
-
     }
 
 
@@ -82,10 +85,12 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_P){
             panel.gameState = panel.pauseState;
+            previousState = panel.playState;
         }
 
         if(code == KeyEvent.VK_I){
             panel.gameState = panel.inventoryState;
+            previousState = panel.playState;
         }
 
         if(code == KeyEvent.VK_H){
@@ -94,11 +99,7 @@ public class KeyHandler implements KeyListener {
     }
     public void pauseStateKeyHandler(int code){
         if(code == KeyEvent.VK_P) {
-            panel.gameState = panel.playState;
-        }
-
-        if(code == KeyEvent.VK_I){
-            panel.gameState = panel.inventoryState;
+            panel.gameState = previousState;
         }
 
         if (code == KeyEvent.VK_W) {
@@ -118,7 +119,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_ENTER) {
             switch (panel.ui.getPauseCommandNum()) {
                 case 0:
-                    panel.gameState = panel.playState;
+                    panel.gameState = previousState;
                     break;
                 case 1:
                     break;
@@ -134,7 +135,7 @@ public class KeyHandler implements KeyListener {
 
     public void inventoryStateKeyHandler(int code){
         if(code == KeyEvent.VK_I){
-            panel.gameState = panel.playState;
+            panel.gameState = previousState;
         }
 
         if (code == KeyEvent.VK_A) {
@@ -178,7 +179,7 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_ENTER){
             switch (panel.ui.getInventoryNum()){
                 case 9:
-                    panel.gameState = panel.playState;
+                    panel.gameState = previousState;
                     break;
                 default:
                     panel.gameState = panel.useState;
@@ -425,6 +426,17 @@ public class KeyHandler implements KeyListener {
     }
 
     private void treasureStateKeyHandler(int code) {
+        if(code == KeyEvent.VK_I){
+            panel.gameState = panel.inventoryState;
+            previousState = panel.treasureState;
+        }
+
+        if(code == KeyEvent.VK_P){
+            panel.gameState = panel.pauseState;
+            previousState = panel.treasureState;
+        }
+
+
         if (code == KeyEvent.VK_A  && !panel.ui.difficultyChosen) {
             panel.ui.setDifficultyNum(panel.ui.getDifficultyNum() - 1);
             if (panel.ui.getDifficultyNum() < 0) {
@@ -446,6 +458,7 @@ public class KeyHandler implements KeyListener {
                 panel.player.answered = true;
                 panel.ui.setNumOfAttempts(0);
                 panel.ui.difficultyChosen = false;
+                panel.inEncounter = false;
             }else{
                 panel.ui.setAlreadyDrawn(false);
                 panel.ui.setNumOfAttempts(panel.ui.getNumOfAttempts() + 1);
@@ -455,7 +468,67 @@ public class KeyHandler implements KeyListener {
             panel.ui.difficultyChosen = true;
         }
 
+        if(panel.ui.difficultyChosen){
+            switch (code){
+                case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
+                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9 -> {
+                    if (panel.ui.getAns().length() <= 5) {
+                        panel.ui.setAns(panel.ui.getAns() + (code - 48));
+                    }
+                }
+                case KeyEvent.VK_BACK_SPACE -> {
+                    if(panel.ui.getAns() != "" && (Integer.valueOf(panel.ui.getAns())/10) > 0){
+                        panel.ui.setAns(String.valueOf(Integer.valueOf(panel.ui.getAns()) / 10));
+                    }else{
+                        panel.ui.setAns("");
+                    }
+                }
 
+            }
+        }
+    }
+
+    private void fightStateKeyHandler(int code) {
+        if(code == KeyEvent.VK_I){
+            panel.gameState = panel.inventoryState;
+            previousState = panel.fightState;
+        }
+
+        if(code == KeyEvent.VK_P){
+            panel.gameState = panel.pauseState;
+            previousState = panel.fightState;
+        }
+
+
+        if (code == KeyEvent.VK_A  && !panel.ui.difficultyChosen) {
+            panel.ui.setDifficultyNum(panel.ui.getDifficultyNum() - 1);
+            if (panel.ui.getDifficultyNum() < 0) {
+                panel.ui.setDifficultyNum(2);
+            }
+        }
+
+        if (code == KeyEvent.VK_D && !panel.ui.difficultyChosen) {
+            panel.ui.setDifficultyNum(panel.ui.getDifficultyNum() + 1);
+            if (panel.ui.getDifficultyNum() > 2) {
+                panel.ui.setDifficultyNum(0);
+            }
+        }
+
+        if(code == KeyEvent.VK_ENTER && panel.ui.difficultyChosen && panel.ui.getAns() != ""){
+            if(panel.ui.fightScreen.multiplication.checkAns()){
+                panel.gameState = panel.playState;
+                panel.player.successfulOpen = true;
+                panel.player.answered = true;
+                panel.ui.difficultyChosen = false;
+                panel.inEncounter = false;
+            }else{
+                panel.player.currentHealth--;
+                panel.ui.setAlreadyDrawn(false);
+                panel.ui.setAns("");
+            }
+        }else if(code == KeyEvent.VK_ENTER && !panel.ui.difficultyChosen){
+            panel.ui.difficultyChosen = true;
+        }
 
         if(panel.ui.difficultyChosen){
             switch (code){

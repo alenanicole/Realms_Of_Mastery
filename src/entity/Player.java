@@ -1,6 +1,5 @@
 package entity;
 
-import item.SpeedPotion;
 import main.GamePanel;
 import main.KeyHandler;
 import main.ScalingManager;
@@ -9,7 +8,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Player extends Entity{
     GamePanel panel;
@@ -32,6 +30,7 @@ public class Player extends Entity{
     public boolean answered;
 
     public Player(GamePanel panel, KeyHandler keyHandler, String hairColor, String skinColor, String shirtColor, String gender){
+        super(panel);
         this.panel = panel;
         this.keyHandler = keyHandler;
 
@@ -92,7 +91,7 @@ public class Player extends Entity{
         }
     }
 
-    public void update(){
+    public void update(int i){
         if(keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed){
             if(keyHandler.upPressed) {
                 direction = "up";
@@ -110,6 +109,8 @@ public class Player extends Entity{
             pickUpObject(objIdx);
             int itemIdx = panel.collisionManager.checkItem(this, true);
             pickUpItem(itemIdx);
+            int monsterIdx = panel.collisionManager.checkEntity(this, panel.monster);
+            fightMonster(monsterIdx);
 
             if(worldX >= 80 * panel.tileSize && worldX <= 81 * panel.tileSize && worldY >= 37 * panel.tileSize && worldY <= 38 * panel.tileSize){
                 worldX = 59 * panel.tileSize;
@@ -141,6 +142,19 @@ public class Player extends Entity{
 
     }
 
+    public void fightMonster(int idx) {
+        if(idx != 999){
+            System.out.print("Let's Fight");
+            if(!panel.monster[idx].dead){
+                panel.gameState = panel.fightState;
+                panel.inEncounter = true;
+                if(successfulOpen){
+                    panel.monster[idx].dead = true;
+                }
+            }
+        }
+    }
+
     public void pickUpObject(int idx) {
         if(idx != 999){
             String objectName = panel.obj[idx].name;
@@ -149,6 +163,7 @@ public class Player extends Entity{
                 case "chest":
                     try{
                         if(!panel.obj[idx].opened){
+                          panel.inEncounter = true;
                           panel.gameState = panel.treasureState;
                           if(answered){
                               if(successfulOpen) {
@@ -199,6 +214,7 @@ public class Player extends Entity{
                 case "coin":
                     panel.items[0].numHeld += 3;
                     panel.items[idx].found = true;
+                    break;
                 case "key":
                     panel.items[1].numHeld++;
                     panel.items[idx].found = true;

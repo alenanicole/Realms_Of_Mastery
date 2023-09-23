@@ -111,6 +111,7 @@ public class TreasureScreen extends UI{
             panel.ui.setNumOfAttempts(0);
             panel.ui.difficultyChosen = false;
             panel.player.answered = true;
+            panel.inEncounter = false;
             return;
         }
         graphics2D.setFont(joystix_small);

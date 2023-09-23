@@ -64,6 +64,7 @@ public class UI {
     InventoryScreen inventoryScreen;
 
     public TreasureScreen treasureScreen;
+    public FightScreen fightScreen;
     public UI (GamePanel panel){
         this.panel = panel;
 
@@ -148,6 +149,7 @@ public class UI {
         useScreen = new UseScreen(panel);
         inventoryScreen = new InventoryScreen(panel);
         treasureScreen = new TreasureScreen(panel);
+        fightScreen = new FightScreen(panel);
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -183,6 +185,13 @@ public class UI {
             treasureScreen.drawDifficultySelection(graphics2D);
             if (difficultyChosen) {
                 treasureScreen.drawQuestion();
+            }
+        }
+        if(panel.gameState == panel.fightState){
+            playScreen.draw(graphics2D);
+            fightScreen.drawDifficultySelection(graphics2D);
+            if (difficultyChosen) {
+                fightScreen.drawQuestion();
             }
         }
 
