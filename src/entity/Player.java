@@ -12,7 +12,7 @@ import java.io.IOException;
 public class Player extends Entity{
     GamePanel panel;
     KeyHandler keyHandler;
-
+    ScalingManager scalingManager = new ScalingManager();
     public final int screenX;
     public final int screenY;
     public String hairColor;
@@ -26,7 +26,7 @@ public class Player extends Entity{
     public volatile int tierTwoDamage;
     public volatile int tierThreeDamage;
 
-    public boolean successfulOpen;
+    public boolean correctAnswer;
     public boolean answered;
 
     public Player(GamePanel panel, KeyHandler keyHandler, String hairColor, String skinColor, String shirtColor, String gender){
@@ -46,7 +46,7 @@ public class Player extends Entity{
         collisionAreaDefaultY = collisionArea.y;
 
         maxHealth = 10;
-        currentHealth = 7;
+        currentHealth = 6;
 
         tierOneDamage = 3;
         tierTwoDamage = 5;
@@ -57,14 +57,13 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues(){
-        worldX = panel.tileSize * 57;
-        worldY = panel.tileSize * 105;
+        worldX = panel.tileSize * 59;
+        worldY = panel.tileSize * 59;
         speed = 4;
         direction = "down";
     }
 
     public void getPlayerImage(){
-        ScalingManager scalingManager = new ScalingManager();
 
         try {
             sprite_sheet = ImageIO.read(getClass().getResourceAsStream("/player/" + gender + "/" + hairColor + "/" + skinColor + "/" + shirtColor + "/sprite_sheet.png"));
@@ -78,7 +77,6 @@ public class Player extends Entity{
             up1 = sprite_sheet.getSubimage(0, 32, panel.originalTileSize, panel.originalTileSize);
             up2 = sprite_sheet.getSubimage(16, 32, panel.originalTileSize, panel.originalTileSize);
 
-//            up1 = scalingManager.scaleImage(up1, panel.tileSize, panel.tileSize);
             up1 = scalingManager.toCompatibleImage(up1, panel.tileSize, panel.tileSize);
             up2 = scalingManager.toCompatibleImage(up2, panel.tileSize, panel.tileSize);
             down1 = scalingManager.toCompatibleImage(down1, panel.tileSize, panel.tileSize);
@@ -114,12 +112,14 @@ public class Player extends Entity{
             int monsterIdx = panel.collisionManager.checkEntity(this, panel.monster);
             fightMonster(monsterIdx);
 
-            if(worldX >= 80 * panel.tileSize && worldX <= 81 * panel.tileSize && worldY >= 37 * panel.tileSize && worldY <= 38 * panel.tileSize){
-                worldX = 59 * panel.tileSize;
-                worldY = 69 * panel.tileSize;
-            }else if(worldX >= 59 * panel.tileSize && worldX <= 60 * panel.tileSize && worldY >= 70 * panel.tileSize && worldY <= 71 * panel.tileSize){
-                worldX = 77 * panel.tileSize;
-                worldY = 37 * panel.tileSize;
+            if(panel.gameState == panel.playState) {
+                if (worldX >= 80 * panel.tileSize && worldX <= 81 * panel.tileSize && worldY >= 37 * panel.tileSize && worldY <= 38 * panel.tileSize) {
+                    worldX = 59 * panel.tileSize;
+                    worldY = 69 * panel.tileSize;
+                } else if (worldX >= 59 * panel.tileSize && worldX <= 60 * panel.tileSize && worldY >= 70 * panel.tileSize && worldY <= 71 * panel.tileSize) {
+                    worldX = 77 * panel.tileSize;
+                    worldY = 37 * panel.tileSize;
+                }
             }
 
             if(!collision){
@@ -146,11 +146,10 @@ public class Player extends Entity{
 
     public void fightMonster(int idx) {
         if(idx != 999){
-            System.out.print("Let's Fight");
             if(!panel.monster[idx].dead){
                 panel.gameState = panel.fightState;
                 panel.inEncounter = true;
-                if(successfulOpen){
+                if(correctAnswer){
                     panel.monster[idx].dead = true;
                 }
             }
@@ -168,9 +167,10 @@ public class Player extends Entity{
                           panel.inEncounter = true;
                           panel.gameState = panel.treasureState;
                           if(answered){
-                              if(successfulOpen) {
+                              if(correctAnswer) {
                                   panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/open_chest.png"));
                                   panel.obj[idx].opened = true;
+                                  panel.obj[idx].image = scalingManager.toCompatibleImage(panel.obj[idx].image, panel.tileSize, panel.tileSize);
                                   if (panel.ui.getDifficultyNum() == 0) {
                                       panel.items[0].numHeld += (int) Math.floor(Math.random() * (10 - 1 + 1) + 1);
                                   }else if(panel.ui.getDifficultyNum() == 1) {
@@ -179,9 +179,10 @@ public class Player extends Entity{
                                       panel.items[0].numHeld += (int) Math.floor(Math.random() * (20 - 10 + 1) + 10);
                                       panel.items[(int) Math.floor(Math.random() * (5 - 2 + 1) + 2)].numHeld++;
                                   }
-                                  successfulOpen = false;
+                                  correctAnswer = false;
                               }else{
                                   panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/locked_chest.png"));
+                                  panel.obj[idx].image = scalingManager.toCompatibleImage(panel.obj[idx].image, panel.tileSize, panel.tileSize);
                                   panel.obj[idx].opened = true;
                                   panel.obj[idx].collision = true;
                               }
@@ -232,7 +233,6 @@ public class Player extends Entity{
                 case "speedPotion":
                     panel.items[4].numHeld++;
                     panel.items[idx].found = true;
-//                    ((SpeedPotion) panel.items[idx]).use();
                     break;
                 case "rerollPotion":
                     panel.items[5].numHeld++;

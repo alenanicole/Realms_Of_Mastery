@@ -9,7 +9,12 @@ public class ObjectLoader {
     public ObjectLoader(GamePanel panel){
         this.panel = panel;
     }
-    
+
+    public void unloadObjects(){
+        for(int i = 0; i < panel.obj.length; i++){
+            panel.obj[i] = null;
+        }
+    }
     public void setObject(){
         panel.obj[0] = new Chest_obj(panel);
         panel.obj[0].worldX = 13 * panel.tileSize;

@@ -17,7 +17,11 @@ public class MonsterLoader {
     public MonsterLoader(GamePanel panel){
         this.panel = panel;
     }
-
+    public void unloadMonsters(){
+        for(int i = 0; i < panel.monster.length; i++){
+            panel.monster[i] = null;
+        }
+    }
     public void intializeMonsters(){
         panel.monster[0] = new Skeleton(panel);
         panel.monster[0].worldX = 87 * panel.tileSize;

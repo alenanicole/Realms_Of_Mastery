@@ -18,13 +18,32 @@ public class ItemLoader {
         this.panel = panel;
     }
 
-    public void initializeItems(){
+    public void unloadItems(){
+        panel.items[1].numHeld = 1;
+        panel.items[2].numHeld = 0;
+        panel.items[3].numHeld = 0;
+        panel.items[4].numHeld = 0;
+        panel.items[5].numHeld = 0;
+
+        for(int i = 6; i < panel.items.length; i++){
+            panel.items[i] = null;
+        }
+    }
+
+    public void intializeStaticItems(){
         panel.items[0] = new Coin(panel);
         panel.items[1] = new Key(panel);
         panel.items[2] = new HealthPotion(panel);
         panel.items[3] = new StrengthPotion(panel);
         panel.items[4] = new SpeedPotion(panel);
         panel.items[5] = new RerollPotion(panel);
+
+        panel.weapons[0] = new Sword(panel);
+        panel.weapons[1] = new Staff(panel);
+        panel.weapons[2] = new Bow(panel);
+
+    }
+    public void initializeItems(){
 
         // Distribute around map
 
@@ -51,10 +70,6 @@ public class ItemLoader {
             panel.items[i].worldX = randX * panel.tileSize;
             panel.items[i].worldY = randY * panel.tileSize;
         }
-
-        panel.weapons[0] = new Sword(panel);
-        panel.weapons[1] = new Staff(panel);
-        panel.weapons[2] = new Bow(panel);
 
     }
 

@@ -35,6 +35,9 @@ public class GamePanel extends JPanel implements Runnable{
     public final int useState = 5;
     public final int treasureState = 6;
     public final int fightState = 7;
+    public final int tutorialState = 8;
+    public final int deathState = 9;
+    public final int startRunState = 10;
 
     public boolean inEncounter = false;
     public int numOfFight = 0;
@@ -43,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
 
     KeyHandler keyHandler = new KeyHandler(this);
+    public RandomNumGenerator randGen = new RandomNumGenerator();
     public Player player = new Player(this, keyHandler, "brown", "lightest", "green", "boy");
     public TileManager tileManager = new TileManager(this);
     public SuperObject obj[] = new SuperObject[20];
@@ -52,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Weapon weapons[] = new Weapon[3];
     public ItemLoader itemLoader = new ItemLoader(this);
     public CollisionManager collisionManager = new CollisionManager(this);
+    public QuestionManager questionManager = new QuestionManager(this);
 
     public UI ui = new UI(this);
 
@@ -69,11 +74,20 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void setUpGame(){
-        objectLoader.setObject();
-        itemLoader.initializeItems();
-        monsterLoader.intializeMonsters();
+        itemLoader.intializeStaticItems();
+        questionManager.intitializeQuestions();
 //        gameState = titleState;
-        gameState = playState;
+//        gameState = startRunState;
+        gameState = tutorialState;
+    }
+
+    public void reset(){
+        gameState = deathState;
+        tileManager.loadMap("/maps/Map.txt");
+        objectLoader.unloadObjects();
+        itemLoader.unloadItems();
+        monsterLoader.unloadMonsters();
+        player.currentHealth = player.maxHealth;
     }
 
     public void startGameThread(){
@@ -108,7 +122,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update() {
 
-        if (gameState == playState) {
+        if (gameState == playState || gameState == tutorialState) {
             player.update(0);
 
             for(int i = 0; i < monster.length; i++){

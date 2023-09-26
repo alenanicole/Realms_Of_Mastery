@@ -18,7 +18,7 @@ public class TileManager {
         tile = new Tile[10];
         mapTileNum = new int[panel.maxWorldCol][panel.maxWorldRow];
         getTileImage();
-        loadMap("/maps/Dungeon_1.txt");
+        loadMap("/maps/Map.txt");
     }
 
     public void getTileImage(){
@@ -39,7 +39,7 @@ public class TileManager {
             tile[idx] = new Tile();
             tile[idx].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + fileName + ".png"));
             tile[idx].collision = collision;
-            tile[idx].image = scalingManager.scaleImage(tile[idx].image, panel.tileSize, panel.tileSize);
+            tile[idx].image = scalingManager.toCompatibleImage(tile[idx].image, panel.tileSize, panel.tileSize);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -30,6 +30,8 @@ public class KeyHandler implements KeyListener {
             titleStateKeyHandler(code);
         }else if(panel.gameState == panel.selectState){
             selectionStateKeyHandler(code);
+        }else if(panel.gameState == panel.tutorialState){
+            tutorialStateKeyHandler(code);
         }else if(panel.gameState == panel.playState){
             playStateKeyHandler(code);
         }else if(panel.gameState == panel.pauseState){
@@ -42,6 +44,8 @@ public class KeyHandler implements KeyListener {
             treasureStateKeyHandler(code);
         }else if(panel.gameState == panel.fightState) {
             fightStateKeyHandler(code);
+        }else if(panel.gameState == panel.deathState){
+            deathStateKeyHandler(code);
         }
     }
 
@@ -67,6 +71,42 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    public void tutorialStateKeyHandler(int code) {
+        if(code == KeyEvent.VK_W){
+            upPressed = true;
+        }
+
+        if(code == KeyEvent.VK_S){
+            downPressed = true;
+        }
+
+        if(code == KeyEvent.VK_A){
+            leftPressed = true;
+        }
+
+        if(code == KeyEvent.VK_D){
+            rightPressed = true;
+        }
+        if(code == KeyEvent.VK_P){
+            panel.gameState = panel.pauseState;
+            previousState = panel.tutorialState;
+        }
+
+        if(code == KeyEvent.VK_I){
+            panel.gameState = panel.inventoryState;
+            previousState = panel.tutorialState;
+        }
+
+        if(code == KeyEvent.VK_H){
+            panel.tileManager.loadMap("/maps/Dungeon_1.txt");
+            panel.player.worldX = panel.tileSize * 57;
+            panel.player.worldY = panel.tileSize * 105;
+            panel.objectLoader.setObject();
+            panel.itemLoader.initializeItems();
+            panel.monsterLoader.intializeMonsters();
+            panel.gameState = panel.playState;
+        }
+    }
     public void playStateKeyHandler(int code){
         if(code == KeyEvent.VK_W){
             upPressed = true;
@@ -93,9 +133,14 @@ public class KeyHandler implements KeyListener {
             previousState = panel.playState;
         }
 
-        if(code == KeyEvent.VK_H){
-            panel.numOfFight--;
-        }
+//        if(code == KeyEvent.VK_H){
+//            panel.tileManager.loadMap("/maps/Dungeon_1.txt");
+//            panel.player.worldX = panel.tileSize * 57;
+//            panel.player.worldY = panel.tileSize * 105;
+//            panel.objectLoader.setObject();
+//            panel.itemLoader.initializeItems();
+//            panel.monsterLoader.intializeMonsters();
+//        }
     }
     public void pauseStateKeyHandler(int code){
         if(code == KeyEvent.VK_P) {
@@ -345,7 +390,7 @@ public class KeyHandler implements KeyListener {
                 case 26 -> {
                 }
                 case 27 -> panel.gameState = panel.titleState;
-                case 28 -> panel.gameState = panel.playState;
+                case 28 -> panel.gameState = panel.tutorialState;
             }
         }
     }
@@ -451,10 +496,10 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if(code == KeyEvent.VK_ENTER && panel.ui.difficultyChosen && panel.ui.getAns() != ""){
-            if(panel.ui.treasureScreen.multiplication.checkAns()){
+        if(code == KeyEvent.VK_ENTER && panel.ui.difficultyChosen && panel.questionManager.getGivenAns() != ""){
+            if(panel.questionManager.checkAns()){
                 panel.gameState = panel.playState;
-                panel.player.successfulOpen = true;
+                panel.player.correctAnswer = true;
                 panel.player.answered = true;
                 panel.ui.setNumOfAttempts(0);
                 panel.ui.difficultyChosen = false;
@@ -462,7 +507,7 @@ public class KeyHandler implements KeyListener {
             }else{
                 panel.ui.setAlreadyDrawn(false);
                 panel.ui.setNumOfAttempts(panel.ui.getNumOfAttempts() + 1);
-                panel.ui.setAns("");
+                panel.questionManager.setGivenAns("");
             }
         }else if(code == KeyEvent.VK_ENTER && !panel.ui.difficultyChosen){
             panel.ui.difficultyChosen = true;
@@ -472,15 +517,15 @@ public class KeyHandler implements KeyListener {
             switch (code){
                 case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
                         KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9 -> {
-                    if (panel.ui.getAns().length() <= 5) {
-                        panel.ui.setAns(panel.ui.getAns() + (code - 48));
+                    if (panel.questionManager.getGivenAns().length() <= 7) {
+                        panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (code - 48));
                     }
                 }
                 case KeyEvent.VK_BACK_SPACE -> {
-                    if(panel.ui.getAns() != "" && (Integer.valueOf(panel.ui.getAns())/10) > 0){
-                        panel.ui.setAns(String.valueOf(Integer.valueOf(panel.ui.getAns()) / 10));
+                    if(panel.questionManager.getGivenAns() != "" && (Integer.valueOf(panel.questionManager.getGivenAns())/10) > 0){
+                        panel.questionManager.setGivenAns((String.valueOf(Integer.valueOf(panel.questionManager.getGivenAns()) / 10)));
                     }else{
-                        panel.ui.setAns("");
+                        panel.questionManager.setGivenAns("");
                     }
                 }
 
@@ -514,17 +559,17 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if(code == KeyEvent.VK_ENTER && panel.ui.difficultyChosen && panel.ui.getAns() != ""){
-            if(panel.ui.fightScreen.multiplication.checkAns()){
+        if(code == KeyEvent.VK_ENTER && panel.ui.difficultyChosen && panel.questionManager.getGivenAns() != ""){
+            if(panel.questionManager.checkAns()){
                 panel.gameState = panel.playState;
-                panel.player.successfulOpen = true;
+                panel.player.correctAnswer = true;
                 panel.player.answered = true;
                 panel.ui.difficultyChosen = false;
                 panel.inEncounter = false;
             }else{
                 panel.player.currentHealth--;
                 panel.ui.setAlreadyDrawn(false);
-                panel.ui.setAns("");
+                panel.questionManager.setGivenAns("");
             }
         }else if(code == KeyEvent.VK_ENTER && !panel.ui.difficultyChosen){
             panel.ui.difficultyChosen = true;
@@ -534,19 +579,25 @@ public class KeyHandler implements KeyListener {
             switch (code){
                 case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
                         KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9 -> {
-                    if (panel.ui.getAns().length() <= 5) {
-                        panel.ui.setAns(panel.ui.getAns() + (code - 48));
+                    if (panel.questionManager.getGivenAns().length() <= 7) {
+                        panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (code - 48));
                     }
                 }
                 case KeyEvent.VK_BACK_SPACE -> {
-                    if(panel.ui.getAns() != "" && (Integer.valueOf(panel.ui.getAns())/10) > 0){
-                        panel.ui.setAns(String.valueOf(Integer.valueOf(panel.ui.getAns()) / 10));
+                    if(panel.questionManager.getGivenAns() != "" && (Integer.valueOf(panel.questionManager.getGivenAns())/10) > 0){
+                        panel.questionManager.setGivenAns((String.valueOf(Integer.valueOf(panel.questionManager.getGivenAns()) / 10)));
                     }else{
-                        panel.ui.setAns("");
+                        panel.questionManager.setGivenAns("");
                     }
                 }
 
             }
+        }
+    }
+
+    public void deathStateKeyHandler(int code) {
+        if(code == KeyEvent.VK_ENTER){
+            panel.gameState = panel.tutorialState;
         }
     }
 

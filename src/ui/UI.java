@@ -16,16 +16,16 @@ public class UI {
     ScalingManager scalingManager = new ScalingManager();
     Font joystix;
     Font joystix_small;
+    Font joystix_smallest;
     Font press_start;
     Font press_start_small;
-
     private int titleCommandNum = 0;
     private int selectNum = 0;
     private int pauseCommandNum = 0;
     private int inventoryNum = 0;
     private int useNum = 0;
-
     private int difficultyNum = 0;
+    private int startRunNum = 0;
     private int num1;
     private int num2;
     private String ans = "";
@@ -59,9 +59,12 @@ public class UI {
     TitleScreen titleScreen;
     SelectScreen selectScreen;
     PauseScreen pauseScreen;
+    TutorialScreen tutorialScreen;
     PlayScreen playScreen;
     UseScreen useScreen;
     InventoryScreen inventoryScreen;
+    DeathScreen deathScreen;
+    StartRunScreen startRunScreen;
 
     public TreasureScreen treasureScreen;
     public FightScreen fightScreen;
@@ -130,6 +133,8 @@ public class UI {
             joystix = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(48F);
             stream = getClass().getResourceAsStream("/fonts/joystix/joystix_monospace.otf");
             joystix_small = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(36F);
+            stream = getClass().getResourceAsStream("/fonts/joystix/joystix_monospace.otf");
+            joystix_smallest = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(30F);
             stream = getClass().getResourceAsStream("/fonts/press-start/prstart.ttf");
             press_start = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(16F);
             stream = getClass().getResourceAsStream("/fonts/press-start/prstart.ttf");
@@ -150,6 +155,9 @@ public class UI {
         inventoryScreen = new InventoryScreen(panel);
         treasureScreen = new TreasureScreen(panel);
         fightScreen = new FightScreen(panel);
+        tutorialScreen = new TutorialScreen(panel);
+        deathScreen = new DeathScreen(panel);
+        startRunScreen = new StartRunScreen(panel);
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -163,6 +171,10 @@ public class UI {
         }
         if (panel.gameState == panel.selectState) {
             selectScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.tutorialState){
+            playScreen.draw(graphics2D);
+            tutorialScreen.draw();
         }
         if (panel.gameState == panel.playState) {
             playScreen.draw(graphics2D);
@@ -193,6 +205,14 @@ public class UI {
             if (difficultyChosen) {
                 fightScreen.drawQuestion();
             }
+        }
+        if(panel.gameState == panel.deathState){
+            playScreen.draw(graphics2D);
+            deathScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.startRunState){
+            playScreen.draw(graphics2D);
+            startRunScreen.draw(graphics2D);
         }
 
     }
@@ -329,5 +349,13 @@ public class UI {
 
     public void setNumOfAttempts(int numOfAttempts) {
         this.numOfAttempts = numOfAttempts;
+    }
+
+    public int getStartRunNum() {
+        return startRunNum;
+    }
+
+    public void setStartRunNum(int startRunNum) {
+        this.startRunNum = startRunNum;
     }
 }

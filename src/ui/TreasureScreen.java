@@ -3,6 +3,7 @@ package ui;
 import main.GamePanel;
 import main.ScalingManager;
 import questions.math.Multiplication;
+import questions.math.WordProblem;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,10 +17,8 @@ public class TreasureScreen extends UI{
     BufferedImage tier1, tier2, tier3;
     BufferedImage grayX, redX;
     int difficulty;
-    public Multiplication multiplication;
-
-
     ScalingManager scalingManager = new ScalingManager();
+
     public TreasureScreen(GamePanel panel) {
         super(panel);
         this.panel = panel;
@@ -46,19 +45,19 @@ public class TreasureScreen extends UI{
         graphics2D.setFont(joystix_small);
         graphics2D.setStroke(new BasicStroke(5));
         graphics2D.setColor(background);
-        graphics2D.fill(new RoundRectangle2D.Float(panel.tileSize * 2, panel.tileSize * 2,
-                panel.screenWidth - panel.tileSize * 4, panel.screenHeight - panel.tileSize * 4,
+        graphics2D.fill(new RoundRectangle2D.Float((int)(panel.tileSize * 1.5), panel.tileSize * 2,
+                (int)(panel.screenWidth - panel.tileSize * 3), panel.screenHeight - panel.tileSize * 4,
                 30, 30));
 
         String text = "You've found treasure!";
         int x = getCenteredX(text, graphics2D);
         int y = panel.tileSize * 3;
-        drawFloat(x, y, text);
+        drawFloat(x, y, text, 5);
 
         text = "Choose your difficulty:";
         y += panel.tileSize * 2;
         x = getCenteredX(text, graphics2D);
-        drawFloat(x, y, text);
+        drawFloat(x, y, text, 5);
 
         x = panel.screenWidth/2 - panel.tileSize * 6;
         y += panel.tileSize * 2;
@@ -88,19 +87,19 @@ public class TreasureScreen extends UI{
 
         y += panel.tileSize * 4;
         text = "TIER 1";
-        drawFloat(x, y, text);
+        drawFloat(x, y, text, 5);
         x += panel.tileSize * 5;
         text = "TIER 2";
-        drawFloat(x, y, text);
+        drawFloat(x, y, text, 5);
         x += panel.tileSize * 5;
         text = "TIER 3";
-        drawFloat(x, y, text);
+        drawFloat(x, y, text, 5);
 
     }
 
-    public void drawFloat(int x, int y, String text){
+    public void drawFloat(int x, int y, String text, int offset){
         graphics2D.setColor(Color.black);
-        graphics2D.drawString(text, x + 5, y + 5);
+        graphics2D.drawString(text, x + offset, y + offset);
         graphics2D.setColor(Color.white);
         graphics2D.drawString(text, x, y);
     }
@@ -114,11 +113,11 @@ public class TreasureScreen extends UI{
             panel.inEncounter = false;
             return;
         }
-        graphics2D.setFont(joystix_small);
+        graphics2D.setFont(joystix_smallest);
         graphics2D.setStroke(new BasicStroke(5));
         graphics2D.setColor(background);
-        graphics2D.fill(new RoundRectangle2D.Float(panel.tileSize * 2, panel.tileSize * 2,
-                panel.screenWidth - panel.tileSize * 4, panel.screenHeight - panel.tileSize * 4,
+        graphics2D.fill(new RoundRectangle2D.Float((int)(panel.tileSize * 1.5), panel.tileSize * 2,
+                (int)(panel.screenWidth - panel.tileSize * 3), panel.screenHeight - panel.tileSize * 4,
                 30, 30));
 
         int x = panel.tileSize * 3;
@@ -139,40 +138,40 @@ public class TreasureScreen extends UI{
 
         difficulty = panel.ui.getDifficultyNum();
 
-//        Math math = new Math(panel);
-        multiplication = new Multiplication(panel);
-
         if(difficulty == 0) {
-           multiplication.drawTierOne();
+           panel.questionManager.drawTierOne();
         }else if(difficulty == 1){
-            multiplication.drawTierTwo();
+            panel.questionManager.drawTierTwo();
         }else{
-            multiplication.drawTierThree();
+            panel.questionManager.drawTierThree();
         }
 
-            String text = "What is " + panel.ui.getNum1() + " times " + panel.ui.getNum2() + "?";
-            x = getCenteredX(text, graphics2D);
-            y = panel.tileSize * 6;
-            drawFloat(x, y, text);
+            String text = panel.questionManager.getQuestion();
+//            x = (int)(panel.tileSize * 2.3);
+            y = panel.tileSize * 5;
+            for(String line : text.split("-")){
+                x = super.getCenteredX(line, graphics2D);
+                drawFloat(x, y, line, 3);
+                y += panel.tileSize;
+            }
 
-            y += panel.tileSize * 2;
-            x = panel.screenWidth/ 2 - panel.tileSize * 2;
+            x = panel.screenWidth/ 2 - panel.tileSize * 3;
 
             graphics2D.setComposite(composite);
             graphics2D.setColor(button);
             graphics2D.fill(new RoundRectangle2D.Float(x, y,
-                    panel.tileSize * 4, panel.tileSize,
+                    panel.tileSize * 6, panel.tileSize,
                     10, 10));
             graphics2D.setColor(border);
             graphics2D.draw(new RoundRectangle2D.Float(x, y,
-                    panel.tileSize * 4, panel.tileSize,
+                    panel.tileSize * 6, panel.tileSize,
                     10, 10));
 
             graphics2D.setComposite(originalComposite);
 
             x += 5;
             y += panel.tileSize;
-            drawFloat(x, y - 5, panel.ui.getAns());
+            drawFloat(x, y - 5, panel.questionManager.getGivenAns(), 3);
 
     }
 

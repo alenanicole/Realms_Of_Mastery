@@ -25,7 +25,7 @@ public class PauseScreen extends UI {
         graphics2D.getFont().deriveFont(Font.BOLD);
         String text = "PAUSED";
         int x = getCenteredX(text, graphics2D);
-        int y = panel.tileSize * 3;
+        int y = panel.tileSize * 4;
         graphics2D.setColor(Color.black);
         graphics2D.drawString(text, x + 5, y + 5);
         graphics2D.setColor(Color.white);

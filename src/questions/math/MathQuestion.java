@@ -9,4 +9,8 @@ public class MathQuestion {
         this.panel = panel;
     }
 
+    public void drawTierOne(){}
+    public void drawTierTwo(){}
+    public void drawTierThree(){}
+
 }

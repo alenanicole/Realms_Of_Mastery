@@ -23,8 +23,14 @@ public class PlayScreen extends UI {
 
 
         for(int i = 1; i <= panel.player.maxHealth/2; i++) {
+            if(panel.player.currentHealth == 0){
+                lastHeart = true;
+            }
             if(panel.player.currentHealth >= i * 2){
                 graphics2D.drawImage(fullHeart, x, y, null);
+                if(panel.player.currentHealth == i * 2){
+                    lastHeart = true;
+                }
             }else if(panel.player.currentHealth < i * 2 && !lastHeart){
                 graphics2D.drawImage(halfHeart, x, y, null);
                 lastHeart = true;
