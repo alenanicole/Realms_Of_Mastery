@@ -1,5 +1,6 @@
 package main;
 
+import questions.math.Division;
 import questions.math.Multiplication;
 import questions.math.WordProblem;
 
@@ -10,6 +11,7 @@ public class QuestionManager {
     GamePanel panel;
     Multiplication multiplication;
     WordProblem wordProblem;
+    Division division;
 
     private String question = "";
     private String correctAns = "";
@@ -22,6 +24,7 @@ public class QuestionManager {
 
     public void initializeTypes(){
         multiplication = new Multiplication(panel);
+        division = new Division(panel);
         wordProblem = new WordProblem(panel);
     }
 
@@ -34,10 +37,12 @@ public class QuestionManager {
     public void drawTierOne(){
         if (!panel.ui.isAlreadyDrawn()) {
             int randSelector = (int) floor(random() * (100 - 1 + 1) + 1);
-            if(randSelector >= 1 && randSelector <= 50){
+            if(randSelector >= 1 && randSelector <= 33){
                 multiplication.drawTierOne();
-            }else if(randSelector > 50 && randSelector <= 100){
+            }else if(randSelector > 33 && randSelector <= 66){
                 wordProblem.drawTierOne();
+            }else if(randSelector > 66 && randSelector <= 100){
+                division.drawTierOne();
             }
             panel.ui.setAlreadyDrawn(true);
         }
@@ -46,22 +51,26 @@ public class QuestionManager {
     public void drawTierTwo(){
         if (!panel.ui.isAlreadyDrawn()) {
             int randSelector = (int) floor(random() * (100 - 1 + 1) + 1);
-            if(randSelector >= 1 && randSelector <= 50){
+            if(randSelector >= 1 && randSelector <= 33){
                 multiplication.drawTierTwo();
-            }else if(randSelector > 50 && randSelector <= 100){
+            }else if(randSelector > 33 && randSelector <= 66){
                 wordProblem.drawTierTwo();
+            }else if(randSelector > 66 && randSelector <= 100) {
+                division.drawTierTwo();
             }
-            panel.ui.setAlreadyDrawn(true);
         }
+            panel.ui.setAlreadyDrawn(true);
     }
 
     public void drawTierThree(){
         if (!panel.ui.isAlreadyDrawn()) {
             int randSelector = (int) floor(random() * (100 - 1 + 1) + 1);
-            if(randSelector >= 1 && randSelector <= 50){
+            if(randSelector >= 1 && randSelector <= 33){
                 multiplication.drawTierThree();
-            }else if(randSelector > 50 && randSelector <= 100){
+            }else if(randSelector > 33 && randSelector <= 66){
                 wordProblem.drawTierThree();
+            }else if(randSelector > 66 && randSelector <= 100){
+                division.drawTierThree();
             }
             panel.ui.setAlreadyDrawn(true);
         }

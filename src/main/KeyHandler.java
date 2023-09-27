@@ -516,14 +516,14 @@ public class KeyHandler implements KeyListener {
         if(panel.ui.difficultyChosen){
             switch (code){
                 case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
-                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9 -> {
+                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R -> {
                     if (panel.questionManager.getGivenAns().length() <= 7) {
-                        panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (code - 48));
+                        panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (char)(code));
                     }
                 }
                 case KeyEvent.VK_BACK_SPACE -> {
-                    if(panel.questionManager.getGivenAns() != "" && (Integer.valueOf(panel.questionManager.getGivenAns())/10) > 0){
-                        panel.questionManager.setGivenAns((String.valueOf(Integer.valueOf(panel.questionManager.getGivenAns()) / 10)));
+                    if(panel.questionManager.getGivenAns() != ""){
+                        panel.questionManager.setGivenAns(panel.questionManager.getGivenAns().substring(0, panel.questionManager.getGivenAns().length() - 1));
                     }else{
                         panel.questionManager.setGivenAns("");
                     }
@@ -578,14 +578,14 @@ public class KeyHandler implements KeyListener {
         if(panel.ui.difficultyChosen){
             switch (code){
                 case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
-                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9 -> {
+                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R -> {
                     if (panel.questionManager.getGivenAns().length() <= 7) {
-                        panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (code - 48));
+                        panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (char)(code));
                     }
                 }
                 case KeyEvent.VK_BACK_SPACE -> {
-                    if(panel.questionManager.getGivenAns() != "" && (Integer.valueOf(panel.questionManager.getGivenAns())/10) > 0){
-                        panel.questionManager.setGivenAns((String.valueOf(Integer.valueOf(panel.questionManager.getGivenAns()) / 10)));
+                    if(panel.questionManager.getGivenAns() != ""){
+                        panel.questionManager.setGivenAns(panel.questionManager.getGivenAns().substring(0, panel.questionManager.getGivenAns().length() - 1));
                     }else{
                         panel.questionManager.setGivenAns("");
                     }
