@@ -20,6 +20,8 @@ public class Zombie extends Monster{
         name = "zombie";
         getImage(name);
         setDefaultValues();
+        maxHealth = 15;
+        currentHealth = maxHealth;
     }
 
 }

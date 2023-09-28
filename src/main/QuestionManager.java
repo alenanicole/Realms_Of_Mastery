@@ -1,6 +1,7 @@
 package main;
 
 import questions.math.Division;
+import questions.math.Fraction;
 import questions.math.Multiplication;
 import questions.math.WordProblem;
 
@@ -12,10 +13,14 @@ public class QuestionManager {
     Multiplication multiplication;
     WordProblem wordProblem;
     Division division;
-
+    Fraction fraction;
     private String question = "";
     private String correctAns = "";
     private String givenAns = "";
+
+    private boolean alreadyDrawn = false;
+    private int numOfAttempts = 0;
+    private boolean difficultyChosen = false;
 
     public QuestionManager(GamePanel panel){
         this.panel = panel;
@@ -26,6 +31,7 @@ public class QuestionManager {
         multiplication = new Multiplication(panel);
         division = new Division(panel);
         wordProblem = new WordProblem(panel);
+        fraction = new Fraction(panel);
     }
 
     public void intitializeQuestions(){
@@ -35,44 +41,53 @@ public class QuestionManager {
     }
 
     public void drawTierOne(){
-        if (!panel.ui.isAlreadyDrawn()) {
-            int randSelector = (int) floor(random() * (100 - 1 + 1) + 1);
-            if(randSelector >= 1 && randSelector <= 33){
+        if (!isAlreadyDrawn()) {
+            int randSelector = panel.randGen.getRandomInteger(100, 1);
+            randSelector = 78;
+            if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierOne();
-            }else if(randSelector > 33 && randSelector <= 66){
+            }else if(randSelector > 25 && randSelector <= 50){
                 wordProblem.drawTierOne();
-            }else if(randSelector > 66 && randSelector <= 100){
+            }else if(randSelector > 50 && randSelector <= 75){
                 division.drawTierOne();
+            }else if(randSelector > 75 && randSelector <= 100){
+                fraction.drawTierOne();
             }
-            panel.ui.setAlreadyDrawn(true);
+            setAlreadyDrawn(true);
         }
     }
 
     public void drawTierTwo(){
-        if (!panel.ui.isAlreadyDrawn()) {
-            int randSelector = (int) floor(random() * (100 - 1 + 1) + 1);
-            if(randSelector >= 1 && randSelector <= 33){
+        if (!isAlreadyDrawn()) {
+            int randSelector = panel.randGen.getRandomInteger(100, 1);
+            randSelector = 78;
+            if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierTwo();
-            }else if(randSelector > 33 && randSelector <= 66){
+            }else if(randSelector > 25 && randSelector <= 50){
                 wordProblem.drawTierTwo();
-            }else if(randSelector > 66 && randSelector <= 100) {
+            }else if(randSelector > 50 && randSelector <= 75) {
                 division.drawTierTwo();
+            }else if(randSelector > 75 && randSelector <= 100){
+                fraction.drawTierTwo();
             }
+            setAlreadyDrawn(true);
         }
-            panel.ui.setAlreadyDrawn(true);
     }
 
     public void drawTierThree(){
-        if (!panel.ui.isAlreadyDrawn()) {
-            int randSelector = (int) floor(random() * (100 - 1 + 1) + 1);
-            if(randSelector >= 1 && randSelector <= 33){
+        if (!isAlreadyDrawn()) {
+            int randSelector = panel.randGen.getRandomInteger(100, 1);
+            randSelector = 78;
+            if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierThree();
-            }else if(randSelector > 33 && randSelector <= 66){
+            }else if(randSelector > 25 && randSelector <= 50){
                 wordProblem.drawTierThree();
-            }else if(randSelector > 66 && randSelector <= 100){
+            }else if(randSelector > 50 && randSelector <= 75){
                 division.drawTierThree();
+            }else if(randSelector > 75 && randSelector <= 100){
+                fraction.drawTierThree();
             }
-            panel.ui.setAlreadyDrawn(true);
+            setAlreadyDrawn(true);
         }
     }
 
@@ -82,9 +97,9 @@ public class QuestionManager {
             isCorrect = true;
         }
 
-        panel.ui.setAlreadyDrawn(false);
+        setAlreadyDrawn(false);
         setGivenAns("");
-        panel.ui.difficultyChosen = false;
+        setDifficultyChosen(false);
         return isCorrect;
     }
 
@@ -110,5 +125,30 @@ public class QuestionManager {
 
     public void setGivenAns(String givenAns) {
         this.givenAns = givenAns;
+    }
+
+    public boolean isAlreadyDrawn() {
+        return alreadyDrawn;
+    }
+
+    public void setAlreadyDrawn(boolean alreadyDrawn) {
+        this.alreadyDrawn = alreadyDrawn;
+    }
+
+
+    public int getNumOfAttempts() {
+        return numOfAttempts;
+    }
+
+    public void setNumOfAttempts(int numOfAttempts) {
+        this.numOfAttempts = numOfAttempts;
+    }
+
+    public boolean isDifficultyChosen() {
+        return difficultyChosen;
+    }
+
+    public void setDifficultyChosen(boolean difficultyChosen) {
+        this.difficultyChosen = difficultyChosen;
     }
 }

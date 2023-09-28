@@ -12,24 +12,24 @@ public class Multiplication extends MathQuestion {
     }
 
     public void drawTierOne(){
-        num1 = ((int) floor(random() * (10 - 1 + 1) + 1));
-        num2 = ((int) floor(random() * (10 - 1 + 1) + 1));
+        num1 = panel.randGen.getRandomInteger(10, 1);
+        num2 = panel.randGen.getRandomInteger(10, 1);
         panel.questionManager.setQuestion("What is " + num1 + " times " + num2 + "?");
         panel.questionManager.setCorrectAns(String.valueOf(num1 * num2));
 
     }
 
     public void drawTierTwo(){
-        num1 = ((int) floor(random() * (99 - 10 + 1) + 10));
-        num2 = ((int) floor(random() * (10 - 1 + 1) + 1));
+        num1 = panel.randGen.getRandomInteger(99, 10);
+        num2 = panel.randGen.getRandomInteger(10, 1);
         panel.questionManager.setQuestion("What is " + num1 + " times " + num2 + "?");
         panel.questionManager.setCorrectAns(String.valueOf(num1 * num2));
 
     }
 
     public void drawTierThree(){
-        num1 = ((int) floor(random() * (99 - 10 + 1) + 10));
-        num2 = ((int) floor(random() * (99 - 10 + 1) + 10));
+        num1 = panel.randGen.getRandomInteger(99, 10);
+        num2 = panel.randGen.getRandomInteger(99, 10);
         panel.questionManager.setQuestion("What is " + num1 + " times " + num2 + "?");
         panel.questionManager.setCorrectAns(String.valueOf(num1 * num2));
     }

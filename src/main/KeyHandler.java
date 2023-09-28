@@ -132,15 +132,6 @@ public class KeyHandler implements KeyListener {
             panel.gameState = panel.inventoryState;
             previousState = panel.playState;
         }
-
-//        if(code == KeyEvent.VK_H){
-//            panel.tileManager.loadMap("/maps/Dungeon_1.txt");
-//            panel.player.worldX = panel.tileSize * 57;
-//            panel.player.worldY = panel.tileSize * 105;
-//            panel.objectLoader.setObject();
-//            panel.itemLoader.initializeItems();
-//            panel.monsterLoader.intializeMonsters();
-//        }
     }
     public void pauseStateKeyHandler(int code){
         if(code == KeyEvent.VK_P) {
@@ -163,17 +154,11 @@ public class KeyHandler implements KeyListener {
 
         if (code == KeyEvent.VK_ENTER) {
             switch (panel.ui.getPauseCommandNum()) {
-                case 0:
-                    panel.gameState = previousState;
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    panel.gameState = panel.titleState;
-                    break;
-                case 3:
-                    System.exit(0);
-                    break;
+                case 0 -> panel.gameState = previousState;
+                case 1 -> {
+                }
+                case 2 -> panel.gameState = panel.titleState;
+                case 3 -> System.exit(0);
             }
         }
     }
@@ -222,13 +207,10 @@ public class KeyHandler implements KeyListener {
         }
 
         if(code == KeyEvent.VK_ENTER){
-            switch (panel.ui.getInventoryNum()){
-                case 9:
+            if(panel.ui.getInventoryNum() == 9){
                     panel.gameState = previousState;
-                    break;
-                default:
+            }else{
                     panel.gameState = panel.useState;
-                    break;
             }
         }
     }
@@ -482,41 +464,30 @@ public class KeyHandler implements KeyListener {
         }
 
 
-        if (code == KeyEvent.VK_A  && !panel.ui.difficultyChosen) {
+        if (code == KeyEvent.VK_A  && !panel.questionManager.isDifficultyChosen()) {
             panel.ui.setDifficultyNum(panel.ui.getDifficultyNum() - 1);
             if (panel.ui.getDifficultyNum() < 0) {
                 panel.ui.setDifficultyNum(2);
             }
         }
 
-        if (code == KeyEvent.VK_D && !panel.ui.difficultyChosen) {
+        if (code == KeyEvent.VK_D && !panel.questionManager.isDifficultyChosen()) {
             panel.ui.setDifficultyNum(panel.ui.getDifficultyNum() + 1);
             if (panel.ui.getDifficultyNum() > 2) {
                 panel.ui.setDifficultyNum(0);
             }
         }
 
-        if(code == KeyEvent.VK_ENTER && panel.ui.difficultyChosen && panel.questionManager.getGivenAns() != ""){
-            if(panel.questionManager.checkAns()){
-                panel.gameState = panel.playState;
-                panel.player.correctAnswer = true;
-                panel.player.answered = true;
-                panel.ui.setNumOfAttempts(0);
-                panel.ui.difficultyChosen = false;
-                panel.inEncounter = false;
-            }else{
-                panel.ui.setAlreadyDrawn(false);
-                panel.ui.setNumOfAttempts(panel.ui.getNumOfAttempts() + 1);
-                panel.questionManager.setGivenAns("");
-            }
-        }else if(code == KeyEvent.VK_ENTER && !panel.ui.difficultyChosen){
-            panel.ui.difficultyChosen = true;
+        if(code == KeyEvent.VK_ENTER && panel.questionManager.isDifficultyChosen() && panel.questionManager.getGivenAns() != ""){
+            panel.treasureManager.validateAns();
+        }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isDifficultyChosen()){
+            panel.questionManager.setDifficultyChosen(true);
         }
 
-        if(panel.ui.difficultyChosen){
+        if(panel.questionManager.isDifficultyChosen()){
             switch (code){
                 case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
-                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R -> {
+                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R, KeyEvent.VK_F, KeyEvent.VK_T, KeyEvent.VK_SLASH-> {
                     if (panel.questionManager.getGivenAns().length() <= 7) {
                         panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (char)(code));
                     }
@@ -545,40 +516,30 @@ public class KeyHandler implements KeyListener {
         }
 
 
-        if (code == KeyEvent.VK_A  && !panel.ui.difficultyChosen) {
+        if (code == KeyEvent.VK_A  && !panel.questionManager.isDifficultyChosen()) {
             panel.ui.setDifficultyNum(panel.ui.getDifficultyNum() - 1);
             if (panel.ui.getDifficultyNum() < 0) {
                 panel.ui.setDifficultyNum(2);
             }
         }
 
-        if (code == KeyEvent.VK_D && !panel.ui.difficultyChosen) {
+        if (code == KeyEvent.VK_D && !panel.questionManager.isDifficultyChosen()) {
             panel.ui.setDifficultyNum(panel.ui.getDifficultyNum() + 1);
             if (panel.ui.getDifficultyNum() > 2) {
                 panel.ui.setDifficultyNum(0);
             }
         }
 
-        if(code == KeyEvent.VK_ENTER && panel.ui.difficultyChosen && panel.questionManager.getGivenAns() != ""){
-            if(panel.questionManager.checkAns()){
-                panel.gameState = panel.playState;
-                panel.player.correctAnswer = true;
-                panel.player.answered = true;
-                panel.ui.difficultyChosen = false;
-                panel.inEncounter = false;
-            }else{
-                panel.player.currentHealth--;
-                panel.ui.setAlreadyDrawn(false);
-                panel.questionManager.setGivenAns("");
-            }
-        }else if(code == KeyEvent.VK_ENTER && !panel.ui.difficultyChosen){
-            panel.ui.difficultyChosen = true;
+        if(code == KeyEvent.VK_ENTER && panel.questionManager.isDifficultyChosen() && panel.questionManager.getGivenAns() != ""){
+            panel.fightManager.validateAns();
+        }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isDifficultyChosen()){
+            panel.questionManager.setDifficultyChosen(true);
         }
 
-        if(panel.ui.difficultyChosen){
+        if(panel.questionManager.isDifficultyChosen()){
             switch (code){
                 case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
-                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R -> {
+                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R, KeyEvent.VK_F, KeyEvent.VK_T, KeyEvent.VK_SLASH -> {
                     if (panel.questionManager.getGivenAns().length() <= 7) {
                         panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (char)(code));
                     }

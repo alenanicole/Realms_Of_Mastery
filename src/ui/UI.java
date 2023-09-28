@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class UI {
-    public boolean difficultyChosen = false;
+
     GamePanel panel;
     Graphics2D graphics2D;
     ScalingManager scalingManager = new ScalingManager();
@@ -53,8 +53,7 @@ public class UI {
     private int spriteNum = 1;
     private int spriteCounter = 0;
 
-    private boolean alreadyDrawn = false;
-    private int numOfAttempts = 0;
+
 
     TitleScreen titleScreen;
     SelectScreen selectScreen;
@@ -195,14 +194,14 @@ public class UI {
         if (panel.gameState == panel.treasureState) {
             playScreen.draw(graphics2D);
             treasureScreen.drawDifficultySelection(graphics2D);
-            if (difficultyChosen) {
+            if (panel.questionManager.isDifficultyChosen()) {
                 treasureScreen.drawQuestion();
             }
         }
         if(panel.gameState == panel.fightState){
             playScreen.draw(graphics2D);
             fightScreen.drawDifficultySelection(graphics2D);
-            if (difficultyChosen) {
+            if (panel.questionManager.isDifficultyChosen()) {
                 fightScreen.drawQuestion();
             }
         }
@@ -308,47 +307,6 @@ public class UI {
 
     public void setDifficultyNum(int difficultyNum) {
         this.difficultyNum = difficultyNum;
-    }
-
-    public boolean isAlreadyDrawn() {
-        return alreadyDrawn;
-    }
-
-    public void setAlreadyDrawn(boolean alreadyDrawn) {
-        this.alreadyDrawn = alreadyDrawn;
-    }
-
-    public int getNum1() {
-        return num1;
-    }
-
-    public void setNum1(int num1) {
-        this.num1 = num1;
-    }
-
-    public int getNum2() {
-        return num2;
-    }
-
-    public void setNum2(int num2) {
-        this.num2 = num2;
-    }
-
-
-    public String getAns() {
-        return ans;
-    }
-
-    public void setAns(String ans) {
-        this.ans = ans;
-    }
-
-    public int getNumOfAttempts() {
-        return numOfAttempts;
-    }
-
-    public void setNumOfAttempts(int numOfAttempts) {
-        this.numOfAttempts = numOfAttempts;
     }
 
     public int getStartRunNum() {

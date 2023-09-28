@@ -57,9 +57,10 @@ public class GamePanel extends JPanel implements Runnable{
     public ItemLoader itemLoader = new ItemLoader(this);
     public CollisionManager collisionManager = new CollisionManager(this);
     public QuestionManager questionManager = new QuestionManager(this);
+    public TreasureManager treasureManager = new TreasureManager(this);
+    public FightManager fightManager = new FightManager(this);
 
     public UI ui = new UI(this);
-
     public Entity monster[] = new Entity[10];
     public MonsterLoader monsterLoader = new MonsterLoader(this);
 
@@ -81,13 +82,16 @@ public class GamePanel extends JPanel implements Runnable{
         gameState = tutorialState;
     }
 
-    public void reset(){
+    public void reset() {
         gameState = deathState;
         tileManager.loadMap("/maps/Map.txt");
         objectLoader.unloadObjects();
         itemLoader.unloadItems();
         monsterLoader.unloadMonsters();
         player.currentHealth = player.maxHealth;
+
+        player.worldX = 59 * tileSize;
+        player.worldY = 59 * tileSize;
     }
 
     public void startGameThread(){

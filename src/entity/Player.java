@@ -147,11 +147,7 @@ public class Player extends Entity{
     public void fightMonster(int idx) {
         if(idx != 999){
             if(!panel.monster[idx].dead){
-                panel.gameState = panel.fightState;
-                panel.inEncounter = true;
-                if(correctAnswer){
-                    panel.monster[idx].dead = true;
-                }
+                panel.fightManager.startFight(idx);
             }
         }
     }
@@ -162,35 +158,8 @@ public class Player extends Entity{
 
             switch(objectName){
                 case "chest":
-                    try{
-                        if(!panel.obj[idx].opened){
-                          panel.inEncounter = true;
-                          panel.gameState = panel.treasureState;
-                          if(answered){
-                              if(correctAnswer) {
-                                  panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/open_chest.png"));
-                                  panel.obj[idx].opened = true;
-                                  panel.obj[idx].image = scalingManager.toCompatibleImage(panel.obj[idx].image, panel.tileSize, panel.tileSize);
-                                  if (panel.ui.getDifficultyNum() == 0) {
-                                      panel.items[0].numHeld += (int) Math.floor(Math.random() * (10 - 1 + 1) + 1);
-                                  }else if(panel.ui.getDifficultyNum() == 1) {
-                                      panel.items[0].numHeld += (int) Math.floor(Math.random() * (15 - 5 + 1) + 5);
-                                  }else{
-                                      panel.items[0].numHeld += (int) Math.floor(Math.random() * (20 - 10 + 1) + 10);
-                                      panel.items[(int) Math.floor(Math.random() * (5 - 2 + 1) + 2)].numHeld++;
-                                  }
-                                  correctAnswer = false;
-                              }else{
-                                  panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/locked_chest.png"));
-                                  panel.obj[idx].image = scalingManager.toCompatibleImage(panel.obj[idx].image, panel.tileSize, panel.tileSize);
-                                  panel.obj[idx].opened = true;
-                                  panel.obj[idx].collision = true;
-                              }
-                          }
-                          answered = false;
-                        }
-                    }catch(IOException e){
-                        e.printStackTrace();
+                    if(!panel.obj[idx].opened){
+                        panel.treasureManager.startTreasureCollection(idx);
                     }
                     break;
                 case "door":

@@ -12,5 +12,7 @@ public class Slime extends Monster{
         name = "slime";
         getImage(name);
         setDefaultValues();
+        maxHealth = 10;
+        currentHealth = maxHealth;
     }
 }

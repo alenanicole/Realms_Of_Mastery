@@ -12,5 +12,7 @@ public class Ghost extends Monster{
         name = "ghost";
         getImage(name);
         setDefaultValues();
+        maxHealth = 10;
+        currentHealth = maxHealth;
     }
 }

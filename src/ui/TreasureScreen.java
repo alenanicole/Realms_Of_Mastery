@@ -105,14 +105,14 @@ public class TreasureScreen extends UI{
     }
 
     public void drawQuestion(){
-        if(panel.ui.getNumOfAttempts() > 2){
-            panel.gameState = panel.playState;
-            panel.ui.setNumOfAttempts(0);
-            panel.ui.difficultyChosen = false;
-            panel.player.answered = true;
-            panel.inEncounter = false;
-            return;
-        }
+//        if(panel.questionManager.getNumOfAttempts() > 2){
+//            panel.gameState = panel.playState;
+//            panel.questionManager.setNumOfAttempts(0);
+//            panel.questionManager.setDifficultyChosen(false);
+//            panel.player.answered = true;
+//            panel.inEncounter = false;
+//            return;
+//        }
         graphics2D.setFont(joystix_smallest);
         graphics2D.setStroke(new BasicStroke(5));
         graphics2D.setColor(background);
@@ -124,7 +124,7 @@ public class TreasureScreen extends UI{
         int y = panel.tileSize * 3;
 
         for(int i = 0; i < 3; i++){
-            if(i >= panel.ui.getNumOfAttempts()) {
+            if(i >= panel.questionManager.getNumOfAttempts()) {
                 graphics2D.setComposite(composite);
                 graphics2D.drawImage(grayX, x, y, null);
             }else{
@@ -147,7 +147,6 @@ public class TreasureScreen extends UI{
         }
 
             String text = panel.questionManager.getQuestion();
-//            x = (int)(panel.tileSize * 2.3);
             y = panel.tileSize * 5;
             for(String line : text.split("-")){
                 x = super.getCenteredX(line, graphics2D);

@@ -20,6 +20,9 @@ public class Entity {
     public boolean collision = false;
     public String name = "";
     public boolean dead = false;
+
+    public int maxHealth;
+    public int currentHealth;
     public int unlockAction = 0;
 
     public Entity(GamePanel panel){

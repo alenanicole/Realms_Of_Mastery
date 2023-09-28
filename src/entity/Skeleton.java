@@ -7,8 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 
-import static java.lang.Math.floor;
-import static java.lang.Math.random;
+import static java.lang.Math.*;
 
 public class Skeleton extends Monster{
 
@@ -20,5 +19,7 @@ public class Skeleton extends Monster{
         name = "skeleton";
         getImage(name);
         setDefaultValues();
+        maxHealth = 15;
+        currentHealth = maxHealth;
     }
 }

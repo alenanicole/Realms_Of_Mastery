@@ -105,16 +105,6 @@ public class FightScreen extends UI{
     }
 
     public void drawQuestion(){
-        if(panel.player.currentHealth <= 0){
-            panel.reset();
-            panel.ui.setNumOfAttempts(0);
-            panel.ui.difficultyChosen = false;
-            panel.player.answered = true;
-            panel.inEncounter = false;
-            panel.player.worldX = 59;
-            panel.player.worldY = 59;
-            return;
-        }
         graphics2D.setFont(joystix_smallest);
         graphics2D.setStroke(new BasicStroke(5));
         graphics2D.setColor(background);
@@ -126,7 +116,7 @@ public class FightScreen extends UI{
         int y = panel.tileSize * 3;
 
         for(int i = 0; i < 3; i++){
-            if(i >= panel.ui.getNumOfAttempts()) {
+            if(i >= panel.questionManager.getNumOfAttempts()) {
                 graphics2D.setComposite(composite);
                 graphics2D.drawImage(grayX, x, y, null);
             }else{
