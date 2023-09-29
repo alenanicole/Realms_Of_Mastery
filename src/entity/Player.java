@@ -167,6 +167,7 @@ public class Player extends Entity{
                         if(panel.items[1].numHeld > 0 && !panel.obj[idx].opened){
                             panel.obj[idx].collision = false;
                             panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/open_door.png"));
+                            panel.obj[idx].image = scalingManager.toCompatibleImage(panel.obj[idx].image, panel.tileSize, panel.tileSize);
                             panel.obj[idx].opened = true;
                             panel.items[1].numHeld--;
                         }

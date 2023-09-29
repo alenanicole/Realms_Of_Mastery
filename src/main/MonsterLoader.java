@@ -1,9 +1,6 @@
 package main;
 
-import entity.Ghost;
-import entity.Skeleton;
-import entity.Slime;
-import entity.Zombie;
+import entity.*;
 import item.*;
 
 import static java.lang.Math.floor;
@@ -23,7 +20,7 @@ public class MonsterLoader {
         }
     }
     public void intializeMonsters(){
-        panel.monster[0] = new Skeleton(panel);
+        panel.monster[0] = new Boss(panel);
         panel.monster[0].worldX = 87 * panel.tileSize;
         panel.monster[0].worldY = 28 * panel.tileSize;
 

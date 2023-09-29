@@ -21,6 +21,12 @@ public class FightManager {
 
     public void endFight(boolean correct){
         panel.inEncounter = false;
+        if(idx == 0){
+            panel.gameState = panel.tutorialState;
+//            panel.gameState = panel.winState;
+            panel.reset();
+            return;
+        }
         if(correct) {
             panel.items[0].numHeld += panel.randGen.getRandomInteger(5, 1);
             int rand = panel.randGen.getRandomInteger(100, 1);
@@ -29,7 +35,9 @@ public class FightManager {
             }
             panel.monster[idx].dead = true;
             panel.gameState = panel.playState;
+            return;
         }else{
+            panel.gameState = panel.deathState;
             panel.reset();
         }
     }
@@ -48,9 +56,9 @@ public class FightManager {
                 endFight(correct);
             }
         }else{
-            if(panel.ui.getDifficultyNum() == 1) {
+            if(panel.ui.getDifficultyNum() == 0) {
                 panel.player.currentHealth -= 1;
-            }else if(panel.ui.getDifficultyNum() == 2){
+            }else if(panel.ui.getDifficultyNum() == 1){
                 panel.player.currentHealth -= 2;
             }else{
                 panel.player.currentHealth -= 3;

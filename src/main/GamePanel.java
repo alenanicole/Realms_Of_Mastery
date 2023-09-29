@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int tutorialState = 8;
     public final int deathState = 9;
     public final int startRunState = 10;
+    public final int winState = 11;
 
     public boolean inEncounter = false;
     public int numOfFight = 0;
@@ -83,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void reset() {
-        gameState = deathState;
+//        gameState = deathState;
         tileManager.loadMap("/maps/Map.txt");
         objectLoader.unloadObjects();
         itemLoader.unloadItems();
@@ -129,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable{
         if (gameState == playState || gameState == tutorialState) {
             player.update(0);
 
-            for(int i = 0; i < monster.length; i++){
+            for(int i = 1; i < monster.length; i++){
                 if(monster[i] != null && !monster[i].dead){
                     monster[i].update(i);
                 }
