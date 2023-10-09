@@ -1,8 +1,5 @@
 package main;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-
 public class FightManager {
     GamePanel panel;
     ScalingManager scalingManager = new ScalingManager();
@@ -16,6 +13,7 @@ public class FightManager {
     public void startFight(int idx){
         panel.inEncounter = true;
         panel.gameState = panel.fightState;
+        panel.ui.setMonsterIdx(idx);
         this.idx = idx;
     }
 
@@ -45,9 +43,9 @@ public class FightManager {
     public void validateAns(){
         boolean correct = panel.questionManager.checkAns();
         if(correct) {
-            if(panel.ui.getDifficultyNum() == 1) {
+            if(panel.ui.getDifficultyNum() == 0) {
                 panel.monster[idx].currentHealth -= panel.player.tierOneDamage;
-            }else if(panel.ui.getDifficultyNum() == 2){
+            }else if(panel.ui.getDifficultyNum() == 1){
                 panel.monster[idx].currentHealth -= panel.player.tierTwoDamage;
             }else{
                 panel.monster[idx].currentHealth -= panel.player.tierThreeDamage;

@@ -41,6 +41,7 @@ public class UI {
     BufferedImage questionMark;
     BufferedImage frame;
     BufferedImage fullHeart, halfHeart, emptyHeart;
+    BufferedImage monstFullHeart, monstHalfHeart;
     BufferedImage boot, dumbbell;
 
     float alpha = 0.3f;
@@ -53,7 +54,7 @@ public class UI {
     private int spriteNum = 1;
     private int spriteCounter = 0;
 
-
+    private int monsterIdx;
 
     TitleScreen titleScreen;
     SelectScreen selectScreen;
@@ -64,6 +65,9 @@ public class UI {
     InventoryScreen inventoryScreen;
     DeathScreen deathScreen;
     StartRunScreen startRunScreen;
+
+    StatsScreen statsScreen;
+    AchievementScreen achievementScreen;
 
     public TreasureScreen treasureScreen;
     public FightScreen fightScreen;
@@ -90,6 +94,10 @@ public class UI {
             fullHeart = scalingManager.toCompatibleImage(fullHeart, panel.tileSize, panel.tileSize);
             halfHeart = ImageIO.read(getClass().getResource("/popups/half_heart.png"));
             halfHeart = scalingManager.toCompatibleImage(halfHeart, panel.tileSize, panel.tileSize);
+            monstFullHeart = ImageIO.read(getClass().getResource("/popups/monst_full_heart.png"));
+            monstFullHeart = scalingManager.toCompatibleImage(monstFullHeart, panel.tileSize, panel.tileSize);
+            monstHalfHeart= ImageIO.read(getClass().getResource("/popups/monst_half_heart.png"));
+            monstHalfHeart = scalingManager.toCompatibleImage(monstHalfHeart, panel.tileSize, panel.tileSize);
             emptyHeart = ImageIO.read(getClass().getResource("/popups/empty_heart.png"));
             emptyHeart = scalingManager.toCompatibleImage(emptyHeart, panel.tileSize, panel.tileSize);
             boot = ImageIO.read(getClass().getResource("/popups/boot.png"));
@@ -157,6 +165,8 @@ public class UI {
         tutorialScreen = new TutorialScreen(panel);
         deathScreen = new DeathScreen(panel);
         startRunScreen = new StartRunScreen(panel);
+        statsScreen = new StatsScreen(panel);
+        achievementScreen = new AchievementScreen(panel);
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -212,6 +222,14 @@ public class UI {
         if(panel.gameState == panel.startRunState){
             playScreen.draw(graphics2D);
             startRunScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.statsState){
+            playScreen.draw(graphics2D);
+            statsScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.achievementState){
+            playScreen.draw(graphics2D);
+            achievementScreen.draw(graphics2D);
         }
 
     }
@@ -315,5 +333,13 @@ public class UI {
 
     public void setStartRunNum(int startRunNum) {
         this.startRunNum = startRunNum;
+    }
+
+    public int getMonsterIdx() {
+        return monsterIdx;
+    }
+
+    public void setMonsterIdx(int monsterIdx) {
+        this.monsterIdx = monsterIdx;
     }
 }

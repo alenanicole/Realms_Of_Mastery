@@ -26,8 +26,15 @@ public class Player extends Entity{
     public volatile int tierTwoDamage;
     public volatile int tierThreeDamage;
 
-    public boolean correctAnswer;
-    public boolean answered;
+    public int monstersDefeated = 0;
+    public int goldCollected = 10;
+    public int chestsOpened = 0;
+    public int potionsUsed = 0;
+    public int bossesSlain = 0;
+    public int rightAnswersInRow = 0;
+    public int maxRightAnswersInRow = 0;
+    public int rightAnswers = 0;
+    public String bestCategory = "Not Available";
 
     public Player(GamePanel panel, KeyHandler keyHandler, String hairColor, String skinColor, String shirtColor, String gender){
         super(panel);

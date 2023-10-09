@@ -19,7 +19,7 @@ public class Skeleton extends Monster{
         name = "skeleton";
         getImage(name);
         setDefaultValues();
-        maxHealth = 15;
+        maxHealth = 16;
         currentHealth = maxHealth;
     }
 }

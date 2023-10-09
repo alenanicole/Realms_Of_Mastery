@@ -43,7 +43,7 @@ public class QuestionManager {
     public void drawTierOne(){
         if (!isAlreadyDrawn()) {
             int randSelector = panel.randGen.getRandomInteger(100, 1);
-            randSelector = 78;
+//            randSelector = 78;
             if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierOne();
             }else if(randSelector > 25 && randSelector <= 50){
@@ -60,7 +60,7 @@ public class QuestionManager {
     public void drawTierTwo(){
         if (!isAlreadyDrawn()) {
             int randSelector = panel.randGen.getRandomInteger(100, 1);
-            randSelector = 78;
+//            randSelector = 78;
             if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierTwo();
             }else if(randSelector > 25 && randSelector <= 50){
@@ -77,7 +77,7 @@ public class QuestionManager {
     public void drawTierThree(){
         if (!isAlreadyDrawn()) {
             int randSelector = panel.randGen.getRandomInteger(100, 1);
-            randSelector = 78;
+//            randSelector = 78;
             if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierThree();
             }else if(randSelector > 25 && randSelector <= 50){

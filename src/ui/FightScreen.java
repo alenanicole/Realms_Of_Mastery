@@ -2,20 +2,16 @@ package ui;
 
 import main.GamePanel;
 import main.ScalingManager;
-import questions.math.Multiplication;
 import weapon.Weapon;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class FightScreen extends UI{
     Graphics2D graphics2D;
     GamePanel panel;
     BufferedImage tier1, tier2, tier3;
-    BufferedImage grayX, redX;
     int difficulty;
     Weapon equipped;
 
@@ -39,8 +35,35 @@ public class FightScreen extends UI{
 
     }
 
+    public void draw(int idx){
+        int y = panel.tileSize;
+        int x = panel.screenWidth - panel.tileSize * 2;
+        boolean lastHeart = false;
+
+
+        for(int i = 1; i <= panel.monster[idx].maxHealth/2; i++) {
+            if(panel.monster[idx].currentHealth == 0){
+                lastHeart = true;
+            }
+            if(panel.monster[idx].currentHealth >= i * 2){
+                graphics2D.drawImage(monstFullHeart, x, y, null);
+                if(panel.monster[idx].currentHealth == i * 2){
+                    lastHeart = true;
+                }
+            }else if(panel.monster[idx].currentHealth < i * 2 && !lastHeart){
+                graphics2D.drawImage(monstHalfHeart, x, y, null);
+                lastHeart = true;
+            }else{
+                graphics2D.drawImage(emptyHeart, x, y, null);
+            }
+
+            x -= panel.tileSize;
+        }
+    }
+
     public void drawDifficultySelection(Graphics2D graphics2D){
         this.graphics2D = graphics2D;
+        draw(panel.ui.getMonsterIdx());
 
         graphics2D.setFont(joystix_small);
         graphics2D.setStroke(new BasicStroke(5));
@@ -105,6 +128,7 @@ public class FightScreen extends UI{
     }
 
     public void drawQuestion(){
+        draw(panel.ui.getMonsterIdx());
         graphics2D.setFont(joystix_smallest);
         graphics2D.setStroke(new BasicStroke(5));
         graphics2D.setColor(background);
@@ -114,19 +138,6 @@ public class FightScreen extends UI{
 
         int x = panel.tileSize * 3;
         int y = panel.tileSize * 3;
-
-        for(int i = 0; i < 3; i++){
-            if(i >= panel.questionManager.getNumOfAttempts()) {
-                graphics2D.setComposite(composite);
-                graphics2D.drawImage(grayX, x, y, null);
-            }else{
-                graphics2D.setComposite(originalComposite);
-                graphics2D.drawImage(redX, x, y, null);
-            }
-            x += panel.tileSize * 1.5;
-        }
-
-        graphics2D.setComposite(originalComposite);
 
         difficulty = panel.ui.getDifficultyNum();
 
@@ -139,7 +150,6 @@ public class FightScreen extends UI{
         }
 
         String text = panel.questionManager.getQuestion();
-//            x = (int)(panel.tileSize * 2.3);
         y = panel.tileSize * 5;
         for(String line : text.split("-")){
             x = super.getCenteredX(line, graphics2D);
