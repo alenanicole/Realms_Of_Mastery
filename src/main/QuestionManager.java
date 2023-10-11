@@ -22,6 +22,11 @@ public class QuestionManager {
     private int numOfAttempts = 0;
     private boolean difficultyChosen = false;
 
+    public String currentCategory = "";
+
+    public String[] questionTypes = {"Multiplication", "Division", "Fractions", "Word Problems"};
+    public float[] percentCorrect = {0, 0, 0, 0};
+
     public QuestionManager(GamePanel panel){
         this.panel = panel;
         initializeTypes();
@@ -46,12 +51,16 @@ public class QuestionManager {
 //            randSelector = 78;
             if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierOne();
+                currentCategory = "multiplication";
             }else if(randSelector > 25 && randSelector <= 50){
                 wordProblem.drawTierOne();
+                currentCategory = "wordproblem";
             }else if(randSelector > 50 && randSelector <= 75){
                 division.drawTierOne();
+                currentCategory = "division";
             }else if(randSelector > 75 && randSelector <= 100){
                 fraction.drawTierOne();
+                currentCategory = "fraction";
             }
             setAlreadyDrawn(true);
         }
@@ -63,12 +72,16 @@ public class QuestionManager {
 //            randSelector = 78;
             if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierTwo();
+                currentCategory = "multiplication";
             }else if(randSelector > 25 && randSelector <= 50){
                 wordProblem.drawTierTwo();
+                currentCategory = "wordproblem";
             }else if(randSelector > 50 && randSelector <= 75) {
                 division.drawTierTwo();
+                currentCategory = "division";
             }else if(randSelector > 75 && randSelector <= 100){
                 fraction.drawTierTwo();
+                currentCategory = "fraction";
             }
             setAlreadyDrawn(true);
         }
@@ -80,12 +93,16 @@ public class QuestionManager {
 //            randSelector = 78;
             if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierThree();
+                currentCategory = "multiplication";
             }else if(randSelector > 25 && randSelector <= 50){
                 wordProblem.drawTierThree();
+                currentCategory = "wordproblem";
             }else if(randSelector > 50 && randSelector <= 75){
                 division.drawTierThree();
+                currentCategory = "division";
             }else if(randSelector > 75 && randSelector <= 100){
                 fraction.drawTierThree();
+                currentCategory = "fraction";
             }
             setAlreadyDrawn(true);
         }

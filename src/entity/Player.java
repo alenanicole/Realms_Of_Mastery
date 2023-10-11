@@ -36,6 +36,15 @@ public class Player extends Entity{
     public int rightAnswers = 0;
     public String bestCategory = "Not Available";
 
+    public int rightFractionQuestions = 0;
+    public int totalFractionQuestions = 0;
+    public int rightMultiplicationQuestions = 0;
+    public int totalMultiplicationQuestions = 0;
+    public int rightDivisionQuestions = 0;
+    public int totalDivisionQuestions = 0;
+    public int rightWordProblemQuestions = 0;
+    public int totalWordProblemQuestions = 0;
+
     public Player(GamePanel panel, KeyHandler keyHandler, String hairColor, String skinColor, String shirtColor, String gender){
         super(panel);
         this.panel = panel;

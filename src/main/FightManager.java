@@ -59,6 +59,7 @@ public class FightManager {
 
     public void validateAns(){
         boolean correct = panel.questionManager.checkAns();
+        addQuestionTotal(correct);
         if(correct) {
             panel.player.rightAnswers++;
             panel.player.rightAnswersInRow++;
@@ -89,6 +90,49 @@ public class FightManager {
                 endFight(correct);
             }
         }
+
+    }
+
+    public void addQuestionTotal(boolean correct) {
+        switch (panel.questionManager.currentCategory){
+            case "multiplication":
+                panel.player.totalMultiplicationQuestions++;
+                if(correct){
+                    panel.player.rightMultiplicationQuestions++;
+                }
+                panel.questionManager.percentCorrect[0] = (float)(panel.player.rightMultiplicationQuestions) / (float)(panel.player.totalMultiplicationQuestions);
+            case "division":
+                panel.player.totalDivisionQuestions++;
+                if(correct){
+                    panel.player.rightDivisionQuestions++;
+                }
+                panel.questionManager.percentCorrect[1] = (float)(panel.player.rightDivisionQuestions) / (float)(panel.player.totalDivisionQuestions);
+            case "fraction":
+                panel.player.totalFractionQuestions++;
+                if(correct){
+                    panel.player.rightFractionQuestions++;
+                }
+                panel.questionManager.percentCorrect[2] = (float)(panel.player.rightFractionQuestions) / (float)(panel.player.totalFractionQuestions);
+            case "wordproblem":
+                panel.player.totalWordProblemQuestions++;
+                if(correct){
+                    panel.player.rightWordProblemQuestions++;
+                }
+                panel.questionManager.percentCorrect[3] = (float)(panel.player.rightWordProblemQuestions) / (float)(panel.player.totalWordProblemQuestions);
+        }
+
+        float max = panel.questionManager.percentCorrect[0];
+        int maxIdx = 0;
+
+        for (int i = 1; i < panel.questionManager.percentCorrect.length; i++) {
+            if(panel.questionManager.percentCorrect[i] > max){
+                max = panel.questionManager.percentCorrect[i];
+                maxIdx = i;
+            }
+
+
+        }
+        panel.player.bestCategory = panel.questionManager.questionTypes[maxIdx];
 
     }
 }
