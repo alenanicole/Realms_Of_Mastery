@@ -21,4 +21,9 @@ public class RerollPotion extends SuperItem{
         }
         encounterOnly = true;
     }
+
+    public void use(){
+        panel.player.potionsUsed++;
+        panel.questionManager.setAlreadyDrawn(false);
+    }
 }

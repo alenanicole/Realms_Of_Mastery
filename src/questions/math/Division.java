@@ -14,7 +14,7 @@ public class Division extends MathQuestion {
     public void drawTierOne(){
         num1 = panel.randGen.getRandomInteger(99, 10);
         num2 = panel.randGen.getRandomInteger(9, 1);
-        panel.questionManager.setQuestion("What is " + num1 + " divided by " + num2 + "?-If there is a remainder-use the form ??R??");
+        panel.questionManager.setQuestion("What is " + num1 + " divided by " + num2 + "?-If there is a remainder-use the form #R#");
         if(num1 % num2 != 0) {
             panel.questionManager.setCorrectAns(String.valueOf(num1 / num2) + "R" + String.valueOf(num1 % num2));
         }else{
@@ -26,7 +26,7 @@ public class Division extends MathQuestion {
     public void drawTierTwo(){
         num1 = panel.randGen.getRandomInteger(999, 100);
         num2 = panel.randGen.getRandomInteger(9, 1);
-        panel.questionManager.setQuestion("What is " + num1 + " divided by " + num2 + "?-If there is a remainder-use the form ??R??");
+        panel.questionManager.setQuestion("What is " + num1 + " divided by " + num2 + "?-If there is a remainder-use the form #R#");
         if(num1 % num2 != 0) {
             panel.questionManager.setCorrectAns(String.valueOf(num1 / num2) + "R" + String.valueOf(num1 % num2));
         }else{
@@ -37,7 +37,7 @@ public class Division extends MathQuestion {
     public void drawTierThree(){
         num1 = panel.randGen.getRandomInteger(9999, 1000);
         num2 = panel.randGen.getRandomInteger(9, 1);
-        panel.questionManager.setQuestion("What is " + num1 + " divided by " + num2 + "?-If there is a remainder-use the form ??R??");
+        panel.questionManager.setQuestion("What is " + num1 + " divided by " + num2 + "?-If there is a remainder-use the form #R#");
         if(num1 % num2 != 0) {
             panel.questionManager.setCorrectAns(String.valueOf(num1 / num2) + "R" + String.valueOf(num1 % num2));
         }else{

@@ -13,7 +13,7 @@ public class SpeedPotion extends SuperItem{
     public SpeedPotion(GamePanel panel){
         this.panel = panel;
         name = "speedPotion";
-        numHeld = 1;
+        numHeld = 0;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/items/speedPotion.png"));
             image  = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);
@@ -24,6 +24,7 @@ public class SpeedPotion extends SuperItem{
     }
 
     public void use(){
+        panel.player.potionsUsed++;
 
         new Thread(new Runnable()
         {

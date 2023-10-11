@@ -23,6 +23,7 @@ public class HealthPotion extends SuperItem {
     }
 
     public void use(){
+        panel.player.potionsUsed++;
         panel.player.currentHealth += 2;
     }
 }

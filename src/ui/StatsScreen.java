@@ -71,7 +71,7 @@ public class StatsScreen extends UI{
 
         y+= panel.tileSize;
         resetY = y;
-        text = "Monsters Defeated " + panel.player.monstersDefeated;
+        text = "Monsters Defeated: " + panel.player.monstersDefeated;
         drawFloat(x, y, text, 3);
         y+= panel.tileSize;
         text = "Gold Collected: " + panel.player.goldCollected;

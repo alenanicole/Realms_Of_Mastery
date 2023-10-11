@@ -44,6 +44,8 @@ public class UI {
     BufferedImage monstFullHeart, monstHalfHeart;
     BufferedImage boot, dumbbell;
 
+    BufferedImage whiteTrophy, bronzeTrophy, silverTrophy, goldTrophy;
+
     float alpha = 0.3f;
     int type = AlphaComposite.SRC_OVER;
     AlphaComposite composite =
@@ -104,6 +106,15 @@ public class UI {
             boot = scalingManager.toCompatibleImage(boot, panel.tileSize, panel.tileSize);
             dumbbell = ImageIO.read(getClass().getResource("/popups/dumbbell.png"));
             dumbbell = scalingManager.toCompatibleImage(dumbbell, panel.tileSize, panel.tileSize);
+
+            whiteTrophy = ImageIO.read(getClass().getResource("/popups/white_trophy.png"));
+            whiteTrophy = scalingManager.toCompatibleImage(whiteTrophy, panel.tileSize, panel.tileSize);
+            bronzeTrophy = ImageIO.read(getClass().getResource("/popups/bronze_trophy.png"));
+            bronzeTrophy = scalingManager.toCompatibleImage(bronzeTrophy, panel.tileSize, panel.tileSize);
+            silverTrophy = ImageIO.read(getClass().getResource("/popups/silver_trophy.png"));
+            silverTrophy = scalingManager.toCompatibleImage(silverTrophy, panel.tileSize, panel.tileSize);
+            goldTrophy = ImageIO.read(getClass().getResource("/popups/gold_trophy.png"));
+            goldTrophy = scalingManager.toCompatibleImage(goldTrophy, panel.tileSize, panel.tileSize);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

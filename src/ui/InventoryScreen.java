@@ -152,13 +152,25 @@ public class InventoryScreen extends UI{
                 text = "REROLL POTION:\nOnly used in a encounter.\nNext question please!";
                 break;
             case 6:
-                text = "SWORD:\nEQUIPPED > " + (panel.weapons[0].equipped ? "yes" : "no") + "\nHit `em hard!";
+                if(panel.weapons[0].available) {
+                    text = "SWORD:\nEQUIPPED > " + (panel.weapons[0].equipped ? "yes" : "no") + "\nHit `em hard!";
+                }else{
+                    text = "???:\nEQUIPPED > " + (panel.weapons[0].equipped ? "yes" : "no") + "\n???????";
+                }
                 break;
             case 7:
-                text = "STAFF:\nEQUIPPED > " + (panel.weapons[1].equipped ? "yes" : "no") + "\n`Yer a wizard!";
+                if(panel.weapons[1].available) {
+                    text = "STAFF:\nEQUIPPED > " + (panel.weapons[1].equipped ? "yes" : "no") + "\n`Yer a wizard!";
+                }else{
+                    text = "???:\nEQUIPPED > " + (panel.weapons[1].equipped ? "yes" : "no") + "\n???????";
+                }
                 break;
             case 8:
-                text = "BOW:\nEQUIPPED > " + (panel.weapons[2].equipped ? "yes" : "no") + "\nShoot straight!";
+                if(panel.weapons[2].available) {
+                    text = "BOW:\nEQUIPPED > " + (panel.weapons[2].equipped ? "yes" : "no") + "\nShoot straight!";
+                }else{
+                    text = "???:\nEQUIPPED > " + (panel.weapons[2].equipped ? "yes" : "no") + "\n???????";
+                }
                 break;
             case 9:
                 text = "Leaving so soon?";
@@ -201,11 +213,16 @@ public class InventoryScreen extends UI{
                     graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize + 10, panel.tileSize + 10, 5, 5));
                 }
 
-                if(!panel.weapons[i].equipped){
+                if(!panel.weapons[i].equipped && panel.weapons[i].available){
                     graphics2D.setComposite(composite);
+                    graphics2D.drawImage(panel.weapons[i].image, x + 5, y + 5, null);
+                }else if(!panel.weapons[i].available){
+                    graphics2D.setComposite(composite);
+                    graphics2D.drawImage(questionMark, x + 5, y + 5, null);
+                }else{
+                    graphics2D.drawImage(panel.weapons[i].image, x + 5, y + 5, null);
                 }
 
-                graphics2D.drawImage(panel.weapons[i].image, x + 5, y + 5, null);
 
                 x += panel.tileSize * 2;
             }

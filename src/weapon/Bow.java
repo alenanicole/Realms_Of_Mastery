@@ -24,6 +24,5 @@ public class Bow extends Weapon{
         }catch (IOException e){
             e.printStackTrace();
         }
-        equipped = true;
     }
 }

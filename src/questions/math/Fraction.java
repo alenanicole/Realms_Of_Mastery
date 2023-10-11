@@ -54,10 +54,10 @@ public class Fraction extends MathQuestion{
         num2 = panel.randGen.getRandomInteger(denom, 1);
 
         if(panel.randGen.getRandomInteger(100, 1) > 50 ) {
-            panel.questionManager.setQuestion("What is " + num1 + "/" + denom + " plus " + num2 + "/" + denom + "?-Enter your answer as ??/??");
+            panel.questionManager.setQuestion("What is " + num1 + "/" + denom + " plus " + num2 + "/" + denom + "?-Enter your answer as #/#");
             panel.questionManager.setCorrectAns(String.valueOf((num1 + num2) + "/" + denom));
         }else{
-            panel.questionManager.setQuestion("What is " + num1 + "/" + denom + " minus " + num2 + "/" + denom + "?-Enter your answer as ??/??");
+            panel.questionManager.setQuestion("What is " + num1 + "/" + denom + " minus " + num2 + "/" + denom + "?-Enter your answer as #/#");
             panel.questionManager.setCorrectAns(String.valueOf((num1 + num2) + "/" + denom));
         }
 
@@ -68,7 +68,7 @@ public class Fraction extends MathQuestion{
         num1 = panel.randGen.getRandomInteger(denom, 1);
         num2 = panel.randGen.getRandomInteger(10, 1);
 
-        panel.questionManager.setQuestion("What is " + num1 + "/" + denom + " times " + num2 + "?-Enter your answer as ??/??");
+        panel.questionManager.setQuestion("What is " + num1 + "/" + denom + " times " + num2 + "?-Enter your answer as #/#");
         panel.questionManager.setCorrectAns(String.valueOf((num1 * num2) + "/" + denom));
     }
 

@@ -66,6 +66,8 @@ public class GamePanel extends JPanel implements Runnable{
     public UI ui = new UI(this);
     public Entity monster[] = new Entity[20];
     public MonsterLoader monsterLoader = new MonsterLoader(this);
+    public Entity npcs[] = new Entity[3];
+    public NPCManager npcManager = new NPCManager(this);
 
 
     public GamePanel(){
@@ -80,10 +82,11 @@ public class GamePanel extends JPanel implements Runnable{
     public void setUpGame(){
         itemLoader.intializeStaticItems();
         questionManager.intitializeQuestions();
+        npcManager.loadNPCs();
 //        gameState = titleState;
 //        gameState = startRunState;
-        gameState = statsState;
-//        gameState = tutorialState;
+//        gameState = achievementState;
+        gameState = tutorialState;
     }
 
     public void reset() {
@@ -91,6 +94,7 @@ public class GamePanel extends JPanel implements Runnable{
         objectLoader.unloadObjects();
         itemLoader.unloadItems();
         monsterLoader.unloadMonsters();
+        npcManager.loadNPCs();
         player.currentHealth = player.maxHealth;
 
         player.worldX = 59 * tileSize;
@@ -137,6 +141,12 @@ public class GamePanel extends JPanel implements Runnable{
                     monster[i].update(i);
                 }
             }
+            for(int i = 0; i < npcs.length; i++){
+                if(npcs[i] != null){
+                    npcs[i].update(i);
+                }
+            }
+
         }
 
         if (((StrengthPotion) items[3]).strengthThread != null) {
@@ -176,6 +186,12 @@ public class GamePanel extends JPanel implements Runnable{
             for(int i = 0; i < monster.length; i++){
                 if(monster[i] != null && !monster[i].dead){
                     monster[i].draw(graphics2D, this);
+                }
+            }
+
+            for(int i = 0; i < npcs.length; i++){
+                if(npcs[i] != null){
+                    npcs[i].draw(graphics2D, this);
                 }
             }
 

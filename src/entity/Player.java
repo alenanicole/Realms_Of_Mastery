@@ -27,7 +27,7 @@ public class Player extends Entity{
     public volatile int tierThreeDamage;
 
     public int monstersDefeated = 0;
-    public int goldCollected = 10;
+    public int goldCollected = 0;
     public int chestsOpened = 0;
     public int potionsUsed = 0;
     public int bossesSlain = 0;

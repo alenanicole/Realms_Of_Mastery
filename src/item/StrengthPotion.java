@@ -13,7 +13,7 @@ public class StrengthPotion extends SuperItem{
     public StrengthPotion(GamePanel panel){
         this.panel = panel;
         name = "strengthPotion";
-        numHeld = 1;
+        numHeld = 0;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/items/strengthPotion.png"));
             image  = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);
@@ -23,6 +23,7 @@ public class StrengthPotion extends SuperItem{
     }
 
     public void use(){
+        panel.player.potionsUsed++;
         strengthThread = new StrengthThread(panel);
         strengthThread.start();
     }

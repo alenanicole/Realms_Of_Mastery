@@ -25,6 +25,7 @@ public class Sword extends Weapon{
         }catch (IOException e){
             e.printStackTrace();
         }
-//        equipped = true;
+        equipped = true;
+        available = true;
     }
 }

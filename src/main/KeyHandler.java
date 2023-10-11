@@ -1,6 +1,7 @@
 package main;
 
 import item.HealthPotion;
+import item.RerollPotion;
 import item.SpeedPotion;
 import item.StrengthPotion;
 
@@ -46,8 +47,11 @@ public class KeyHandler implements KeyListener {
             fightStateKeyHandler(code);
         }else if(panel.gameState == panel.deathState){
             deathStateKeyHandler(code);
+        }else if(panel.gameState == panel.statsState || panel.gameState == panel.achievementState){
+            statsAndAchievementKeyHandler(code);
         }
     }
+
 
 
     @Override
@@ -97,6 +101,11 @@ public class KeyHandler implements KeyListener {
             previousState = panel.tutorialState;
         }
 
+        if(code == KeyEvent.VK_O){
+            panel.gameState = panel.statsState;
+            previousState = panel.tutorialState;
+        }
+
         if(code == KeyEvent.VK_H){
             panel.tileManager.loadMap("/maps/Dungeon_1.txt");
             panel.player.worldX = panel.tileSize * 57;
@@ -104,6 +113,7 @@ public class KeyHandler implements KeyListener {
             panel.objectLoader.setObject();
             panel.itemLoader.initializeItems();
             panel.monsterLoader.intializeMonsters();
+            panel.npcManager.unloadNPCs();
             panel.gameState = panel.playState;
         }
     }
@@ -130,6 +140,11 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_I){
             panel.gameState = panel.inventoryState;
+            previousState = panel.playState;
+        }
+
+        if(code == KeyEvent.VK_O){
+            panel.gameState = panel.statsState;
             previousState = panel.playState;
         }
     }
@@ -422,24 +437,30 @@ public class KeyHandler implements KeyListener {
                             break;
                         case 5:
                             if(panel.items[5].numHeld > 0 && panel.inEncounter) {
-//                                ((RerollPotion) panel.items[5]).use();
+                                ((RerollPotion) panel.items[5]).use();
                                 panel.items[5].numHeld--;
                             }
                             break;
                         case 6:
-                            panel.weapons[0].equipped = true;
-                            panel.weapons[1].equipped = false;
-                            panel.weapons[2].equipped = false;
+                            if(panel.weapons[0].available) {
+                                panel.weapons[0].equipped = true;
+                                panel.weapons[1].equipped = false;
+                                panel.weapons[2].equipped = false;
+                            }
                             break;
                         case 7:
-                            panel.weapons[0].equipped = false;
-                            panel.weapons[1].equipped = true;
-                            panel.weapons[2].equipped = false;
+                            if(panel.weapons[1].available) {
+                                panel.weapons[0].equipped = false;
+                                panel.weapons[1].equipped = true;
+                                panel.weapons[2].equipped = false;
+                            }
                             break;
                         case 8:
-                            panel.weapons[0].equipped = false;
-                            panel.weapons[1].equipped = false;
-                            panel.weapons[2].equipped = true;
+                            if(panel.weapons[2].available) {
+                                panel.weapons[0].equipped = false;
+                                panel.weapons[1].equipped = false;
+                                panel.weapons[2].equipped = true;
+                            }
                             break;
                     }
                     panel.gameState = panel.inventoryState;
@@ -460,6 +481,11 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_P){
             panel.gameState = panel.pauseState;
+            previousState = panel.treasureState;
+        }
+
+        if(code == KeyEvent.VK_O){
+            panel.gameState = panel.statsState;
             previousState = panel.treasureState;
         }
 
@@ -515,6 +541,11 @@ public class KeyHandler implements KeyListener {
             previousState = panel.fightState;
         }
 
+        if(code == KeyEvent.VK_O){
+            panel.gameState = panel.statsState;
+            previousState = panel.fightState;
+        }
+
 
         if (code == KeyEvent.VK_A  && !panel.questionManager.isDifficultyChosen()) {
             panel.ui.setDifficultyNum(panel.ui.getDifficultyNum() - 1);
@@ -561,5 +592,28 @@ public class KeyHandler implements KeyListener {
             panel.gameState = panel.tutorialState;
         }
     }
+
+    public void statsAndAchievementKeyHandler(int code) {
+        if(code == KeyEvent.VK_O) {
+            panel.gameState = previousState;
+        }
+
+        if(code == KeyEvent.VK_D){
+            if(panel.gameState == panel.statsState){
+                panel.gameState = panel.achievementState;
+            }else{
+                panel.gameState = panel.statsState;
+            }
+        }
+
+        if(code == KeyEvent.VK_A){
+            if(panel.gameState == panel.statsState){
+                panel.gameState = panel.achievementState;
+            }else{
+                panel.gameState = panel.statsState;
+            }
+        }
+    }
+
 
 }
