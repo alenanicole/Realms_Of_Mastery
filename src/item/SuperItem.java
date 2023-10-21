@@ -17,7 +17,6 @@ public class SuperItem {
     public Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
     public int collisionAreaDefaultX = 0;
     public int collisionAreaDefaultY = 0;
-
     public boolean encounterOnly = false;
     public boolean adventureOnly = false;
 

@@ -19,9 +19,7 @@ public class Player extends Entity{
     public String skinColor;
     public String shirtColor;
     public String gender;
-
-    public int maxHealth;
-    public int currentHealth;
+    
     public volatile int tierOneDamage;
     public volatile int tierTwoDamage;
     public volatile int tierThreeDamage;

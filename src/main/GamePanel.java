@@ -1,5 +1,6 @@
 package main;
 
+import data.SaveAndLoad;
 import entity.Entity;
 import entity.Player;
 import item.StrengthPotion;
@@ -23,9 +24,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     public final int maxWorldCol = 120;
     public final int maxWorldRow = 120;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
-
     public int gameState;
     public int titleState = 0;
     public final int playState = 1;
@@ -41,12 +39,13 @@ public class GamePanel extends JPanel implements Runnable{
     public final int winState = 11;
     public final int statsState = 12;
     public final int achievementState = 13;
+    public final int loadingState = 14;
 
     public boolean inEncounter = false;
     public int numOfFight = 0;
     final int FPS = 60;
 
-    Thread gameThread;
+    final Thread gameThread = new Thread(this);
 
     KeyHandler keyHandler = new KeyHandler(this);
     public RandomNumGenerator randGen = new RandomNumGenerator();
@@ -66,8 +65,9 @@ public class GamePanel extends JPanel implements Runnable{
     public UI ui = new UI(this);
     public Entity monster[] = new Entity[20];
     public MonsterLoader monsterLoader = new MonsterLoader(this);
-    public Entity npcs[] = new Entity[3];
-    public NPCManager npcManager = new NPCManager(this);
+    public Entity npcs[] = new Entity[5];
+    public NPCLoader npcLoader = new NPCLoader(this);
+    public SaveAndLoad saveAndLoad = new SaveAndLoad(this);
 
 
     public GamePanel(){
@@ -82,19 +82,20 @@ public class GamePanel extends JPanel implements Runnable{
     public void setUpGame(){
         itemLoader.intializeStaticItems();
         questionManager.intitializeQuestions();
-        npcManager.loadNPCs();
-//        gameState = titleState;
+        npcLoader.loadNPCs();
+        gameState = titleState;
 //        gameState = startRunState;
 //        gameState = achievementState;
-        gameState = tutorialState;
+//        gameState = tutorialState;
     }
 
     public void reset() {
+        numOfFight = 0;
         tileManager.loadMap("/maps/Map.txt");
         objectLoader.unloadObjects();
         itemLoader.unloadItems();
         monsterLoader.unloadMonsters();
-        npcManager.loadNPCs();
+        npcLoader.loadNPCs();
         player.currentHealth = player.maxHealth;
 
         player.worldX = 59 * tileSize;
@@ -102,7 +103,6 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void startGameThread(){
-        gameThread = new Thread(this);
         gameThread.start();
     }
 

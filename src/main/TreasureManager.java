@@ -1,6 +1,7 @@
 package main;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,9 +12,20 @@ public class TreasureManager {
     int idx;
     int numCoins;
 
+    BufferedImage openChest, lockedChest;
+
     public TreasureManager(GamePanel panel)
     {
         this.panel = panel;
+        try {
+            openChest = ImageIO.read(getClass().getResourceAsStream("/objects/open_chest.png"));
+            lockedChest = ImageIO.read(getClass().getResourceAsStream("/objects/locked_chest.png"));
+            openChest = scalingManager.toCompatibleImage(openChest, panel.tileSize, panel.tileSize);
+            lockedChest = scalingManager.toCompatibleImage(lockedChest, panel.tileSize, panel.tileSize);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void startTreasureCollection(int idx){
@@ -27,19 +39,10 @@ public class TreasureManager {
         panel.questionManager.setNumOfAttempts(0);
         if(correct) {
             panel.player.chestsOpened++;
-            try {
-                panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/open_chest.png"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            panel.obj[idx].image = openChest;
         }else{
-            try {
-                panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/locked_chest.png"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            panel.obj[idx].image = lockedChest;
         }
-        panel.obj[idx].image = scalingManager.toCompatibleImage(panel.obj[idx].image, panel.tileSize, panel.tileSize);
         panel.obj[idx].opened = true;
         panel.obj[idx].collision = true;
         panel.gameState = panel.playState;
@@ -68,12 +71,12 @@ public class TreasureManager {
                 panel.player.goldCollected += numCoins;
                 panel.items[panel.randGen.getRandomInteger(5, 2)].numHeld++;
             }
-            endTreasureCollection(correct);
+            endTreasureCollection(true);
         }else{
             panel.player.rightAnswersInRow = 0;
             panel.questionManager.setNumOfAttempts(panel.questionManager.getNumOfAttempts() + 1);
             if(panel.questionManager.getNumOfAttempts() == 3){
-                endTreasureCollection(correct);
+                endTreasureCollection(false);
             }
         }
 

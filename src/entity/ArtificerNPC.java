@@ -2,12 +2,12 @@ package entity;
 
 import main.GamePanel;
 
-public class Outfitter extends NPC{
+public class ArtificerNPC extends NPC{
     GamePanel panel;
-    public Outfitter(GamePanel panel) {
+    public ArtificerNPC(GamePanel panel) {
         super(panel);
         this.panel = panel;
-        name = "outfitter";
+        name = "artificer";
         getImage(name);
         setDefaultValues();
     }

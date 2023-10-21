@@ -4,7 +4,9 @@ import item.HealthPotion;
 import item.RerollPotion;
 import item.SpeedPotion;
 import item.StrengthPotion;
+import ui.LoadingScreen;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -107,14 +109,18 @@ public class KeyHandler implements KeyListener {
         }
 
         if(code == KeyEvent.VK_H){
-            panel.npcManager.unloadNPCs();
-            panel.tileManager.loadMap("/maps/Dungeon_1.txt");
-            panel.player.worldX = panel.tileSize * 57;
-            panel.player.worldY = panel.tileSize * 105;
-            panel.objectLoader.setObject();
-            panel.itemLoader.initializeItems();
-            panel.monsterLoader.intializeMonsters();
-            panel.gameState = panel.playState;
+            panel.gameState = panel.loadingState;
+
+
+            LoadingThread lt = new LoadingThread(panel);
+            lt.run(0);
+            try {
+                synchronized(panel.gameThread){
+                    panel.gameThread.wait();
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
     public void playStateKeyHandler(int code){
@@ -171,6 +177,11 @@ public class KeyHandler implements KeyListener {
             switch (panel.ui.getPauseCommandNum()) {
                 case 0 -> panel.gameState = previousState;
                 case 1 -> {
+                    if(previousState == panel.tutorialState){
+                        panel.saveAndLoad.save();
+                    }else{
+                        System.out.println("can't save right now");
+                    }
                 }
                 case 2 -> panel.gameState = panel.titleState;
                 case 3 -> System.exit(0);
@@ -248,6 +259,8 @@ public class KeyHandler implements KeyListener {
             switch (panel.ui.getTitleCommandNum()) {
                 case 0 -> panel.gameState = panel.selectState;
                 case 1 -> {
+                    panel.saveAndLoad.load();
+                    panel.gameState = panel.tutorialState;
                 }
                 case 2 -> System.exit(0);
             }
@@ -474,6 +487,7 @@ public class KeyHandler implements KeyListener {
     }
 
     private void treasureStateKeyHandler(int code) {
+
         if(code == KeyEvent.VK_I){
             panel.gameState = panel.inventoryState;
             previousState = panel.treasureState;
@@ -508,12 +522,16 @@ public class KeyHandler implements KeyListener {
             panel.treasureManager.validateAns();
         }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isDifficultyChosen()){
             panel.questionManager.setDifficultyChosen(true);
+        }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isCorrect()){
+            panel.questionManager.setCorrect(true);
+            // Will show the next correct answer, need to fix this
+//            panel.questionManager.setDifficultyChosen(false);
         }
 
         if(panel.questionManager.isDifficultyChosen()){
             switch (code){
                 case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
-                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R, KeyEvent.VK_F, KeyEvent.VK_T, KeyEvent.VK_SLASH-> {
+                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R, KeyEvent.VK_F, KeyEvent.VK_T, KeyEvent.VK_SLASH, KeyEvent.VK_MINUS-> {
                     if (panel.questionManager.getGivenAns().length() <= 7) {
                         panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (char)(code));
                     }
@@ -565,12 +583,15 @@ public class KeyHandler implements KeyListener {
             panel.fightManager.validateAns();
         }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isDifficultyChosen()){
             panel.questionManager.setDifficultyChosen(true);
+        }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isCorrect()){
+            panel.questionManager.setCorrect(true);
+//            panel.questionManager.setDifficultyChosen(false);
         }
 
         if(panel.questionManager.isDifficultyChosen()){
             switch (code){
                 case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
-                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R, KeyEvent.VK_F, KeyEvent.VK_T, KeyEvent.VK_SLASH -> {
+                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R, KeyEvent.VK_F, KeyEvent.VK_T, KeyEvent.VK_SLASH, KeyEvent.VK_MINUS -> {
                     if (panel.questionManager.getGivenAns().length() <= 7) {
                         panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (char)(code));
                     }

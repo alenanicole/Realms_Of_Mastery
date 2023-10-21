@@ -8,6 +8,7 @@ import java.awt.geom.RoundRectangle2D;
 public class InventoryScreen extends UI{
     GamePanel panel;
     Graphics2D graphics2D;
+    StringBuilder sb = new StringBuilder();
     public InventoryScreen(GamePanel panel) {
         super(panel);
         this.panel = panel;
@@ -153,23 +154,47 @@ public class InventoryScreen extends UI{
                 break;
             case 6:
                 if(panel.weapons[0].available) {
-                    text = "SWORD:\nEQUIPPED > " + (panel.weapons[0].equipped ? "yes" : "no") + "\nHit `em hard!";
+                    sb.append("SWORD:\nEQUIPPED > ");
+                    sb.append((panel.weapons[0].equipped ? "yes" : "no"));
+                    sb.append("\nHit `em hard!");
+                    text = sb.toString();
+                    sb.setLength(0);
                 }else{
-                    text = "???:\nEQUIPPED > " + (panel.weapons[0].equipped ? "yes" : "no") + "\n???????";
+                    sb.append("???:\nEQUIPPED > ");
+                    sb.append((panel.weapons[0].equipped ? "yes" : "no"));
+                    sb.append("\n???????");
+                    text = sb.toString();
+                    sb.setLength(0);
                 }
                 break;
             case 7:
                 if(panel.weapons[1].available) {
-                    text = "STAFF:\nEQUIPPED > " + (panel.weapons[1].equipped ? "yes" : "no") + "\n`Yer a wizard!";
+                    sb.append("STAFF:\nEQUIPPED > ");
+                    sb.append((panel.weapons[1].equipped ? "yes" : "no"));
+                    sb.append("\n`Yer a wizard!");
+                    text = sb.toString();
+                    sb.setLength(0);
                 }else{
-                    text = "???:\nEQUIPPED > " + (panel.weapons[1].equipped ? "yes" : "no") + "\n???????";
+                    sb.append("???:\nEQUIPPED > ");
+                    sb.append((panel.weapons[1].equipped ? "yes" : "no"));
+                    sb.append("\n???????");
+                    text = sb.toString();
+                    sb.setLength(0);
                 }
                 break;
             case 8:
                 if(panel.weapons[2].available) {
-                    text = "BOW:\nEQUIPPED > " + (panel.weapons[2].equipped ? "yes" : "no") + "\nShoot straight!";
+                    sb.append("BOW:\nEQUIPPED > ");
+                    sb.append((panel.weapons[2].equipped ? "yes" : "no"));
+                    sb.append("\nShoot straight!");
+                    text = sb.toString();
+                    sb.setLength(0);
                 }else{
-                    text = "???:\nEQUIPPED > " + (panel.weapons[2].equipped ? "yes" : "no") + "\n???????";
+                    sb.append("???:\nEQUIPPED > ");
+                    sb.append((panel.weapons[2].equipped ? "yes" : "no"));
+                    sb.append("\n???????");
+                    text = sb.toString();
+                    sb.setLength(0);
                 }
                 break;
             case 9:

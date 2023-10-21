@@ -18,6 +18,8 @@ public class QuestionManager {
     private String correctAns = "";
     private String givenAns = "";
 
+    private boolean correct = true;
+
     private boolean alreadyDrawn = false;
     private int numOfAttempts = 0;
     private boolean difficultyChosen = false;
@@ -112,6 +114,10 @@ public class QuestionManager {
         boolean isCorrect = false;
         if(givenAns.equals(correctAns)){
             isCorrect = true;
+            setCorrect(true);
+//            setDifficultyChosen(false);
+        }else{
+            setCorrect(false);
         }
 
         setAlreadyDrawn(false);
@@ -167,5 +173,12 @@ public class QuestionManager {
 
     public void setDifficultyChosen(boolean difficultyChosen) {
         this.difficultyChosen = difficultyChosen;
+    }
+
+    public boolean isCorrect() {
+        return correct;
+    }
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 }

@@ -73,6 +73,8 @@ public class UI {
 
     public TreasureScreen treasureScreen;
     public FightScreen fightScreen;
+    WrongAnswerScreen answerScreen;
+    public LoadingScreen loadingScreen;
     public UI (GamePanel panel){
         this.panel = panel;
 
@@ -178,6 +180,8 @@ public class UI {
         startRunScreen = new StartRunScreen(panel);
         statsScreen = new StatsScreen(panel);
         achievementScreen = new AchievementScreen(panel);
+        answerScreen = new WrongAnswerScreen(panel);
+        loadingScreen = new LoadingScreen(panel, graphics2D);
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -218,12 +222,18 @@ public class UI {
             if (panel.questionManager.isDifficultyChosen()) {
                 treasureScreen.drawQuestion();
             }
+            if(!panel.questionManager.isCorrect()){
+                answerScreen.draw(graphics2D);
+            }
         }
         if(panel.gameState == panel.fightState){
             playScreen.draw(graphics2D);
             fightScreen.drawDifficultySelection(graphics2D);
             if (panel.questionManager.isDifficultyChosen()) {
                 fightScreen.drawQuestion();
+            }
+            if(!panel.questionManager.isCorrect()){
+                answerScreen.draw(graphics2D);
             }
         }
         if(panel.gameState == panel.deathState){
@@ -242,7 +252,8 @@ public class UI {
             playScreen.draw(graphics2D);
             achievementScreen.draw(graphics2D);
         }
-
+        if(panel.gameState == panel.loadingState)
+            loadingScreen.draw(graphics2D);
     }
 
     public int getCenteredX(String text, Graphics2D graphics2D){

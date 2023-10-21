@@ -20,6 +20,7 @@ public class FightManager {
 
     public void endFight(boolean correct){
         panel.inEncounter = false;
+        panel.numOfFight--;
         if(idx == 0){
             if(correct){
                 panel.player.bossesSlain++;

@@ -105,14 +105,6 @@ public class TreasureScreen extends UI{
     }
 
     public void drawQuestion(){
-//        if(panel.questionManager.getNumOfAttempts() > 2){
-//            panel.gameState = panel.playState;
-//            panel.questionManager.setNumOfAttempts(0);
-//            panel.questionManager.setDifficultyChosen(false);
-//            panel.player.answered = true;
-//            panel.inEncounter = false;
-//            return;
-//        }
         graphics2D.setFont(joystix_smallest);
         graphics2D.setStroke(new BasicStroke(5));
         graphics2D.setColor(background);
