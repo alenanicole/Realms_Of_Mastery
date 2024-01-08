@@ -1,4 +1,4 @@
-package item;
+package object;
 
 import main.GamePanel;
 import main.ScalingManager;
@@ -6,15 +6,15 @@ import main.ScalingManager;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Coin extends SuperItem{
+public class WeaponTable2 extends SuperObject {
     ScalingManager scalingManager = new ScalingManager();
     GamePanel panel;
-    public Coin(GamePanel panel){
+    public WeaponTable2(GamePanel panel){
         this.panel = panel;
-        name = "coin";
-        numHeld = 50;
+        name = "weapontable2";
+        collision = true;
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/items/coin.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/weapons/table/weapon-table-2.png"));
             image  = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);
         }catch (IOException e){
             e.printStackTrace();

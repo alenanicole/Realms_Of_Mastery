@@ -7,5 +7,6 @@ public class Weapon {
     public String name;
     public boolean equipped = false;
     public boolean available = false;
+    public int price;
 
 }

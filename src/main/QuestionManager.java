@@ -115,7 +115,6 @@ public class QuestionManager {
         if(givenAns.equals(correctAns)){
             isCorrect = true;
             setCorrect(true);
-//            setDifficultyChosen(false);
         }else{
             setCorrect(false);
         }

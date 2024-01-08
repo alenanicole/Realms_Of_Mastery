@@ -36,7 +36,7 @@ public class FightScreen extends UI{
     }
 
     public void draw(int idx){
-        int y = panel.tileSize;
+        int y = panel.screenHeight - panel.tileSize * 2;
         int x = panel.screenWidth - panel.tileSize * 2;
         boolean lastHeart = false;
 

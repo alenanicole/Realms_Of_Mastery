@@ -51,6 +51,12 @@ public class KeyHandler implements KeyListener {
             deathStateKeyHandler(code);
         }else if(panel.gameState == panel.statsState || panel.gameState == panel.achievementState){
             statsAndAchievementKeyHandler(code);
+        }else if(panel.gameState == panel.weaponStoreState){
+            weaponStoreStateKeyHandler(code);
+        }else if(panel.gameState == panel.outfitterStoreState){
+            outfitterStoreStateKeyHandler(code);
+        }else if(panel.gameState == panel.purchaseWeaponState || panel.gameState == panel.purchaseOutfitState){
+            purchaseStateKeyHandler(code);
         }
     }
 
@@ -155,7 +161,7 @@ public class KeyHandler implements KeyListener {
         }
     }
     public void pauseStateKeyHandler(int code){
-        if(code == KeyEvent.VK_P) {
+        if(code == KeyEvent.VK_P || code == KeyEvent.VK_ESCAPE) {
             panel.gameState = previousState;
         }
 
@@ -190,7 +196,7 @@ public class KeyHandler implements KeyListener {
     }
 
     public void inventoryStateKeyHandler(int code){
-        if(code == KeyEvent.VK_I){
+        if(code == KeyEvent.VK_I || code == KeyEvent.VK_ESCAPE){
             panel.gameState = previousState;
         }
 
@@ -257,7 +263,10 @@ public class KeyHandler implements KeyListener {
 
         if (code == KeyEvent.VK_ENTER) {
             switch (panel.ui.getTitleCommandNum()) {
-                case 0 -> panel.gameState = panel.selectState;
+                case 0 -> {
+                    panel.gameState = panel.selectState;
+                    previousState = panel.titleState;
+                }
                 case 1 -> {
                     panel.saveAndLoad.load();
                     panel.gameState = panel.tutorialState;
@@ -326,6 +335,11 @@ public class KeyHandler implements KeyListener {
                 case 5 -> {
                 }
                 case 6 -> {
+                    if(panel.outfits[0].equipped) {
+                        panel.outfits[0].equipped = false;
+                    }else{
+                        panel.outfits[0].equipped = true;
+                    }
                 }
                 case 7 -> {
                     panel.player.skinColor = "lightest";
@@ -399,8 +413,14 @@ public class KeyHandler implements KeyListener {
                 }
                 case 26 -> {
                 }
-                case 27 -> panel.gameState = panel.titleState;
-                case 28 -> panel.gameState = panel.tutorialState;
+                case 27 -> panel.gameState = previousState;
+                case 28 -> {
+                        if(previousState == panel.titleState){
+                            panel.gameState = panel.tutorialState;
+                        }else{
+                            panel.gameState = previousState;
+                        }
+                }
             }
         }
     }
@@ -520,12 +540,11 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_ENTER && panel.questionManager.isDifficultyChosen() && panel.questionManager.getGivenAns() != ""){
             panel.treasureManager.validateAns();
-        }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isDifficultyChosen()){
+        }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isDifficultyChosen() && panel.questionManager.isCorrect()){
             panel.questionManager.setDifficultyChosen(true);
         }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isCorrect()){
             panel.questionManager.setCorrect(true);
-            // Will show the next correct answer, need to fix this
-//            panel.questionManager.setDifficultyChosen(false);
+            panel.update();
         }
 
         if(panel.questionManager.isDifficultyChosen()){
@@ -581,11 +600,11 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_ENTER && panel.questionManager.isDifficultyChosen() && panel.questionManager.getGivenAns() != ""){
             panel.fightManager.validateAns();
-        }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isDifficultyChosen()){
+        }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isDifficultyChosen() && panel.questionManager.isCorrect()){
             panel.questionManager.setDifficultyChosen(true);
         }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isCorrect()){
             panel.questionManager.setCorrect(true);
-//            panel.questionManager.setDifficultyChosen(false);
+            panel.update();
         }
 
         if(panel.questionManager.isDifficultyChosen()){
@@ -615,7 +634,7 @@ public class KeyHandler implements KeyListener {
     }
 
     public void statsAndAchievementKeyHandler(int code) {
-        if(code == KeyEvent.VK_O) {
+        if(code == KeyEvent.VK_O || code == KeyEvent.VK_ESCAPE) {
             panel.gameState = previousState;
         }
 
@@ -636,5 +655,170 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+
+    public void weaponStoreStateKeyHandler(int code){
+        if(code == KeyEvent.VK_ESCAPE){
+            panel.gameState = panel.tutorialState;
+        }
+
+        if(code == KeyEvent.VK_I){
+            panel.gameState = panel.inventoryState;
+            previousState = panel.weaponStoreState;
+        }
+
+        if (code == KeyEvent.VK_A) {
+            panel.ui.setWeaponNum(panel.ui.getWeaponNum() - 1);
+            if (panel.ui.getWeaponNum() < 0) {
+                panel.ui.setWeaponNum(3);
+            }
+        }
+
+        if (code == KeyEvent.VK_D) {
+            panel.ui.setWeaponNum(panel.ui.getWeaponNum() + 1);
+            if (panel.ui.getWeaponNum() > 3) {
+                panel.ui.setWeaponNum(0);
+            }
+        }
+
+        if (code == KeyEvent.VK_W) {
+            if(panel.ui.getWeaponNum() < 3) {
+                panel.ui.setWeaponNum(3);
+            }else{
+                panel.ui.setWeaponNum(0);
+            }
+        }
+
+        if (code == KeyEvent.VK_S) {
+            if(panel.ui.getWeaponNum() < 3) {
+                panel.ui.setWeaponNum(3);
+            }else{
+                panel.ui.setWeaponNum(0);
+            }
+        }
+
+        if(code == KeyEvent.VK_ENTER){
+            if(panel.ui.getWeaponNum() == 3){
+                panel.gameState = panel.tutorialState;
+            }else{
+                panel.gameState = panel.purchaseWeaponState;
+                previousState = panel.weaponStoreState;
+            }
+        }
+    }
+
+    public void outfitterStoreStateKeyHandler(int code){
+        if(code == KeyEvent.VK_ESCAPE){
+            panel.gameState = panel.tutorialState;
+        }
+
+        if(code == KeyEvent.VK_I){
+            panel.gameState = panel.inventoryState;
+            previousState = panel.outfitterStoreState;
+        }
+
+        if (code == KeyEvent.VK_A) {
+            panel.ui.setOutfitterNum(panel.ui.getOutfitterNum() - 1);
+            if (panel.ui.getOutfitterNum() < 0) {
+                panel.ui.setOutfitterNum(6);
+            }
+        }
+
+        if (code == KeyEvent.VK_D) {
+            panel.ui.setOutfitterNum(panel.ui.getOutfitterNum() + 1);
+            if (panel.ui.getOutfitterNum() > 6) {
+                panel.ui.setOutfitterNum(0);
+            }
+        }
+
+        if (code == KeyEvent.VK_W) {
+            if(panel.ui.getOutfitterNum() < 3) {
+                panel.ui.setOutfitterNum(6);
+            }else if(panel.ui.getOutfitterNum() == 6){
+                panel.ui.setOutfitterNum(5);
+            }else if(panel.ui.getOutfitterNum() == 5){
+                panel.ui.setOutfitterNum(3);
+            }else{
+                panel.ui.setOutfitterNum(0);
+            }
+        }
+
+        if (code == KeyEvent.VK_S) {
+            if(panel.ui.getOutfitterNum() < 3) {
+                panel.ui.setOutfitterNum(3);
+            }else if(panel.ui.getOutfitterNum() == 6){
+                panel.ui.setOutfitterNum(0);
+            }else if(panel.ui.getOutfitterNum() == 5){
+                panel.ui.setOutfitterNum(6);
+            }else{
+                panel.ui.setOutfitterNum(5);
+            }
+        }
+
+        if(code == KeyEvent.VK_ENTER){
+            if(panel.ui.getOutfitterNum() == 6) {
+                panel.gameState = panel.tutorialState;
+            }else if(panel.ui.getOutfitterNum() == 5){
+                panel.gameState = panel.selectState;
+                previousState = panel.outfitterStoreState;
+            }else{
+                panel.gameState = panel.purchaseOutfitState;
+                previousState = panel.outfitterStoreState;
+            }
+        }
+    }
+
+    public void purchaseStateKeyHandler(int code){
+        if(code == KeyEvent.VK_D){
+            if(panel.ui.getUseNum() == 0){
+                panel.ui.setUseNum(1);
+            }else{
+                panel.ui.setUseNum(0);
+            }
+        }
+
+        if(code == KeyEvent.VK_A){
+            if(panel.ui.getUseNum() == 0){
+                panel.ui.setUseNum(1);
+            }else{
+                panel.ui.setUseNum(0);
+            }
+        }
+
+        if(code == KeyEvent.VK_ENTER){
+            if(previousState == panel.weaponStoreState){
+                switch (panel.ui.getUseNum()){
+                    case 0:
+                        switch (panel.ui.getWeaponNum()) {
+                            case 0:
+                                if (!panel.weapons[0].available && panel.items[0].numHeld >= panel.weapons[0].price) {
+                                    panel.weapons[0].available = true;
+                                    panel.items[0].numHeld -= panel.weapons[0].price;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 1:
+                                if (!panel.weapons[1].available && panel.items[0].numHeld >= panel.weapons[1].price) {
+                                    panel.weapons[1].available = true;
+                                    panel.items[0].numHeld -= panel.weapons[1].price;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 2:
+                                if (!panel.weapons[2].available && panel.items[0].numHeld >= panel.weapons[2].price){
+                                    panel.weapons[2].available = true;
+                                    panel.items[0].numHeld -= panel.weapons[2].price;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                        }
+                        break;
+                    case 1:
+                        panel.gameState = previousState;
+                        panel.ui.setUseNum(0);
+                        break;
+                }
+            }
+        }
+    }
 
 }

@@ -58,6 +58,55 @@ public class CollisionManager {
         }
     }
 
+    public void checkTileNPC(Entity entity){
+        int entityWorldXLeft = entity.worldX + entity.collisionArea.x;
+        int entityWorldXRight = entity.worldX + entity.collisionArea.x + entity.collisionArea.width;
+        int entityWorldYTop = entity.worldY + entity.collisionArea.y;
+        int entityWorldYBottom = entity.worldY + entity.collisionArea.y + entity.collisionArea.height;
+
+        int entityLeftCol = entityWorldXLeft / panel.tileSize;
+        int entityRightCol = entityWorldXRight / panel.tileSize;
+        int entityTopRow = entityWorldYTop / panel.tileSize;
+        int entityBottomRow = entityWorldYBottom / panel.tileSize;
+
+        int tileNum1, tileNum2;
+
+        switch (entity.direction) {
+            case "up" -> {
+                entityTopRow = (entityWorldYTop - entity.speed) / panel.tileSize;
+                tileNum1 = panel.tileManager.mapTileNum[entityLeftCol][entityTopRow];
+                tileNum2 = panel.tileManager.mapTileNum[entityRightCol][entityTopRow];
+                if (panel.tileManager.tile[tileNum1].collisionNPC || panel.tileManager.tile[tileNum2].collisionNPC) {
+                    entity.collision = true;
+                }
+            }
+            case "down" -> {
+                entityBottomRow = (entityWorldYBottom + entity.speed) / panel.tileSize;
+                tileNum1 = panel.tileManager.mapTileNum[entityLeftCol][entityBottomRow];
+                tileNum2 = panel.tileManager.mapTileNum[entityRightCol][entityBottomRow];
+                if (panel.tileManager.tile[tileNum1].collisionNPC || panel.tileManager.tile[tileNum2].collisionNPC) {
+                    entity.collision = true;
+                }
+            }
+            case "left" -> {
+                entityLeftCol = (entityWorldXLeft - entity.speed) / panel.tileSize;
+                tileNum1 = panel.tileManager.mapTileNum[entityLeftCol][entityTopRow];
+                tileNum2 = panel.tileManager.mapTileNum[entityLeftCol][entityBottomRow];
+                if (panel.tileManager.tile[tileNum1].collisionNPC || panel.tileManager.tile[tileNum2].collisionNPC) {
+                    entity.collision = true;
+                }
+            }
+            case "right" -> {
+                entityRightCol = (entityWorldXRight + entity.speed) / panel.tileSize;
+                tileNum1 = panel.tileManager.mapTileNum[entityRightCol][entityTopRow];
+                tileNum2 = panel.tileManager.mapTileNum[entityRightCol][entityBottomRow];
+                if (panel.tileManager.tile[tileNum1].collisionNPC || panel.tileManager.tile[tileNum2].collisionNPC) {
+                    entity.collision = true;
+                }
+            }
+        }
+    }
+
     public int checkObject(Entity entity, boolean isPlayer){
             int index = 999;
 

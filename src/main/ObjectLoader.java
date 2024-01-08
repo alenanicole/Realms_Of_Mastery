@@ -1,7 +1,6 @@
 package main;
 
-import object.Chest_obj;
-import object.Door_obj;
+import object.*;
 
 public class ObjectLoader {
     GamePanel panel;
@@ -76,5 +75,19 @@ public class ObjectLoader {
         panel.obj[14] = new Chest_obj(panel);
         panel.obj[14].worldX = 59 * panel.tileSize;
         panel.obj[14].worldY = 103 * panel.tileSize;
+    }
+
+    public void tutorialObjects(){
+        panel.obj[0] = new WeaponTable1(panel);
+        panel.obj[0].worldX = 37 * panel.tileSize;
+        panel.obj[0].worldY = 47 * panel.tileSize;
+
+        panel.obj[1] = new WeaponTable2(panel);
+        panel.obj[1].worldX = 38 * panel.tileSize;
+        panel.obj[1].worldY = 47 * panel.tileSize;
+
+        panel.obj[2] = new WeaponTable3(panel);
+        panel.obj[2].worldX = 39 * panel.tileSize;
+        panel.obj[2].worldY = 47 * panel.tileSize;
     }
 }

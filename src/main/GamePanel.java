@@ -6,6 +6,7 @@ import entity.Player;
 import item.StrengthPotion;
 import item.SuperItem;
 import object.SuperObject;
+import outfit.SuperOutfit;
 import tile.TileManager;
 import ui.UI;
 import weapon.Weapon;
@@ -41,6 +42,13 @@ public class GamePanel extends JPanel implements Runnable{
     public final int achievementState = 13;
     public final int loadingState = 14;
 
+    public final int weaponStoreState = 15;
+    public final int purchaseWeaponState = 16;
+
+    public final int outfitterStoreState = 17;
+    public final int purchaseOutfitState = 18;
+
+
     public boolean inEncounter = false;
     public int numOfFight = 0;
     final int FPS = 60;
@@ -56,6 +64,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     public SuperItem items[] = new SuperItem[26];
     public Weapon weapons[] = new Weapon[3];
+    public SuperOutfit outfits[] = new SuperOutfit[5];
+    public OutfitLoader outfitLoader = new OutfitLoader(this);
     public ItemLoader itemLoader = new ItemLoader(this);
     public CollisionManager collisionManager = new CollisionManager(this);
     public QuestionManager questionManager = new QuestionManager(this);
@@ -80,13 +90,18 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void setUpGame(){
+        outfitLoader.intializeStaticOutfits();
         itemLoader.intializeStaticItems();
         questionManager.intitializeQuestions();
         npcLoader.loadNPCs();
+        objectLoader.tutorialObjects();
+        player.getPlayerImage();
         gameState = titleState;
 //        gameState = startRunState;
 //        gameState = achievementState;
 //        gameState = tutorialState;
+//        gameState = outfitterStoreState;
+
     }
 
     public void reset() {
@@ -137,7 +152,7 @@ public class GamePanel extends JPanel implements Runnable{
             player.update(0);
 
             if(gameState == playState) {
-                for (int i = 1; i < monster.length; i++) {
+                for (int i = 0; i < monster.length; i++) {
                     if (monster[i] != null && !monster[i].dead) {
                         monster[i].update(i);
                     }
@@ -166,7 +181,13 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics graphic){
         super.paintComponent(graphic);
 
-        Graphics2D graphics2D = (Graphics2D)graphic;
+        Graphics2D graphics2D = (Graphics2D) graphic.create();
+        RenderingHints renderingHints1 = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        RenderingHints renderingHints2 = new RenderingHints(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY);
+        graphics2D.setRenderingHints(renderingHints1);
+        graphics2D.setRenderingHints(renderingHints2);
 
         if(gameState == titleState){
             ui.draw(graphics2D);

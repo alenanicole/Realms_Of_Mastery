@@ -12,6 +12,7 @@ public class Staff extends Weapon{
     public Staff(GamePanel panel){
         this.panel = panel;
         name = "staff";
+        price = 300;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/weapons/staff/staff.png"));
             image = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);

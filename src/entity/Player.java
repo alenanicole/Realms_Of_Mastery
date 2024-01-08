@@ -5,6 +5,7 @@ import main.KeyHandler;
 import main.ScalingManager;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -67,7 +68,6 @@ public class Player extends Entity{
         tierThreeDamage = 7;
 
         setDefaultValues();
-        getPlayerImage();
     }
 
     public void setDefaultValues(){
@@ -82,27 +82,97 @@ public class Player extends Entity{
         try {
             sprite_sheet = ImageIO.read(getClass().getResourceAsStream("/player/" + gender + "/" + hairColor + "/" + skinColor + "/" + shirtColor + "/sprite_sheet.png"));
 
-            down1 = sprite_sheet.getSubimage(0, 0, panel.originalTileSize, panel.originalTileSize);
-            down2 = sprite_sheet.getSubimage(16, 0, panel.originalTileSize, panel.originalTileSize);
-            left1 = sprite_sheet.getSubimage(32, 0, panel.originalTileSize, panel.originalTileSize);
-            left2 = sprite_sheet.getSubimage(0, 16, panel.originalTileSize, panel.originalTileSize);
-            right1 = sprite_sheet.getSubimage(16, 16, panel.originalTileSize, panel.originalTileSize);
-            right2 = sprite_sheet.getSubimage(32, 16, panel.originalTileSize, panel.originalTileSize);
-            up1 = sprite_sheet.getSubimage(0, 32, panel.originalTileSize, panel.originalTileSize);
-            up2 = sprite_sheet.getSubimage(16, 32, panel.originalTileSize, panel.originalTileSize);
+            down1Normal = sprite_sheet.getSubimage(0, 0, panel.originalTileSize, panel.originalTileSize);
+            down2Normal = sprite_sheet.getSubimage(16, 0, panel.originalTileSize, panel.originalTileSize);
+            left1Normal = sprite_sheet.getSubimage(32, 0, panel.originalTileSize, panel.originalTileSize);
+            left2Normal = sprite_sheet.getSubimage(0, 16, panel.originalTileSize, panel.originalTileSize);
+            right1Normal = sprite_sheet.getSubimage(16, 16, panel.originalTileSize, panel.originalTileSize);
+            right2Normal = sprite_sheet.getSubimage(32, 16, panel.originalTileSize, panel.originalTileSize);
+            up1Normal = sprite_sheet.getSubimage(0, 32, panel.originalTileSize, panel.originalTileSize);
+            up2Normal = sprite_sheet.getSubimage(16, 32, panel.originalTileSize, panel.originalTileSize);
 
-            up1 = scalingManager.toCompatibleImage(up1, panel.tileSize, panel.tileSize);
-            up2 = scalingManager.toCompatibleImage(up2, panel.tileSize, panel.tileSize);
-            down1 = scalingManager.toCompatibleImage(down1, panel.tileSize, panel.tileSize);
-            down2 = scalingManager.toCompatibleImage(down2, panel.tileSize, panel.tileSize);
-            left1 = scalingManager.toCompatibleImage(left1, panel.tileSize, panel.tileSize);
-            left2 = scalingManager.toCompatibleImage(left2, panel.tileSize, panel.tileSize);
-            right1 = scalingManager.toCompatibleImage(right1, panel.tileSize, panel.tileSize);
-            right2 = scalingManager.toCompatibleImage(right2, panel.tileSize, panel.tileSize);
+            up1Normal = scalingManager.toCompatibleImage(up1Normal, panel.tileSize, panel.tileSize);
+            up2Normal = scalingManager.toCompatibleImage(up2Normal, panel.tileSize, panel.tileSize);
+            down1Normal = scalingManager.toCompatibleImage(down1Normal, panel.tileSize, panel.tileSize);
+            down2Normal = scalingManager.toCompatibleImage(down2Normal, panel.tileSize, panel.tileSize);
+            left1Normal = scalingManager.toCompatibleImage(left1Normal, panel.tileSize, panel.tileSize);
+            left2Normal = scalingManager.toCompatibleImage(left2Normal, panel.tileSize, panel.tileSize);
+            right1Normal = scalingManager.toCompatibleImage(right1Normal, panel.tileSize, panel.tileSize);
+            right2Normal = scalingManager.toCompatibleImage(right2Normal, panel.tileSize, panel.tileSize);
+
+            up1Overlayed = copyImage(up1Normal);
+            up2Overlayed = copyImage(up2Normal);
+            down1Overlayed = copyImage(down1Normal);
+            down2Overlayed = copyImage(down2Normal);
+            left1Overlayed = copyImage(left1Normal);
+            left2Overlayed = copyImage(left2Normal);
+            right1Overlayed = copyImage(right1Normal);
+            right2Overlayed = copyImage(right2Normal);
 
         }catch(IOException e) {
             e.printStackTrace();
         }
+
+
+        up1Overlayed = overlayImages(panel.outfits[0].up1,  up1Overlayed);
+        up2Overlayed = overlayImages(panel.outfits[0].up2,  up2Overlayed);
+        down1Overlayed = overlayImages(panel.outfits[0].down1,  down1Overlayed);
+        down2Overlayed = overlayImages(panel.outfits[0].down2,  down2Overlayed);
+        left1Overlayed = overlayImages(panel.outfits[0].left1,  left1Overlayed);
+        left2Overlayed = overlayImages(panel.outfits[0].left2,  left2Overlayed);
+        right1Overlayed = overlayImages(panel.outfits[0].right1,  right1Overlayed);
+        right2Overlayed = overlayImages(panel.outfits[0].right2,  right2Overlayed);
+
+        if(panel.outfits[0].equipped){
+            up1 = up1Overlayed;
+            up2 = up2Overlayed;
+            down1 = down1Overlayed;
+            down2 = down2Overlayed;
+            left1 = left1Overlayed;
+            left2 = left2Overlayed;
+            right1 = right1Overlayed;
+            right2 = right2Overlayed;
+        }else{
+            up1 = up1Normal;
+            up2 = up2Normal;
+            down1 = down1Normal;
+            down2 = down2Normal;
+            left1 = left1Normal;
+            left2 = left2Normal;
+            right1 = right1Normal;
+            right2 = right2Normal;
+        }
+    }
+
+    public static BufferedImage copyImage(BufferedImage source){
+        BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+        Graphics g = b.getGraphics();
+        g.drawImage(source, 0, 0, null);
+        g.dispose();
+        return b;
+    }
+
+    public static BufferedImage overlayImages(BufferedImage fgImage, BufferedImage bgImage) {
+
+        if (fgImage.getHeight() > bgImage.getHeight()
+                || fgImage.getWidth() > fgImage.getWidth()) {
+            JOptionPane.showMessageDialog(null,
+                    "Foreground Image Is Bigger In One or Both Dimensions"
+                            + "\nCannot proceed with overlay."
+                            + "\n\n Please use smaller Image for foreground");
+            return null;
+        }
+
+        Graphics2D g = bgImage.createGraphics();
+
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g.drawImage(bgImage, 0, 0, null);
+
+        g.drawImage(fgImage, 0, 0, null);
+        g.dispose();
+        return bgImage;
     }
 
     public void update(int i){
@@ -125,6 +195,8 @@ public class Player extends Entity{
             pickUpItem(itemIdx);
             int monsterIdx = panel.collisionManager.checkEntity(this, panel.monster);
             fightMonster(monsterIdx);
+            int NPCIdx = panel.collisionManager.checkEntity(this, panel.npcs);
+            visitShop(NPCIdx);
 
             if(panel.gameState == panel.playState) {
                 if (worldX >= 80 * panel.tileSize && worldX <= 81 * panel.tileSize && worldY >= 37 * panel.tileSize && worldY <= 38 * panel.tileSize) {
@@ -156,6 +228,17 @@ public class Player extends Entity{
             }
         }
 
+    }
+
+    private void visitShop(int idx) {
+        if(idx != 999){
+            switch (idx) {
+                case 1:
+                    panel.gameState = panel.weaponStoreState;
+
+
+            }
+        }
     }
 
     public void fightMonster(int idx) {

@@ -2,6 +2,9 @@ package ui;
 
 import main.GamePanel;
 import main.ScalingManager;
+import ui.npc.OutfitterStore;
+import ui.npc.PurchaseWeaponScreen;
+import ui.npc.WeaponMasterStore;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,11 +17,11 @@ public class UI {
     GamePanel panel;
     Graphics2D graphics2D;
     ScalingManager scalingManager = new ScalingManager();
-    Font joystix;
+    public Font joystix;
     Font joystix_small;
     Font joystix_smallest;
-    Font press_start;
-    Font press_start_small;
+    public Font press_start;
+    public Font press_start_small;
     private int titleCommandNum = 0;
     private int selectNum = 0;
     private int pauseCommandNum = 0;
@@ -26,9 +29,8 @@ public class UI {
     private int useNum = 0;
     private int difficultyNum = 0;
     private int startRunNum = 0;
-    private int num1;
-    private int num2;
-    private String ans = "";
+    private int weaponNum = 0;
+    private int outfitterNum = 0;
 
     public Color background, button, border;
     public Color blonde, brownHair, black;
@@ -38,19 +40,20 @@ public class UI {
     private Color selectedSkin;
     private Color selectedShirt;
 
-    BufferedImage questionMark;
+    public BufferedImage questionMark;
     BufferedImage frame;
     BufferedImage fullHeart, halfHeart, emptyHeart;
     BufferedImage monstFullHeart, monstHalfHeart;
     BufferedImage boot, dumbbell;
+    BufferedImage hat;
 
     BufferedImage whiteTrophy, bronzeTrophy, silverTrophy, goldTrophy;
 
     float alpha = 0.3f;
     int type = AlphaComposite.SRC_OVER;
-    AlphaComposite composite =
+    public AlphaComposite composite =
             AlphaComposite.getInstance(type, alpha);
-    AlphaComposite originalComposite =
+    public AlphaComposite originalComposite =
             AlphaComposite.getInstance(type, 1F);
 
     private int spriteNum = 1;
@@ -75,6 +78,11 @@ public class UI {
     public FightScreen fightScreen;
     WrongAnswerScreen answerScreen;
     public LoadingScreen loadingScreen;
+
+    WeaponMasterStore weaponMasterStore;
+    PurchaseWeaponScreen purchaseWeaponScreen;
+    OutfitterStore outfitterStore;
+
     public UI (GamePanel panel){
         this.panel = panel;
 
@@ -108,6 +116,9 @@ public class UI {
             boot = scalingManager.toCompatibleImage(boot, panel.tileSize, panel.tileSize);
             dumbbell = ImageIO.read(getClass().getResource("/popups/dumbbell.png"));
             dumbbell = scalingManager.toCompatibleImage(dumbbell, panel.tileSize, panel.tileSize);
+
+            hat = ImageIO.read(getClass().getResource("/outfit/hat/hat.png"));
+            hat = scalingManager.toCompatibleImage(hat, panel.tileSize, panel.tileSize);
 
             whiteTrophy = ImageIO.read(getClass().getResource("/popups/white_trophy.png"));
             whiteTrophy = scalingManager.toCompatibleImage(whiteTrophy, panel.tileSize, panel.tileSize);
@@ -182,6 +193,10 @@ public class UI {
         achievementScreen = new AchievementScreen(panel);
         answerScreen = new WrongAnswerScreen(panel);
         loadingScreen = new LoadingScreen(panel, graphics2D);
+
+        weaponMasterStore = new WeaponMasterStore(panel);
+        purchaseWeaponScreen = new PurchaseWeaponScreen(panel);
+        outfitterStore = new OutfitterStore(panel);
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -252,8 +267,24 @@ public class UI {
             playScreen.draw(graphics2D);
             achievementScreen.draw(graphics2D);
         }
-        if(panel.gameState == panel.loadingState)
+        if(panel.gameState == panel.loadingState){
             loadingScreen.draw(graphics2D);
+        }
+
+        if(panel.gameState == panel.weaponStoreState){
+            weaponMasterStore.draw(graphics2D);
+        }
+        if(panel.gameState == panel.purchaseWeaponState){
+            weaponMasterStore.draw(graphics2D);
+            purchaseWeaponScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.outfitterStoreState){
+            outfitterStore.draw(graphics2D);
+        }
+        if(panel.gameState == panel.purchaseOutfitState){
+            outfitterStore.draw(graphics2D);
+            purchaseWeaponScreen.draw(graphics2D);
+        }
     }
 
     public int getCenteredX(String text, Graphics2D graphics2D){
@@ -363,5 +394,21 @@ public class UI {
 
     public void setMonsterIdx(int monsterIdx) {
         this.monsterIdx = monsterIdx;
+    }
+
+    public int getWeaponNum() {
+        return weaponNum;
+    }
+
+    public void setWeaponNum(int weaponNum) {
+        this.weaponNum = weaponNum;
+    }
+
+    public int getOutfitterNum() {
+        return outfitterNum;
+    }
+
+    public void setOutfitterNum(int outfitterNum) {
+        this.outfitterNum = outfitterNum;
     }
 }

@@ -18,7 +18,7 @@ public class NPC extends Entity{
     }
 
     public void setDefaultValues(){
-        speed = 2;
+        speed = 1;
         direction = "down";
         collisionArea = new Rectangle(8, 16, 20, 20);
         collisionAreaDefaultX = collisionArea.x;
@@ -85,7 +85,7 @@ public class NPC extends Entity{
     public void update(int idx){
         setAction();
         collision = false;
-        panel.collisionManager.checkTile(this);
+        panel.collisionManager.checkTileNPC(this);
         panel.collisionManager.checkObject(this, false);
         panel.collisionManager.checkPlayer(this, false, idx);
 

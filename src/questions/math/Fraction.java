@@ -58,7 +58,7 @@ public class Fraction extends MathQuestion{
             panel.questionManager.setCorrectAns(String.valueOf((num1 + num2) + "/" + denom));
         }else{
             panel.questionManager.setQuestion("What is " + num1 + "/" + denom + " minus " + num2 + "/" + denom + "?-Enter your answer as #/#");
-            panel.questionManager.setCorrectAns(String.valueOf((num1 + num2) + "/" + denom));
+            panel.questionManager.setCorrectAns(String.valueOf((num1 - num2) + "/" + denom));
         }
 
     }

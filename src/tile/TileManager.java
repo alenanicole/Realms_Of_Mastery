@@ -22,23 +22,24 @@ public class TileManager {
     }
 
     public void getTileImage(){
-            loadImage(0, "grass", false);
-            loadImage(1, "water", true);
-            loadImage(2, "wall", true);
-            loadImage(3, "path", false);
-            loadImage(4, "sand", false);
-            loadImage(5, "tree", true);
-            loadImage(6, "floor", false);
-            loadImage(7, "collision_grass", true);
-            loadImage(8, "dirt", false);
+            loadImage(0, "grass", false, true);
+            loadImage(1, "water", true, true);
+            loadImage(2, "wall", true, true);
+            loadImage(3, "path", false, true);
+            loadImage(4, "sand", false, false);
+            loadImage(5, "tree", true, true);
+            loadImage(6, "floor", false, false);
+            loadImage(7, "collision_grass", true, true);
+            loadImage(8, "dirt", false, true);
     }
 
-    public void loadImage(int idx, String fileName, boolean collision){
+    public void loadImage(int idx, String fileName, boolean collision, boolean collisionNPC){
         ScalingManager scalingManager = new ScalingManager();
         try {
             tile[idx] = new Tile();
             tile[idx].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + fileName + ".png"));
             tile[idx].collision = collision;
+            tile[idx].collisionNPC = collisionNPC;
             tile[idx].image = scalingManager.toCompatibleImage(tile[idx].image, panel.tileSize, panel.tileSize);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -73,22 +74,6 @@ public class TileManager {
         }catch (Exception e){
 
         }
-
-//        DEBUGGING to make sure map loads correctly, delete later
-//        try {
-//            FileWriter myWriter = new FileWriter("filename.txt");
-//            for(int i = 0; i < panel.maxWorldCol; i++){
-//                for(int j = 0; j < panel.maxWorldRow; j++){
-//                    myWriter.write(mapTileNum[i][j] + " ");
-//                }
-//                myWriter.write("\n");
-//            }
-//            myWriter.close();
-//            System.out.println("Successfully wrote to the file.");
-//        } catch (IOException e) {
-//            System.out.println("An error occurred.");
-//            e.printStackTrace();
-//        }
 
     }
 

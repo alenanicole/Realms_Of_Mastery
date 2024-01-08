@@ -12,6 +12,7 @@ public class Sword extends Weapon{
     public Sword(GamePanel panel){
         this.panel = panel;
         name = "sword";
+        price = 50;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/weapons/sword/sword.png"));
             image = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);
@@ -25,7 +26,7 @@ public class Sword extends Weapon{
         }catch (IOException e){
             e.printStackTrace();
         }
-        equipped = true;
-        available = true;
+        equipped = false;
+        available = false;
     }
 }

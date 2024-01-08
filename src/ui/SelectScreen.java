@@ -36,7 +36,7 @@ public class SelectScreen extends UI{
         graphics2D.fill(new RoundRectangle2D.Float(x - panel.tileSize, y - panel.tileSize, panel.tileSize * 7, panel.tileSize * 7, 10, 10));
 
         panel.ui.setSpriteCounter(panel.ui.getSpriteCounter() + 1);
-        if(panel.ui.getSpriteCounter() > 20){
+        if(panel.ui.getSpriteCounter() > 15){
             if(panel.ui.getSpriteNum() == 1){
                 panel.ui.setSpriteNum(2);
             }else if(panel.ui.getSpriteNum() == 2){
@@ -140,14 +140,22 @@ public class SelectScreen extends UI{
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
         }
 
+
         x += panel.tileSize * 2;
-//        graphics2D.setColor(button);
-//        graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
-        graphics2D.drawImage(questionMark, x, y, null);
+        if(!panel.outfits[0].available) {
+            graphics2D.drawImage(questionMark, x, y, null);
+        }else{
+            graphics2D.drawImage(hat, x, y, null);
+        }
+        if(panel.outfits[0].equipped){
+            graphics2D.setColor(Color.white);
+            graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
+        }
         if(panel.ui.getSelectNum() == 6){
             graphics2D.setColor(Color.black);
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
         }
+
 
 
         x = resetX;
@@ -349,13 +357,14 @@ public class SelectScreen extends UI{
         }
 
         x += panel.tileSize * 4.5;
-        text = "Start";
+        text = "OK!";
+        int textX = (int)( x + panel.tileSize * .8);
         graphics2D.setColor(button);
         graphics2D.fill(new RoundRectangle2D.Float(x - 10, y - panel.tileSize + 8, 210, 48, 5, 5));
         graphics2D.setColor(Color.black);
-        graphics2D.drawString(text, x + 5, y + 5);
+        graphics2D.drawString(text, textX + 5, y + 5);
         graphics2D.setColor(Color.white);
-        graphics2D.drawString(text, x, y);
+        graphics2D.drawString(text, textX, y);
         if(panel.ui.getSelectNum() == 28){
             graphics2D.setColor(Color.black);
             graphics2D.draw(new RoundRectangle2D.Float(x - 10, y - panel.tileSize + 8, 210, 48, 5, 5));

@@ -12,6 +12,7 @@ public class Bow extends Weapon{
     public Bow(GamePanel panel){
         this.panel = panel;
         name = "bow";
+        price = 150;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/weapons/bow/bow.png"));
             image = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);

@@ -15,7 +15,6 @@ public class SuperObject {
     public int collisionAreaDefaultX = 0;
     public int collisionAreaDefaultY = 0;
 
-    public int numOfAttempts = 0;
 
     public void draw(Graphics2D graphics2D, GamePanel panel){
         int screenX = worldX - panel.player.worldX + panel.player.screenX;

@@ -12,6 +12,8 @@ public class Entity {
     public volatile int speed;
 
     public BufferedImage sprite_sheet, up1, up2, down1, down2, left1, left2, right1, right2;
+    public BufferedImage up1Overlayed, up2Overlayed, down1Overlayed, down2Overlayed, left1Overlayed, left2Overlayed, right1Overlayed, right2Overlayed;
+    public BufferedImage up1Normal, up2Normal, down1Normal, down2Normal, left1Normal, left2Normal, right1Normal, right2Normal;
     public String direction;
     public int spriteCounter = 0;
     public int spriteNum = 1;

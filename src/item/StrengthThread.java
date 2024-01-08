@@ -11,6 +11,9 @@ public class StrengthThread extends Thread implements Runnable{
     @Override
     public void run()
     {
+        if(panel.numOfFight < 0){
+            panel.numOfFight = 0;
+        }
         synchronized (this) {
             panel.player.tierOneDamage += 2;
             panel.player.tierTwoDamage += 2;

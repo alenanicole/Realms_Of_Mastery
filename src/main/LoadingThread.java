@@ -42,6 +42,7 @@ public class LoadingThread extends Thread implements Runnable{
         panel.tileManager.loadMap("/maps/Dungeon_1.txt");
         panel.player.worldX = panel.tileSize * 57;
         panel.player.worldY = panel.tileSize * 105;
+        panel.objectLoader.unloadObjects();
         panel.objectLoader.setObject();
         panel.itemLoader.initializeItems();
         panel.monsterLoader.intializeMonsters();
