@@ -10,9 +10,9 @@ public class OutfitLoader {
     }
     public void intializeStaticOutfits(){
         panel.outfits[0] = new Hat(panel);
-        panel.outfits[1] = new Hat(panel);
-        panel.outfits[2] = new Hat(panel);
-        panel.outfits[3] = new Hat(panel);
-        panel.outfits[4] = new Hat(panel);
+        panel.outfits[1] = new Jacket(panel);
+        panel.outfits[2] = new Suit(panel);
+        panel.outfits[3] = new Checker(panel);
+        panel.outfits[4] = new Ragtag(panel);
     }
 }

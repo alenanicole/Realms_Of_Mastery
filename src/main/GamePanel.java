@@ -13,6 +13,7 @@ import weapon.Weapon;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.stream.IntStream;
 
 public class GamePanel extends JPanel implements Runnable{
     public final int originalTileSize = 16;
@@ -57,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     KeyHandler keyHandler = new KeyHandler(this);
     public RandomNumGenerator randGen = new RandomNumGenerator();
-    public Player player = new Player(this, keyHandler, "brown", "lightest", "green", "boy");
+    public Player player = new Player(this, keyHandler, "brown", "light", "green", "boy");
     public TileManager tileManager = new TileManager(this);
     public SuperObject obj[] = new SuperObject[20];
     public ObjectLoader objectLoader = new ObjectLoader(this);
@@ -96,11 +97,11 @@ public class GamePanel extends JPanel implements Runnable{
         npcLoader.loadNPCs();
         objectLoader.tutorialObjects();
         player.getPlayerImage();
-        gameState = titleState;
+//        gameState = titleState;
 //        gameState = startRunState;
 //        gameState = achievementState;
 //        gameState = tutorialState;
-//        gameState = outfitterStoreState;
+        gameState = outfitterStoreState;
 
     }
 
@@ -182,18 +183,31 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(graphic);
 
         Graphics2D graphics2D = (Graphics2D) graphic.create();
-        RenderingHints renderingHints1 = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+        RenderingHints playAntialiasing = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        RenderingHints renderingHints2 = new RenderingHints(RenderingHints.KEY_RENDERING,
+        RenderingHints playRendering = new RenderingHints(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
-        graphics2D.setRenderingHints(renderingHints1);
-        graphics2D.setRenderingHints(renderingHints2);
+
+        RenderingHints storeAntialiasing = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_DEFAULT);
+        RenderingHints storeRendering = new RenderingHints(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_DEFAULT);
+
+        if(IntStream.of(selectState, inventoryState, outfitterStoreState, weaponStoreState).anyMatch(j -> gameState == j)){
+            graphics2D.setRenderingHints(storeAntialiasing);
+            graphics2D.setRenderingHints(storeRendering);
+        }else{
+            graphics2D.setRenderingHints(playAntialiasing);
+            graphics2D.setRenderingHints(playRendering);
+        }
 
         if(gameState == titleState){
             ui.draw(graphics2D);
         }else if(gameState == selectState){
             ui.draw(graphics2D);
         }else{
+
+
             tileManager.draw(graphics2D);
 
             for(int i = 0; i < obj.length; i++){

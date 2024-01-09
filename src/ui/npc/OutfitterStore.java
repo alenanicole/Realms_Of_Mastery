@@ -76,7 +76,7 @@ public class OutfitterStore extends UI{
         graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10, panel.tileSize * 2 + 10, 5, 5));
         graphics2D.setColor(border);
         graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10 , panel.tileSize * 2 + 10, 5, 5));
-        graphics2D.drawImage(panel.ui.questionMark, x + 5, y + 5, panel.tileSize * 2, panel.tileSize * 2, null);
+        graphics2D.drawImage(panel.outfits[1].image, x + 5, y + 5, panel.tileSize * 2, panel.tileSize * 2, null);
         if(panel.ui.getOutfitterNum() == 1){
             graphics2D.setColor(Color.white);
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10 , panel.tileSize * 2 + 10, 5, 5));
@@ -100,7 +100,7 @@ public class OutfitterStore extends UI{
         graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10, panel.tileSize * 2 + 10, 5, 5));
         graphics2D.setColor(border);
         graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10 , panel.tileSize * 2 + 10, 5, 5));
-        graphics2D.drawImage(panel.ui.questionMark, x + 5, y + 5, panel.tileSize * 2, panel.tileSize * 2, null);
+        graphics2D.drawImage(panel.outfits[2].image, x + 5, y + 5, panel.tileSize * 2, panel.tileSize * 2, null);
         if(panel.ui.getOutfitterNum() == 2){
             graphics2D.setColor(Color.white);
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10 , panel.tileSize * 2 + 10, 5, 5));
@@ -124,7 +124,7 @@ public class OutfitterStore extends UI{
         graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10, panel.tileSize * 2 + 10, 5, 5));
         graphics2D.setColor(border);
         graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10 , panel.tileSize * 2 + 10, 5, 5));
-        graphics2D.drawImage(panel.ui.questionMark, x + 5, y + 5, panel.tileSize * 2, panel.tileSize * 2, null);
+        graphics2D.drawImage(panel.outfits[3].image, x + 5, y + 5, panel.tileSize * 2, panel.tileSize * 2, null);
         if(panel.ui.getOutfitterNum() == 3){
             graphics2D.setColor(Color.white);
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10 , panel.tileSize * 2 + 10, 5, 5));
@@ -135,7 +135,7 @@ public class OutfitterStore extends UI{
             graphics2D.drawImage(panel.items[0].image, x, y + 5, panel.tileSize, panel.tileSize, null);
             x += panel.tileSize;
             y += panel.tileSize;
-            text = String.valueOf(panel.outfits[0].price);
+            text = String.valueOf(panel.outfits[3].price);
             drawFloat(x, y, text, 5);
 
             y = resetY;
@@ -148,7 +148,7 @@ public class OutfitterStore extends UI{
         graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10, panel.tileSize * 2 + 10, 5, 5));
         graphics2D.setColor(border);
         graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10 , panel.tileSize * 2 + 10, 5, 5));
-        graphics2D.drawImage(panel.ui.questionMark, x + 5, y + 5, panel.tileSize * 2, panel.tileSize * 2, null);
+        graphics2D.drawImage(panel.outfits[4].image, x + 5, y + 5, panel.tileSize * 2, panel.tileSize * 2, null);
         if(panel.ui.getOutfitterNum() == 4){
             graphics2D.setColor(Color.white);
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize * 2 + 10 , panel.tileSize * 2 + 10, 5, 5));
@@ -159,7 +159,7 @@ public class OutfitterStore extends UI{
             graphics2D.drawImage(panel.items[0].image, x, y + 5, panel.tileSize, panel.tileSize, null);
             x += panel.tileSize;
             y += panel.tileSize;
-            text = String.valueOf(panel.outfits[0].price);
+            text = String.valueOf(panel.outfits[4].price);
             drawFloat(x, y, text, 5);
 
             y = resetY;

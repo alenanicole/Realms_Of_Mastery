@@ -333,12 +333,16 @@ public class KeyHandler implements KeyListener {
                     panel.ui.setSelectedHair(panel.ui.black);
                 }
                 case 5 -> {
+                    panel.player.hairColor = "red";
+                    panel.ui.setSelectedHair(panel.ui.redHair);
                 }
                 case 6 -> {
-                    if(panel.outfits[0].equipped) {
-                        panel.outfits[0].equipped = false;
-                    }else{
-                        panel.outfits[0].equipped = true;
+                    if(panel.outfits[0].available) {
+                        if (panel.outfits[0].equipped) {
+                            panel.outfits[0].equipped = false;
+                        } else {
+                            panel.outfits[0].equipped = true;
+                        }
                     }
                 }
                 case 7 -> {
@@ -391,7 +395,7 @@ public class KeyHandler implements KeyListener {
                 }
                 case 19 -> {
                     panel.player.shirtColor = "red";
-                    panel.ui.setSelectedShirt(panel.ui.red);
+                    panel.ui.setSelectedShirt(panel.ui.redShirt);
                 }
                 case 20 -> {
                     panel.player.shirtColor = "teal";
@@ -406,12 +410,28 @@ public class KeyHandler implements KeyListener {
                     panel.ui.setSelectedShirt(panel.ui.yellow);
                 }
                 case 23 -> {
+                    if(panel.outfits[1].available) {
+                        panel.player.shirtColor = "jacket";
+                        panel.ui.setSelectedShirt(panel.ui.jacketColor);
+                    }
                 }
                 case 24 -> {
+                    if(panel.outfits[2].available) {
+                        panel.player.shirtColor = "suit";
+                        panel.ui.setSelectedShirt(panel.ui.suitColor);
+                    }
                 }
                 case 25 -> {
+                    if(panel.outfits[3].available) {
+                        panel.player.shirtColor = "checker";
+                        panel.ui.setSelectedShirt(panel.ui.checkerColor);
+                    }
                 }
                 case 26 -> {
+                    if(panel.outfits[4].available) {
+                        panel.player.shirtColor = "ragtag";
+                        panel.ui.setSelectedShirt(panel.ui.ragtagColor);
+                    }
                 }
                 case 27 -> panel.gameState = previousState;
                 case 28 -> {
@@ -810,6 +830,55 @@ public class KeyHandler implements KeyListener {
                                     panel.gameState = previousState;
                                 }
                                 break;
+                        }
+                        break;
+                    case 1:
+                        panel.gameState = previousState;
+                        panel.ui.setUseNum(0);
+                        break;
+                }
+            }
+            if(previousState == panel.outfitterStoreState) {
+                switch (panel.ui.getUseNum()) {
+                    case 0:
+                        switch (panel.ui.getOutfitterNum()) {
+                            case 0:
+                                if (!panel.outfits[0].available && panel.items[0].numHeld >= panel.outfits[0].price) {
+                                    panel.outfits[0].available = true;
+                                    panel.items[0].numHeld -= panel.outfits[0].price;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 1:
+                                if (!panel.outfits[1].available && panel.items[0].numHeld >= panel.outfits[1].price) {
+                                    panel.outfits[1].available = true;
+                                    panel.items[0].numHeld -= panel.outfits[1].price;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 2:
+                                if (!panel.outfits[2].available && panel.items[0].numHeld >= panel.outfits[2].price) {
+                                    panel.outfits[2].available = true;
+                                    panel.items[0].numHeld -= panel.outfits[2].price;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 3:
+                                if (!panel.outfits[3].available && panel.items[0].numHeld >= panel.outfits[3].price) {
+                                    panel.outfits[3].available = true;
+                                    panel.items[0].numHeld -= panel.outfits[3].price;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 4:
+                                if (!panel.outfits[4].available && panel.items[0].numHeld >= panel.outfits[4].price) {
+                                    panel.outfits[4].available = true;
+                                    panel.items[0].numHeld -= panel.outfits[4].price;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+
+
                         }
                         break;
                     case 1:

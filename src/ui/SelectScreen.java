@@ -36,7 +36,7 @@ public class SelectScreen extends UI{
         graphics2D.fill(new RoundRectangle2D.Float(x - panel.tileSize, y - panel.tileSize, panel.tileSize * 7, panel.tileSize * 7, 10, 10));
 
         panel.ui.setSpriteCounter(panel.ui.getSpriteCounter() + 1);
-        if(panel.ui.getSpriteCounter() > 15){
+        if(panel.ui.getSpriteCounter() > 10){
             if(panel.ui.getSpriteNum() == 1){
                 panel.ui.setSpriteNum(2);
             }else if(panel.ui.getSpriteNum() == 2){
@@ -132,9 +132,8 @@ public class SelectScreen extends UI{
         }
 
         x += panel.tileSize * 2;
-//        graphics2D.setColor(button);
-//        graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
-        graphics2D.drawImage(questionMark, x, y, null);
+        graphics2D.setColor(redHair);
+        graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
         if(panel.ui.getSelectNum() == 5){
             graphics2D.setColor(Color.black);
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
@@ -276,7 +275,7 @@ public class SelectScreen extends UI{
         }
 
         x += panel.tileSize * 2;
-        graphics2D.setColor(red);
+        graphics2D.setColor(redShirt);
         graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
         if(panel.ui.getSelectNum() == 19){
             graphics2D.setColor(Color.black);
@@ -309,34 +308,43 @@ public class SelectScreen extends UI{
         }
 
         x += panel.tileSize * 2;
-        graphics2D.setColor(new Color(255, 255, 255));
-//        graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
-        graphics2D.drawImage(questionMark, x, y, null);
+        if(!panel.outfits[1].available) {
+            graphics2D.drawImage(questionMark, x, y, null);
+        }else{
+            graphics2D.drawImage(jacket, x, y, null);
+        }
         if(panel.ui.getSelectNum() == 23){
             graphics2D.setColor(Color.black);
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
         }
 
         x += panel.tileSize * 2;
-        graphics2D.setColor(new Color(255, 255, 255));
-//        graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
-        graphics2D.drawImage(questionMark, x, y, null);
+        if(!panel.outfits[2].available) {
+            graphics2D.drawImage(questionMark, x, y, null);
+        }else{
+            graphics2D.drawImage(suit, x, y, null);
+        }
         if(panel.ui.getSelectNum() == 24){
             graphics2D.setColor(Color.black);
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
         }
+
         x += panel.tileSize * 2;
-        graphics2D.setColor(new Color(255, 255, 255));
-//        graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
-        graphics2D.drawImage(questionMark, x, y, null);
+        if(!panel.outfits[3].available) {
+            graphics2D.drawImage(questionMark, x, y, null);
+        }else{
+            graphics2D.drawImage(checker, x, y, null);
+        }
         if(panel.ui.getSelectNum() == 25){
             graphics2D.setColor(Color.black);
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
         }
         x += panel.tileSize * 2;
-        graphics2D.setColor(new Color(255, 255, 255));
-//        graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));
-        graphics2D.drawImage(questionMark, x, y, null);
+        if(!panel.outfits[4].available) {
+            graphics2D.drawImage(questionMark, x, y, null);
+        }else{
+            graphics2D.drawImage(ragtag, x, y, null);
+        }
         if(panel.ui.getSelectNum() == 26){
             graphics2D.setColor(Color.black);
             graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize, 5, 5));

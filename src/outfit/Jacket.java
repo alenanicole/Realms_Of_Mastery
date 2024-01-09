@@ -2,12 +2,12 @@ package outfit;
 
 import main.GamePanel;
 
-public class Hat extends SuperOutfit{
+public class Jacket extends SuperOutfit{
 
-    public Hat(GamePanel panel) {
+    public Jacket(GamePanel panel) {
         super(panel);
-        name = "hat";
-        price = 100;
+        name = "jacket";
+        price = 150;
         getImage(name, panel.tileSize, panel.tileSize);
     }
 }

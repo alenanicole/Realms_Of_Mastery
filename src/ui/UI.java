@@ -3,6 +3,7 @@ package ui;
 import main.GamePanel;
 import main.ScalingManager;
 import ui.npc.OutfitterStore;
+import ui.npc.PurchaseOutfitScreen;
 import ui.npc.PurchaseWeaponScreen;
 import ui.npc.WeaponMasterStore;
 
@@ -11,6 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 public class UI {
 
@@ -33,11 +35,12 @@ public class UI {
     private int outfitterNum = 0;
 
     public Color background, button, border;
-    public Color blonde, brownHair, black;
+    public Color blonde, brownHair, black, redHair;
     public Color lightest, light, medium, dark, darkest;
-    public Color blue, brownShirt, gray, green, orange, pink, purple, red, teal, white, yellow;
+    public Color blue, brownShirt, gray, green, orange, pink, purple, redShirt, teal, white, yellow, jacketColor, suitColor, checkerColor, ragtagColor;
     private Color selectedHair;
     private Color selectedSkin;
+
     private Color selectedShirt;
 
     public BufferedImage questionMark;
@@ -45,7 +48,7 @@ public class UI {
     BufferedImage fullHeart, halfHeart, emptyHeart;
     BufferedImage monstFullHeart, monstHalfHeart;
     BufferedImage boot, dumbbell;
-    BufferedImage hat;
+    BufferedImage hat, jacket, suit, checker, ragtag;
 
     BufferedImage whiteTrophy, bronzeTrophy, silverTrophy, goldTrophy;
 
@@ -82,6 +85,7 @@ public class UI {
     WeaponMasterStore weaponMasterStore;
     PurchaseWeaponScreen purchaseWeaponScreen;
     OutfitterStore outfitterStore;
+    PurchaseOutfitScreen purchaseOutfitScreen;
 
     public UI (GamePanel panel){
         this.panel = panel;
@@ -98,35 +102,44 @@ public class UI {
 
     private void initializePopups(GamePanel panel) {
         try {
-            questionMark = ImageIO.read(getClass().getResource("/popups/questionmark.png"));
+            questionMark = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/questionmark.png")));
             questionMark = scalingManager.toCompatibleImage(questionMark, panel.tileSize, panel.tileSize);
-            frame = ImageIO.read(getClass().getResource("/popups/frame.png"));
+            frame = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/frame.png")));
             frame = scalingManager.toCompatibleImage(frame, panel.tileSize, panel.tileSize);
-            fullHeart = ImageIO.read(getClass().getResource("/popups/full_heart.png"));
+            fullHeart = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/full_heart.png")));
             fullHeart = scalingManager.toCompatibleImage(fullHeart, panel.tileSize, panel.tileSize);
-            halfHeart = ImageIO.read(getClass().getResource("/popups/half_heart.png"));
+            halfHeart = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/half_heart.png")));
             halfHeart = scalingManager.toCompatibleImage(halfHeart, panel.tileSize, panel.tileSize);
-            monstFullHeart = ImageIO.read(getClass().getResource("/popups/monst_full_heart.png"));
+            monstFullHeart = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/monst_full_heart.png")));
             monstFullHeart = scalingManager.toCompatibleImage(monstFullHeart, panel.tileSize, panel.tileSize);
-            monstHalfHeart= ImageIO.read(getClass().getResource("/popups/monst_half_heart.png"));
+            monstHalfHeart= ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/monst_half_heart.png")));
             monstHalfHeart = scalingManager.toCompatibleImage(monstHalfHeart, panel.tileSize, panel.tileSize);
-            emptyHeart = ImageIO.read(getClass().getResource("/popups/empty_heart.png"));
+            emptyHeart = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/empty_heart.png")));
             emptyHeart = scalingManager.toCompatibleImage(emptyHeart, panel.tileSize, panel.tileSize);
-            boot = ImageIO.read(getClass().getResource("/popups/boot.png"));
+            boot = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/boot.png")));
             boot = scalingManager.toCompatibleImage(boot, panel.tileSize, panel.tileSize);
-            dumbbell = ImageIO.read(getClass().getResource("/popups/dumbbell.png"));
+            dumbbell = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/dumbbell.png")));
             dumbbell = scalingManager.toCompatibleImage(dumbbell, panel.tileSize, panel.tileSize);
 
-            hat = ImageIO.read(getClass().getResource("/outfit/hat/hat.png"));
+            hat = ImageIO.read(Objects.requireNonNull(getClass().getResource("/outfit/hat/hat.png")));
             hat = scalingManager.toCompatibleImage(hat, panel.tileSize, panel.tileSize);
+            jacket = ImageIO.read(Objects.requireNonNull(getClass().getResource("/outfit/jacket/jacketColor.png")));
+            jacket = scalingManager.toCompatibleImage(jacket, panel.tileSize, panel.tileSize);
+            suit = ImageIO.read(Objects.requireNonNull(getClass().getResource("/outfit/suit/suitColor.png")));
+            suit = scalingManager.toCompatibleImage(suit, panel.tileSize, panel.tileSize);
+            checker = ImageIO.read(Objects.requireNonNull(getClass().getResource("/outfit/checker/checkerColor.png")));
+            checker = scalingManager.toCompatibleImage(checker, panel.tileSize, panel.tileSize);
+            ragtag = ImageIO.read(Objects.requireNonNull(getClass().getResource("/outfit/ragtag/ragtagColor.png")));
+            ragtag = scalingManager.toCompatibleImage(ragtag, panel.tileSize, panel.tileSize);
 
-            whiteTrophy = ImageIO.read(getClass().getResource("/popups/white_trophy.png"));
+
+            whiteTrophy = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/white_trophy.png")));
             whiteTrophy = scalingManager.toCompatibleImage(whiteTrophy, panel.tileSize, panel.tileSize);
-            bronzeTrophy = ImageIO.read(getClass().getResource("/popups/bronze_trophy.png"));
+            bronzeTrophy = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/bronze_trophy.png")));
             bronzeTrophy = scalingManager.toCompatibleImage(bronzeTrophy, panel.tileSize, panel.tileSize);
-            silverTrophy = ImageIO.read(getClass().getResource("/popups/silver_trophy.png"));
+            silverTrophy = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/silver_trophy.png")));
             silverTrophy = scalingManager.toCompatibleImage(silverTrophy, panel.tileSize, panel.tileSize);
-            goldTrophy = ImageIO.read(getClass().getResource("/popups/gold_trophy.png"));
+            goldTrophy = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/gold_trophy.png")));
             goldTrophy = scalingManager.toCompatibleImage(goldTrophy, panel.tileSize, panel.tileSize);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -140,6 +153,7 @@ public class UI {
         blonde = new Color(218,181,69);
         brownHair = new Color(56,34,20);
         black = new Color(9,15,27);
+        redHair = new Color(119, 31, 10);
         lightest = new Color(249, 209, 172);
         light = new Color(215,175,140);
         medium = new Color(206,172,127);
@@ -152,10 +166,14 @@ public class UI {
         orange = new Color(234,120,49);
         pink = new Color(162,42,128);
         purple = new Color(103, 38, 188);
-        red = new Color(138,25,19);
+        redShirt = new Color(138,25,19);
         teal = new Color(120,239,192);
         white = new Color(255, 255, 255);
         yellow = new Color(236,224,87);
+        jacketColor = new Color(72, 5, 5);
+        suitColor = new Color(42, 42, 53);
+        checkerColor = new Color(111, 143, 136);
+        ragtagColor = new Color(9, 61, 21);
     }
 
     private void initializeFonts() {
@@ -197,6 +215,7 @@ public class UI {
         weaponMasterStore = new WeaponMasterStore(panel);
         purchaseWeaponScreen = new PurchaseWeaponScreen(panel);
         outfitterStore = new OutfitterStore(panel);
+        purchaseOutfitScreen = new PurchaseOutfitScreen(panel);
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -283,7 +302,7 @@ public class UI {
         }
         if(panel.gameState == panel.purchaseOutfitState){
             outfitterStore.draw(graphics2D);
-            purchaseWeaponScreen.draw(graphics2D);
+            purchaseOutfitScreen.draw(graphics2D);
         }
     }
 
