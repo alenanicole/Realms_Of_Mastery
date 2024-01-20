@@ -71,6 +71,21 @@ public class SaveAndLoad {
             dataStorage.staffEquipped = panel.weapons[1].equipped;
             dataStorage.bowEquipped = panel.weapons[2].equipped;
 
+            // Upgrades and Outfits
+            dataStorage.healthUpgradeCanPurchase = panel.upgrades[0].canPurchase;
+            dataStorage.strengthUpgradeCanPurchase = panel.upgrades[1].canPurchase;
+            dataStorage.speedUpgradeCanPurchase = panel.upgrades[2].canPurchase;
+            dataStorage.healthUpgradeNumAvailable = panel.upgrades[0].numAvailable;
+            dataStorage.strengthUpgradeNumAvailable = panel.upgrades[1].numAvailable;
+            dataStorage.speedUpgradeNumAvailable = panel.upgrades[2].numAvailable;
+            dataStorage.hatAvailable = panel.outfits[0].available;
+            dataStorage.hatEquipped= panel.outfits[0].equipped;
+            dataStorage.jacketAvailable = panel.outfits[1].available;
+            dataStorage.suitAvailable = panel.outfits[2].available;
+            dataStorage.checkerAvailable = panel.outfits[3].available;
+            dataStorage.ragtagAvailable = panel.outfits[4].available;
+
+
             oos.writeObject(dataStorage);
             successful = true;
         } catch (IOException e) {
@@ -138,6 +153,20 @@ public class SaveAndLoad {
             panel.weapons[0].equipped = dataStorage.swordEquipped;
             panel.weapons[1].equipped = dataStorage.staffEquipped;
             panel.weapons[2].equipped = dataStorage.bowEquipped;
+
+            // Upgrades and Outfits
+            panel.upgrades[0].canPurchase = dataStorage.healthUpgradeCanPurchase;
+            panel.upgrades[1].canPurchase = dataStorage.strengthUpgradeCanPurchase;
+            panel.upgrades[2].canPurchase = dataStorage.speedUpgradeCanPurchase;
+            panel.upgrades[0].numAvailable = dataStorage.healthUpgradeNumAvailable;
+            panel.upgrades[1].numAvailable = dataStorage.strengthUpgradeNumAvailable;
+            panel.upgrades[2].numAvailable = dataStorage.speedUpgradeNumAvailable;
+            panel.outfits[0].available = dataStorage.hatAvailable;
+            panel.outfits[0].equipped = dataStorage.hatEquipped;
+            panel.outfits[1].available = dataStorage.jacketAvailable;
+            panel.outfits[2].available = dataStorage.suitAvailable;
+            panel.outfits[3].available = dataStorage.checkerAvailable;
+            panel.outfits[4].available = dataStorage.ragtagAvailable;
         } catch (Exception e) {
             System.out.println("Could not load!");
             e.printStackTrace();

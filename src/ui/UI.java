@@ -31,6 +31,7 @@ public class UI {
     private int weaponNum = 0;
     private int outfitterNum = 0;
     private int potionNum = 0;
+    private int upgradeNum = 0;
 
     public Color background, button, border;
     public Color blonde, brownHair, black, redHair;
@@ -43,9 +44,9 @@ public class UI {
 
     public BufferedImage questionMark;
     BufferedImage frame;
-    BufferedImage fullHeart, halfHeart, emptyHeart;
+    public BufferedImage fullHeart, halfHeart, emptyHeart;
     BufferedImage monstFullHeart, monstHalfHeart;
-    BufferedImage boot, dumbbell;
+    public BufferedImage boot, dumbbell;
     BufferedImage hat, jacket, suit, checker, ragtag;
 
     BufferedImage whiteTrophy, bronzeTrophy, silverTrophy, goldTrophy;
@@ -84,9 +85,10 @@ public class UI {
     PurchaseWeaponScreen purchaseWeaponScreen;
     OutfitterStore outfitterStore;
     PurchaseOutfitScreen purchaseOutfitScreen;
-
     DoctorStore doctorStore;
     PurchasePotionScreen purchasePotionScreen;
+    ArtificerStore artificerStore;
+    PurchaseUpgradesScreen purchaseUpgradesScreen;
 
     SaveScreen saveScreen;
 
@@ -222,6 +224,8 @@ public class UI {
         purchaseOutfitScreen = new PurchaseOutfitScreen(panel);
         doctorStore = new DoctorStore(panel);
         purchasePotionScreen = new PurchasePotionScreen(panel);
+        artificerStore = new ArtificerStore(panel);
+        purchaseUpgradesScreen = new PurchaseUpgradesScreen(panel);
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -248,6 +252,7 @@ public class UI {
             pauseScreen.draw(graphics2D);
         }
         if(panel.gameState == panel.saveState){
+            playScreen.draw(graphics2D);
             pauseScreen.draw(graphics2D);
             saveScreen.draw(graphics2D);
         }
@@ -301,25 +306,40 @@ public class UI {
         }
 
         if(panel.gameState == panel.weaponStoreState){
+            playScreen.draw(graphics2D);
             weaponMasterStore.draw(graphics2D);
         }
         if(panel.gameState == panel.purchaseWeaponState){
+            playScreen.draw(graphics2D);
             weaponMasterStore.draw(graphics2D);
             purchaseWeaponScreen.draw(graphics2D);
         }
         if(panel.gameState == panel.outfitterStoreState){
+            playScreen.draw(graphics2D);
             outfitterStore.draw(graphics2D);
         }
         if(panel.gameState == panel.purchaseOutfitState){
+            playScreen.draw(graphics2D);
             outfitterStore.draw(graphics2D);
             purchaseOutfitScreen.draw(graphics2D);
         }
         if(panel.gameState == panel.doctorStoreState){
+            playScreen.draw(graphics2D);
             doctorStore.draw(graphics2D);
         }
         if(panel.gameState == panel.purchasePotionState){
+            playScreen.draw(graphics2D);
             doctorStore.draw(graphics2D);
             purchasePotionScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.artificerStoreState){
+            playScreen.draw(graphics2D);
+            artificerStore.draw(graphics2D);
+        }
+        if(panel.gameState == panel.purchaseUpgradesState){
+            playScreen.draw(graphics2D);
+            artificerStore.draw(graphics2D);
+            purchaseUpgradesScreen.draw(graphics2D);
         }
     }
 
@@ -454,5 +474,13 @@ public class UI {
 
     public void setPotionNum(int potionNum) {
         this.potionNum = potionNum;
+    }
+
+    public int getUpgradeNum() {
+        return upgradeNum;
+    }
+
+    public void setUpgradeNum(int upgradeNum) {
+        this.upgradeNum = upgradeNum;
     }
 }

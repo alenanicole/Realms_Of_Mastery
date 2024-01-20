@@ -58,5 +58,19 @@ public class DataStorage implements Serializable {
     public boolean staffEquipped;
     public boolean bowEquipped;
 
+    // Upgrades and Outfits
+    public boolean healthUpgradeCanPurchase;
+    public boolean strengthUpgradeCanPurchase;
+    public boolean speedUpgradeCanPurchase;
+    public int healthUpgradeNumAvailable;
+    public int strengthUpgradeNumAvailable;
+    public int speedUpgradeNumAvailable;
+    public boolean hatAvailable;
+    public boolean hatEquipped;
+    public boolean jacketAvailable;
+    public boolean checkerAvailable;
+    public boolean suitAvailable;
+    public boolean ragtagAvailable;
+
 
 }

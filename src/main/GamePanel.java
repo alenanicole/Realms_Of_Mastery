@@ -9,6 +9,7 @@ import object.SuperObject;
 import outfit.SuperOutfit;
 import tile.TileManager;
 import ui.UI;
+import upgrades.SuperUpgrade;
 import weapon.Weapon;
 
 import javax.swing.JPanel;
@@ -51,6 +52,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int purchaseOutfitState = 19;
     public final int doctorStoreState = 20;
     public final int purchasePotionState = 21;
+    public final int artificerStoreState = 22;
+    public final int purchaseUpgradesState = 23;
 
 
     public boolean inEncounter = false;
@@ -63,13 +66,15 @@ public class GamePanel extends JPanel implements Runnable{
     public RandomNumGenerator randGen = new RandomNumGenerator();
     public Player player = new Player(this, keyHandler, "brown", "light", "green", "boy");
     public TileManager tileManager = new TileManager(this);
-    public SuperObject obj[] = new SuperObject[20];
+    public SuperObject[] obj = new SuperObject[20];
     public ObjectLoader objectLoader = new ObjectLoader(this);
 
-    public SuperItem items[] = new SuperItem[26];
-    public Weapon weapons[] = new Weapon[3];
-    public SuperOutfit outfits[] = new SuperOutfit[5];
+    public SuperItem[] items = new SuperItem[26];
+    public Weapon[] weapons = new Weapon[3];
+    public SuperOutfit[] outfits = new SuperOutfit[5];
+    public SuperUpgrade[] upgrades = new SuperUpgrade[3];
     public OutfitLoader outfitLoader = new OutfitLoader(this);
+    public UpgradeLoader upgradeLoader = new UpgradeLoader(this);
     public ItemLoader itemLoader = new ItemLoader(this);
     public CollisionManager collisionManager = new CollisionManager(this);
     public QuestionManager questionManager = new QuestionManager(this);
@@ -77,9 +82,9 @@ public class GamePanel extends JPanel implements Runnable{
     public FightManager fightManager = new FightManager(this);
 
     public UI ui = new UI(this);
-    public Entity monster[] = new Entity[20];
+    public Entity[] monster = new Entity[20];
     public MonsterLoader monsterLoader = new MonsterLoader(this);
-    public Entity npcs[] = new Entity[5];
+    public Entity[] npcs = new Entity[5];
     public NPCLoader npcLoader = new NPCLoader(this);
     public SaveAndLoad saveAndLoad = new SaveAndLoad(this);
 
@@ -104,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable{
 //        gameState = startRunState;
 //        gameState = achievementState;
 //        gameState = tutorialState;
-        gameState = doctorStoreState;
+        gameState = artificerStoreState;
 
     }
 
@@ -196,7 +201,7 @@ public class GamePanel extends JPanel implements Runnable{
         RenderingHints storeRendering = new RenderingHints(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_DEFAULT);
 
-        if(IntStream.of(selectState, inventoryState, outfitterStoreState, weaponStoreState).anyMatch(j -> gameState == j)){
+        if(IntStream.of(selectState, inventoryState, outfitterStoreState, weaponStoreState, doctorStoreState, artificerStoreState).anyMatch(j -> gameState == j)){
             graphics2D.setRenderingHints(storeAntialiasing);
             graphics2D.setRenderingHints(storeRendering);
         }else{

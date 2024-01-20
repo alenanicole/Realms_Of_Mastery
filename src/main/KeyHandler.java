@@ -7,6 +7,7 @@ import item.StrengthPotion;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.stream.IntStream;
 
 public class KeyHandler implements KeyListener {
     public boolean upPressed, downPressed, leftPressed, rightPressed;
@@ -55,9 +56,11 @@ public class KeyHandler implements KeyListener {
             weaponStoreStateKeyHandler(code);
         }else if(panel.gameState == panel.outfitterStoreState){
             outfitterStoreStateKeyHandler(code);
-        }else if(panel.gameState == panel.doctorStoreState){
+        }else if(panel.gameState == panel.doctorStoreState) {
             doctorStoreStateKeyHandler(code);
-        }else if(panel.gameState == panel.purchaseWeaponState || panel.gameState == panel.purchaseOutfitState || panel.gameState == panel.purchasePotionState){
+        }else if(panel.gameState == panel.artificerStoreState){
+            artificerStoreStateKeyHandler(code);
+        }else if(IntStream.of(panel.purchaseOutfitState, panel.purchasePotionState, panel.purchaseUpgradesState, panel.purchaseWeaponState).anyMatch(j -> panel.gameState == j)){
             purchaseStateKeyHandler(code);
         }
     }
@@ -844,6 +847,56 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    public void artificerStoreStateKeyHandler(int code){
+        if(code == KeyEvent.VK_ESCAPE){
+            panel.gameState = panel.tutorialState;
+        }
+
+        if(code == KeyEvent.VK_I){
+            panel.gameState = panel.inventoryState;
+            previousState = panel.artificerStoreState;
+        }
+
+        if (code == KeyEvent.VK_A) {
+            panel.ui.setUpgradeNum(panel.ui.getUpgradeNum() - 1);
+            if (panel.ui.getUpgradeNum() < 0) {
+                panel.ui.setUpgradeNum(3);
+            }
+        }
+
+        if (code == KeyEvent.VK_D) {
+            panel.ui.setUpgradeNum(panel.ui.getUpgradeNum() + 1);
+            if (panel.ui.getUpgradeNum() > 3) {
+                panel.ui.setUpgradeNum(0);
+            }
+        }
+
+        if (code == KeyEvent.VK_W) {
+            if(panel.ui.getUpgradeNum() < 3) {
+                panel.ui.setUpgradeNum(3);
+            }else{
+                panel.ui.setUpgradeNum(0);
+            }
+        }
+
+        if (code == KeyEvent.VK_S) {
+            if(panel.ui.getUpgradeNum() < 3) {
+                panel.ui.setUpgradeNum(3);
+            }else{
+                panel.ui.setUpgradeNum(0);
+            }
+        }
+
+        if(code == KeyEvent.VK_ENTER){
+            if(panel.ui.getUpgradeNum() == 3){
+                panel.gameState = panel.tutorialState;
+            }else{
+                panel.gameState = panel.purchaseUpgradesState;
+                previousState = panel.artificerStoreState;
+            }
+        }
+    }
+
     public void purchaseStateKeyHandler(int code){
         if(code == KeyEvent.VK_D){
             if(panel.ui.getUseNum() == 0){
@@ -884,6 +937,54 @@ public class KeyHandler implements KeyListener {
                                 if (!panel.weapons[2].available && panel.items[0].numHeld >= panel.weapons[2].price){
                                     panel.weapons[2].available = true;
                                     panel.items[0].numHeld -= panel.weapons[2].price;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                        }
+                        break;
+                    case 1:
+                        panel.gameState = previousState;
+                        panel.ui.setUseNum(0);
+                        break;
+                }
+            }
+            if(previousState == panel.artificerStoreState){
+                switch (panel.ui.getUseNum()){
+                    case 0:
+                        switch (panel.ui.getUpgradeNum()) {
+                            case 0:
+                                if (panel.upgrades[0].canPurchase && panel.items[0].numHeld >= panel.upgrades[0].price) {
+                                    panel.items[0].numHeld -= panel.upgrades[0].price;
+                                    panel.upgrades[0].numAvailable--;
+                                    panel.player.maxHealth += 2;
+                                    panel.player.currentHealth += 2;
+                                    if(panel.upgrades[0].numAvailable <= 0){
+                                        panel.upgrades[0].canPurchase = false;
+                                    }
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 1:
+                                if (panel.upgrades[1].canPurchase && panel.items[0].numHeld >= panel.upgrades[1].price) {
+                                    panel.items[0].numHeld -= panel.upgrades[1].price;
+                                    panel.upgrades[1].numAvailable--;
+                                    panel.player.tierOneDamage++;
+                                    panel.player.tierTwoDamage++;
+                                    panel.player.tierThreeDamage++;
+                                    if(panel.upgrades[1].numAvailable <= 0){
+                                        panel.upgrades[1].canPurchase = false;
+                                    }
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 2:
+                                if (panel.upgrades[2].canPurchase && panel.items[0].numHeld >= panel.upgrades[2].price){
+                                    panel.items[0].numHeld -= panel.upgrades[2].price;
+                                    panel.upgrades[2].numAvailable--;
+                                    panel.player.speed += 2;
+                                    if(panel.upgrades[2].numAvailable <= 0){
+                                        panel.upgrades[2].canPurchase = false;
+                                    }
                                     panel.gameState = previousState;
                                 }
                                 break;
@@ -986,5 +1087,4 @@ public class KeyHandler implements KeyListener {
             }
         }
     }
-
 }
