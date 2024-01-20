@@ -7,7 +7,7 @@ public class Suit extends SuperOutfit{
     public Suit(GamePanel panel) {
         super(panel);
         name = "suit";
-        price = 150;
+        price = 200;
         getImage(name, panel.tileSize, panel.tileSize);
     }
 }

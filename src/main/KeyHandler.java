@@ -4,9 +4,7 @@ import item.HealthPotion;
 import item.RerollPotion;
 import item.SpeedPotion;
 import item.StrengthPotion;
-import ui.LoadingScreen;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -37,8 +35,10 @@ public class KeyHandler implements KeyListener {
             tutorialStateKeyHandler(code);
         }else if(panel.gameState == panel.playState){
             playStateKeyHandler(code);
-        }else if(panel.gameState == panel.pauseState){
+        }else if(panel.gameState == panel.pauseState) {
             pauseStateKeyHandler(code);
+        }else if(panel.gameState == panel.saveState){
+            saveStateKeyHandler(code);
         }else if(panel.gameState == panel.inventoryState){
             inventoryStateKeyHandler(code);
         }else if(panel.gameState == panel.useState){
@@ -55,7 +55,9 @@ public class KeyHandler implements KeyListener {
             weaponStoreStateKeyHandler(code);
         }else if(panel.gameState == panel.outfitterStoreState){
             outfitterStoreStateKeyHandler(code);
-        }else if(panel.gameState == panel.purchaseWeaponState || panel.gameState == panel.purchaseOutfitState){
+        }else if(panel.gameState == panel.doctorStoreState){
+            doctorStoreStateKeyHandler(code);
+        }else if(panel.gameState == panel.purchaseWeaponState || panel.gameState == panel.purchaseOutfitState || panel.gameState == panel.purchasePotionState){
             purchaseStateKeyHandler(code);
         }
     }
@@ -185,13 +187,18 @@ public class KeyHandler implements KeyListener {
                 case 1 -> {
                     if(previousState == panel.tutorialState){
                         panel.saveAndLoad.save();
-                    }else{
-                        System.out.println("can't save right now");
                     }
+                    panel.gameState = panel.saveState;
                 }
                 case 2 -> panel.gameState = panel.titleState;
                 case 3 -> System.exit(0);
             }
+        }
+    }
+
+    public void saveStateKeyHandler(int code){
+        if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE){
+            panel.gameState = panel.pauseState;
         }
     }
 
@@ -787,6 +794,56 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    public void doctorStoreStateKeyHandler(int code){
+        if(code == KeyEvent.VK_ESCAPE){
+            panel.gameState = panel.tutorialState;
+        }
+
+        if(code == KeyEvent.VK_I){
+            panel.gameState = panel.inventoryState;
+            previousState = panel.doctorStoreState;
+        }
+
+        if (code == KeyEvent.VK_A) {
+            panel.ui.setPotionNum(panel.ui.getPotionNum() - 1);
+            if (panel.ui.getPotionNum() < 0) {
+                panel.ui.setPotionNum(4);
+            }
+        }
+
+        if (code == KeyEvent.VK_D) {
+            panel.ui.setPotionNum(panel.ui.getPotionNum() + 1);
+            if (panel.ui.getPotionNum() > 4) {
+                panel.ui.setPotionNum(0);
+            }
+        }
+
+        if (code == KeyEvent.VK_W) {
+            if(panel.ui.getPotionNum() < 4) {
+                panel.ui.setPotionNum(4);
+            }else{
+                panel.ui.setPotionNum(0);
+            }
+        }
+
+        if (code == KeyEvent.VK_S) {
+            if(panel.ui.getPotionNum() < 4) {
+                panel.ui.setPotionNum(4);
+            }else{
+                panel.ui.setPotionNum(0);
+            }
+        }
+
+        if(code == KeyEvent.VK_ENTER){
+            if(panel.ui.getPotionNum() == 4){
+                panel.gameState = panel.tutorialState;
+            }else{
+                panel.gameState = panel.purchasePotionState;
+                previousState = panel.doctorStoreState;
+            }
+        }
+    }
+
     public void purchaseStateKeyHandler(int code){
         if(code == KeyEvent.VK_D){
             if(panel.ui.getUseNum() == 0){
@@ -827,6 +884,46 @@ public class KeyHandler implements KeyListener {
                                 if (!panel.weapons[2].available && panel.items[0].numHeld >= panel.weapons[2].price){
                                     panel.weapons[2].available = true;
                                     panel.items[0].numHeld -= panel.weapons[2].price;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                        }
+                        break;
+                    case 1:
+                        panel.gameState = previousState;
+                        panel.ui.setUseNum(0);
+                        break;
+                }
+            }
+            if(previousState == panel.doctorStoreState){
+                switch (panel.ui.getUseNum()){
+                    case 0:
+                        switch (panel.ui.getPotionNum()) {
+                            case 0:
+                                if (panel.items[0].numHeld >= panel.items[2].price) {
+                                    panel.items[0].numHeld -= panel.items[2].price;
+                                    panel.items[2].numHeld++;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 1:
+                                if (panel.items[0].numHeld >= panel.items[3].price) {
+                                    panel.items[0].numHeld -= panel.items[3].price;
+                                    panel.items[3].numHeld++;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 2:
+                                if (panel.items[0].numHeld >= panel.items[4].price){
+                                    panel.items[0].numHeld -= panel.items[4].price;
+                                    panel.items[4].numHeld++;
+                                    panel.gameState = previousState;
+                                }
+                                break;
+                            case 3:
+                                if (panel.items[0].numHeld >= panel.items[5].price){
+                                    panel.items[0].numHeld -= panel.items[5].price;
+                                    panel.items[5].numHeld++;
                                     panel.gameState = previousState;
                                 }
                                 break;

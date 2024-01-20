@@ -7,7 +7,7 @@ public class Ragtag extends SuperOutfit{
     public Ragtag(GamePanel panel) {
         super(panel);
         name = "ragtag";
-        price = 150;
+        price = 100;
         getImage(name, panel.tileSize, panel.tileSize);
     }
 }

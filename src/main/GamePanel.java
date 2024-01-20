@@ -39,24 +39,27 @@ public class GamePanel extends JPanel implements Runnable{
     public final int deathState = 9;
     public final int startRunState = 10;
     public final int winState = 11;
-    public final int statsState = 12;
-    public final int achievementState = 13;
-    public final int loadingState = 14;
+    public final int saveState = 12;
+    public final int statsState = 13;
+    public final int achievementState = 14;
+    public final int loadingState = 15;
 
-    public final int weaponStoreState = 15;
-    public final int purchaseWeaponState = 16;
+    public final int weaponStoreState = 16;
+    public final int purchaseWeaponState = 17;
 
-    public final int outfitterStoreState = 17;
-    public final int purchaseOutfitState = 18;
+    public final int outfitterStoreState = 18;
+    public final int purchaseOutfitState = 19;
+    public final int doctorStoreState = 20;
+    public final int purchasePotionState = 21;
 
 
     public boolean inEncounter = false;
     public int numOfFight = 0;
-    final int FPS = 60;
+    final int FPS = 24;
 
     final Thread gameThread = new Thread(this);
 
-    KeyHandler keyHandler = new KeyHandler(this);
+    public KeyHandler keyHandler = new KeyHandler(this);
     public RandomNumGenerator randGen = new RandomNumGenerator();
     public Player player = new Player(this, keyHandler, "brown", "light", "green", "boy");
     public TileManager tileManager = new TileManager(this);
@@ -101,13 +104,13 @@ public class GamePanel extends JPanel implements Runnable{
 //        gameState = startRunState;
 //        gameState = achievementState;
 //        gameState = tutorialState;
-        gameState = outfitterStoreState;
+        gameState = doctorStoreState;
 
     }
 
     public void reset() {
         numOfFight = 0;
-        tileManager.loadMap("/maps/Map.txt");
+        tileManager.loadMap("/maps/MainMap.txt");
         objectLoader.unloadObjects();
         itemLoader.unloadItems();
         monsterLoader.unloadMonsters();

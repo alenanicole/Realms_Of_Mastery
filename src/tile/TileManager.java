@@ -18,7 +18,7 @@ public class TileManager {
         tile = new Tile[10];
         mapTileNum = new int[panel.maxWorldCol][panel.maxWorldRow];
         getTileImage();
-        loadMap("/maps/Map.txt");
+        loadMap("/maps/MainMap.txt");
     }
 
     public void getTileImage(){
@@ -26,11 +26,13 @@ public class TileManager {
             loadImage(1, "water", true, true);
             loadImage(2, "wall", true, true);
             loadImage(3, "path", false, true);
-            loadImage(4, "sand", false, false);
+            loadImage(4, "dirt", false, true);
             loadImage(5, "tree", true, true);
             loadImage(6, "floor", false, false);
             loadImage(7, "collision_grass", true, true);
-            loadImage(8, "dirt", false, true);
+            loadImage(8, "sand", false, true);
+
+
     }
 
     public void loadImage(int idx, String fileName, boolean collision, boolean collisionNPC){
@@ -74,7 +76,6 @@ public class TileManager {
         }catch (Exception e){
 
         }
-
     }
 
     public void draw(Graphics2D graphics2D){

@@ -19,6 +19,7 @@ public class SuperItem {
     public int collisionAreaDefaultY = 0;
     public boolean encounterOnly = false;
     public boolean adventureOnly = false;
+    public int price;
 
     public void draw(Graphics2D graphics2D, GamePanel panel){
         int screenX = worldX - panel.player.worldX + panel.player.screenX;

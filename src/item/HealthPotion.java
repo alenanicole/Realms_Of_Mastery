@@ -14,6 +14,7 @@ public class HealthPotion extends SuperItem {
         this.panel = panel;
         name = "healthPotion";
         numHeld = 0;
+        price = 15;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/items/healthPotion.png"));
             image  = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);

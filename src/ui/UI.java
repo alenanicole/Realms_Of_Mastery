@@ -2,10 +2,7 @@ package ui;
 
 import main.GamePanel;
 import main.ScalingManager;
-import ui.npc.OutfitterStore;
-import ui.npc.PurchaseOutfitScreen;
-import ui.npc.PurchaseWeaponScreen;
-import ui.npc.WeaponMasterStore;
+import ui.npc.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -33,6 +30,7 @@ public class UI {
     private int startRunNum = 0;
     private int weaponNum = 0;
     private int outfitterNum = 0;
+    private int potionNum = 0;
 
     public Color background, button, border;
     public Color blonde, brownHair, black, redHair;
@@ -86,6 +84,11 @@ public class UI {
     PurchaseWeaponScreen purchaseWeaponScreen;
     OutfitterStore outfitterStore;
     PurchaseOutfitScreen purchaseOutfitScreen;
+
+    DoctorStore doctorStore;
+    PurchasePotionScreen purchasePotionScreen;
+
+    SaveScreen saveScreen;
 
     public UI (GamePanel panel){
         this.panel = panel;
@@ -211,11 +214,14 @@ public class UI {
         achievementScreen = new AchievementScreen(panel);
         answerScreen = new WrongAnswerScreen(panel);
         loadingScreen = new LoadingScreen(panel, graphics2D);
+        saveScreen = new SaveScreen(panel);
 
         weaponMasterStore = new WeaponMasterStore(panel);
         purchaseWeaponScreen = new PurchaseWeaponScreen(panel);
         outfitterStore = new OutfitterStore(panel);
         purchaseOutfitScreen = new PurchaseOutfitScreen(panel);
+        doctorStore = new DoctorStore(panel);
+        purchasePotionScreen = new PurchasePotionScreen(panel);
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -240,6 +246,10 @@ public class UI {
         if (panel.gameState == panel.pauseState) {
             playScreen.draw(graphics2D);
             pauseScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.saveState){
+            pauseScreen.draw(graphics2D);
+            saveScreen.draw(graphics2D);
         }
         if (panel.gameState == panel.inventoryState) {
             playScreen.draw(graphics2D);
@@ -303,6 +313,13 @@ public class UI {
         if(panel.gameState == panel.purchaseOutfitState){
             outfitterStore.draw(graphics2D);
             purchaseOutfitScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.doctorStoreState){
+            doctorStore.draw(graphics2D);
+        }
+        if(panel.gameState == panel.purchasePotionState){
+            doctorStore.draw(graphics2D);
+            purchasePotionScreen.draw(graphics2D);
         }
     }
 
@@ -429,5 +446,13 @@ public class UI {
 
     public void setOutfitterNum(int outfitterNum) {
         this.outfitterNum = outfitterNum;
+    }
+
+    public int getPotionNum() {
+        return potionNum;
+    }
+
+    public void setPotionNum(int potionNum) {
+        this.potionNum = potionNum;
     }
 }

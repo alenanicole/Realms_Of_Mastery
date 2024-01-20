@@ -13,6 +13,7 @@ public class RerollPotion extends SuperItem{
         this.panel = panel;
         name = "rerollPotion";
         numHeld = 0;
+        price = 25;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/items/rerollPotion.png"));
             image  = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);

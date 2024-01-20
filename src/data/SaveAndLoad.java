@@ -8,6 +8,7 @@ import java.io.*;
 public class SaveAndLoad {
 
     GamePanel panel;
+    private boolean successful;
 
     public SaveAndLoad(GamePanel panel){
         this.panel = panel;
@@ -71,8 +72,9 @@ public class SaveAndLoad {
             dataStorage.bowEquipped = panel.weapons[2].equipped;
 
             oos.writeObject(dataStorage);
+            successful = true;
         } catch (IOException e) {
-            System.out.println("Could not save!");
+            successful = false;
             e.printStackTrace();
         }
 
@@ -142,5 +144,9 @@ public class SaveAndLoad {
         }
 
 
+    }
+
+    public boolean isSuccessful() {
+        return successful;
     }
 }

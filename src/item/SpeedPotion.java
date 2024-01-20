@@ -14,6 +14,7 @@ public class SpeedPotion extends SuperItem{
         this.panel = panel;
         name = "speedPotion";
         numHeld = 0;
+        price = 15;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/items/speedPotion.png"));
             image  = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);
@@ -31,17 +32,16 @@ public class SpeedPotion extends SuperItem{
             @Override
             public void run()
             {
-                panel.player.speed++;
+                panel.player.speed += 2;
                 inUse = true;
 
                 try {
-//                    Thread.sleep(1000 * 60 * 2);
                     TimeUnit.MINUTES.sleep(1);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
 
-                panel.player.speed--;
+                panel.player.speed -= 2;
                 inUse = false;
             }
         }).start();
