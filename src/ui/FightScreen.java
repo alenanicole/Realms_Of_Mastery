@@ -151,10 +151,38 @@ public class FightScreen extends UI{
 
         String text = panel.questionManager.getQuestion();
         y = panel.tileSize * 5;
-        for(String line : text.split("-")){
-            x = super.getCenteredX(line, graphics2D);
-            drawFloat(x, y, line, 3);
-            y += panel.tileSize;
+        if(panel.questionManager.currentCategory.equals("wordproblem")){
+            String line;
+            int last_space = 0;
+            int begin = 0;
+            int current_char_num = 0;
+            for(int i = 0; i < text.length(); i++){
+                if (text.charAt(i) == ' '){
+                    last_space = i;
+                }
+                if(i > 0 && i % 30 == 0 || i == text.length() - 1) {
+                    if(last_space == i) {
+                        line = text.substring(begin, current_char_num + 1);
+                        begin = current_char_num + 1;
+                    }else if(i == text.length() - 1){
+                        line = text.substring(begin);
+                    }else{
+                        line = text.substring(begin, last_space);
+                        begin = last_space + 1;
+                    }
+                    x = super.getCenteredX(line, graphics2D);
+                    drawFloat(x, y, line, 3);
+                    y += panel.tileSize;
+                    current_char_num = begin - 1;
+                }
+                current_char_num++;
+            }
+        }else{
+            for(String line : text.split("-")){
+                x = super.getCenteredX(line, graphics2D);
+                drawFloat(x, y, line, 3);
+                y += panel.tileSize;
+            }
         }
 
         x = panel.screenWidth/ 2 - panel.tileSize * 3;

@@ -138,31 +138,61 @@ public class TreasureScreen extends UI{
             panel.questionManager.drawTierThree();
         }
 
-            String text = panel.questionManager.getQuestion();
-            y = panel.tileSize * 5;
+
+        String text = panel.questionManager.getQuestion();
+        y = panel.tileSize * 5;
+
+        if(panel.questionManager.currentCategory.equals("wordproblem")){
+            String line;
+            int last_space = 0;
+            int begin = 0;
+            int current_char_num = 0;
+            for(int i = 0; i < text.length(); i++){
+                if (text.charAt(i) == ' '){
+                    last_space = i;
+                }
+                if(i > 0 && i % 30 == 0 || i == text.length() - 1) {
+                    if(last_space == i) {
+                        line = text.substring(begin, current_char_num + 1);
+                        begin = current_char_num + 1;
+                    }else if(i == text.length() - 1){
+                        line = text.substring(begin);
+                    }else{
+                        line = text.substring(begin, last_space);
+                        begin = last_space + 1;
+                    }
+                    x = super.getCenteredX(line, graphics2D);
+                    drawFloat(x, y, line, 3);
+                    y += panel.tileSize;
+                    current_char_num = begin - 1;
+                }
+                current_char_num++;
+            }
+        }else{
             for(String line : text.split("-")){
                 x = super.getCenteredX(line, graphics2D);
                 drawFloat(x, y, line, 3);
                 y += panel.tileSize;
             }
+        }
 
-            x = panel.screenWidth/ 2 - panel.tileSize * 3;
+        x = panel.screenWidth/ 2 - panel.tileSize * 3;
 
-            graphics2D.setComposite(composite);
-            graphics2D.setColor(button);
-            graphics2D.fill(new RoundRectangle2D.Float(x, y,
-                    panel.tileSize * 6, panel.tileSize,
-                    10, 10));
-            graphics2D.setColor(border);
-            graphics2D.draw(new RoundRectangle2D.Float(x, y,
-                    panel.tileSize * 6, panel.tileSize,
-                    10, 10));
+        graphics2D.setComposite(composite);
+        graphics2D.setColor(button);
+        graphics2D.fill(new RoundRectangle2D.Float(x, y,
+                panel.tileSize * 6, panel.tileSize,
+                10, 10));
+        graphics2D.setColor(border);
+        graphics2D.draw(new RoundRectangle2D.Float(x, y,
+                panel.tileSize * 6, panel.tileSize,
+                10, 10));
 
-            graphics2D.setComposite(originalComposite);
+        graphics2D.setComposite(originalComposite);
 
-            x += 5;
-            y += panel.tileSize;
-            drawFloat(x, y - 5, panel.questionManager.getGivenAns(), 3);
+        x += 5;
+        y += panel.tileSize;
+        drawFloat(x, y - 5, panel.questionManager.getGivenAns(), 3);
 
     }
 

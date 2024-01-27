@@ -6,6 +6,7 @@ import object.SuperObject;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import java.util.Objects;
 
 public class HealthPotion extends SuperItem {
     GamePanel panel;
@@ -16,7 +17,7 @@ public class HealthPotion extends SuperItem {
         numHeld = 0;
         price = 15;
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/items/healthPotion.png"));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/items/healthPotion.png")));
             image  = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);
         }catch (IOException e){
             e.printStackTrace();

@@ -124,14 +124,42 @@ public class FightManager {
 
         float max = panel.questionManager.percentCorrect[0];
         int maxIdx = 0;
+        int maxRightProblems = 0;
 
         for (int i = 1; i < panel.questionManager.percentCorrect.length; i++) {
             if(panel.questionManager.percentCorrect[i] > max){
-                max = panel.questionManager.percentCorrect[i];
-                maxIdx = i;
+                switch(i){
+                    case 0:
+                        if(panel.player.rightMultiplicationQuestions > maxRightProblems){
+                            max = panel.questionManager.percentCorrect[i];
+                            maxIdx = i;
+                            maxRightProblems = panel.player.rightMultiplicationQuestions;
+                        }
+                        break;
+                    case 1:
+                        if(panel.player.rightDivisionQuestions > maxRightProblems){
+                            max = panel.questionManager.percentCorrect[i];
+                            maxIdx = i;
+                            maxRightProblems = panel.player.rightDivisionQuestions;
+                        }
+                        break;
+                    case 2:
+                        if(panel.player.rightFractionQuestions > maxRightProblems){
+                            max = panel.questionManager.percentCorrect[i];
+                            maxIdx = i;
+                            maxRightProblems = panel.player.rightFractionQuestions;
+                        }
+                        break;
+                    case 3:
+                        if(panel.player.rightWordProblemQuestions > maxRightProblems){
+                            max = panel.questionManager.percentCorrect[i];
+                            maxIdx = i;
+                            maxRightProblems = panel.player.rightWordProblemQuestions;
+                        }
+                        break;
+                }
+
             }
-
-
         }
         panel.player.bestCategory = panel.questionManager.questionTypes[maxIdx];
 
