@@ -109,8 +109,9 @@ public class GamePanel extends JPanel implements Runnable{
 //        gameState = startRunState;
 //        gameState = achievementState;
 //        gameState = tutorialState;
-        gameState = artificerStoreState;
+//        gameState = artificerStoreState;
 
+        gameState = startRunState;
     }
 
     public void reset() {

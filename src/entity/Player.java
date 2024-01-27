@@ -5,7 +5,6 @@ import main.KeyHandler;
 import main.ScalingManager;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -265,7 +264,7 @@ public class Player extends Entity{
             collision = false;
             panel.collisionManager.checkTile(this);
             int objIdx = panel.collisionManager.checkObject(this, true);
-            pickUpObject(objIdx);
+            objectInteract(objIdx);
             int itemIdx = panel.collisionManager.checkItem(this, true);
             pickUpItem(itemIdx);
             int monsterIdx = panel.collisionManager.checkEntity(this, panel.monster);
@@ -324,11 +323,14 @@ public class Player extends Entity{
         }
     }
 
-    public void pickUpObject(int idx) {
+    public void objectInteract(int idx) {
         if(idx != 999){
             String objectName = panel.obj[idx].name;
 
             switch(objectName){
+                case "portal":
+                    panel.gameState = panel.startRunState;
+                    break;
                 case "chest":
                     if(!panel.obj[idx].opened){
                         panel.treasureManager.startTreasureCollection(idx);

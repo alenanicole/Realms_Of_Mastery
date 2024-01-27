@@ -37,7 +37,7 @@ public class LoadingThread extends Thread implements Runnable{
     }
 
     public void loadRun(){
-        System.out.println(System.currentTimeMillis());
+//        System.out.println(System.currentTimeMillis());
         panel.npcLoader.unloadNPCs();
         panel.tileManager.loadMap("/maps/Dungeon_1.txt");
         panel.player.worldX = panel.tileSize * 57;
@@ -46,7 +46,7 @@ public class LoadingThread extends Thread implements Runnable{
         panel.objectLoader.setObject();
         panel.itemLoader.initializeItems();
         panel.monsterLoader.intializeMonsters();
-        System.out.println(System.currentTimeMillis());
+//        System.out.println(System.currentTimeMillis());
     }
 
     public void reset(){

@@ -6,15 +6,15 @@ import main.ScalingManager;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class WeaponTable1 extends SuperObject {
+public class PortalTL extends SuperObject {
     ScalingManager scalingManager = new ScalingManager();
     GamePanel panel;
-    public WeaponTable1(GamePanel panel){
+    public PortalTL(GamePanel panel){
         this.panel = panel;
-        name = "weapontable1";
+        name = "portal";
         collision = true;
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/tutorial_objects/weapons/weapon-table-1.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/tutorial_objects/start_run/portal_tl.png"));
             image  = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);
         }catch (IOException e){
             e.printStackTrace();

@@ -78,16 +78,41 @@ public class ObjectLoader {
     }
 
     public void tutorialObjects(){
-        panel.obj[0] = new WeaponTable1(panel);
-        panel.obj[0].worldX = 37 * panel.tileSize;
-        panel.obj[0].worldY = 47 * panel.tileSize;
+        panel.obj[0] = new PortalBL(panel);
+        panel.obj[0].worldX = 76 * panel.tileSize;
+        panel.obj[0].worldY = 76 * panel.tileSize;
 
-        panel.obj[1] = new WeaponTable2(panel);
-        panel.obj[1].worldX = 38 * panel.tileSize;
-        panel.obj[1].worldY = 47 * panel.tileSize;
+        panel.obj[1] = new PortalBR(panel);
+        panel.obj[1].worldX = 77 * panel.tileSize;
+        panel.obj[1].worldY = 76 * panel.tileSize;
 
-        panel.obj[2] = new WeaponTable3(panel);
-        panel.obj[2].worldX = 39 * panel.tileSize;
-        panel.obj[2].worldY = 47 * panel.tileSize;
+        panel.obj[2] = new PortalML(panel);
+        panel.obj[2].worldX = 76 * panel.tileSize;
+        panel.obj[2].worldY = 75 * panel.tileSize;
+
+        panel.obj[3] = new PortalMR(panel);
+        panel.obj[3].worldX = 77 * panel.tileSize;
+        panel.obj[3].worldY = 75 * panel.tileSize;
+
+        panel.obj[4] = new PortalTL(panel);
+        panel.obj[4].worldX = 76 * panel.tileSize;
+        panel.obj[4].worldY = 74 * panel.tileSize;
+
+        panel.obj[5] = new PortalTR(panel);
+        panel.obj[5].worldX = 77 * panel.tileSize;
+        panel.obj[5].worldY = 74 * panel.tileSize;
+
+
+        panel.obj[6] = new WeaponTable1(panel);
+        panel.obj[6].worldX = 37 * panel.tileSize;
+        panel.obj[6].worldY = 47 * panel.tileSize;
+
+        panel.obj[7] = new WeaponTable2(panel);
+        panel.obj[7].worldX = 38 * panel.tileSize;
+        panel.obj[7].worldY = 47 * panel.tileSize;
+
+        panel.obj[8] = new WeaponTable3(panel);
+        panel.obj[8].worldX = 39 * panel.tileSize;
+        panel.obj[8].worldY = 47 * panel.tileSize;
     }
 }

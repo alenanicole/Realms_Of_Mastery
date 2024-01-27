@@ -34,8 +34,10 @@ public class KeyHandler implements KeyListener {
             selectionStateKeyHandler(code);
         }else if(panel.gameState == panel.tutorialState){
             tutorialStateKeyHandler(code);
-        }else if(panel.gameState == panel.playState){
+        }else if(panel.gameState == panel.playState) {
             playStateKeyHandler(code);
+        }else if(panel.gameState == panel.startRunState){
+            startRunStateKeyHandler(code);
         }else if(panel.gameState == panel.pauseState) {
             pauseStateKeyHandler(code);
         }else if(panel.gameState == panel.saveState){
@@ -119,20 +121,20 @@ public class KeyHandler implements KeyListener {
             previousState = panel.tutorialState;
         }
 
-        if(code == KeyEvent.VK_H){
-            panel.gameState = panel.loadingState;
-
-
-            LoadingThread lt = new LoadingThread(panel);
-            lt.run(0);
-            try {
-                synchronized(panel.gameThread){
-                    panel.gameThread.wait();
-                }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+//        if(code == KeyEvent.VK_H){
+//            panel.gameState = panel.loadingState;
+//
+//
+//            LoadingThread lt = new LoadingThread(panel);
+//            lt.run(0);
+//            try {
+//                synchronized(panel.gameThread){
+//                    panel.gameThread.wait();
+//                }
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
     }
     public void playStateKeyHandler(int code){
         if(code == KeyEvent.VK_W){
@@ -163,6 +165,49 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_O){
             panel.gameState = panel.statsState;
             previousState = panel.playState;
+        }
+    }
+
+    public void startRunStateKeyHandler(int code){
+        if(code == KeyEvent.VK_D){
+            if(panel.ui.getStartRunNum() == 0){
+                panel.ui.setStartRunNum(1);
+            }else{
+                panel.ui.setStartRunNum(0);
+            }
+        }
+
+        if(code == KeyEvent.VK_A){
+            if(panel.ui.getStartRunNum() == 0){
+                panel.ui.setStartRunNum(1);
+            }else{
+                panel.ui.setStartRunNum(0);
+            }
+        }
+
+        if(code == KeyEvent.VK_ESCAPE){
+            panel.gameState = panel.tutorialState;
+        }
+
+        if(code == KeyEvent.VK_ENTER){
+            switch (panel.ui.getStartRunNum()){
+                case 0:
+                    panel.gameState = panel.loadingState;
+
+                    LoadingThread lt = new LoadingThread(panel);
+                    lt.run(0);
+                    try {
+                        synchronized(panel.gameThread){
+                            panel.gameThread.wait();
+                        }
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                case 1:
+                    panel.gameState = panel.tutorialState;
+                    break;
+            }
         }
     }
     public void pauseStateKeyHandler(int code){

@@ -28,7 +28,7 @@ public class StartRunScreen extends UI{
 
         text = "Start Run?";
         x = super.getCenteredX(text, graphics2D);
-        y += panel.tileSize;
+        y += panel.tileSize * 2;
 
         graphics2D.setColor(Color.black);
         graphics2D.drawString(text, x + 5, y + 5);
@@ -36,7 +36,7 @@ public class StartRunScreen extends UI{
         graphics2D.drawString(text, x, y);
 
         text = "Yes";
-        y += panel.tileSize * 3;
+        y += panel.tileSize * 2;
         x = (int) (panel.screenWidth / 2 - panel.tileSize * 3);
         graphics2D.setColor(Color.black);
         graphics2D.drawString(text, x + 5, y + 5);

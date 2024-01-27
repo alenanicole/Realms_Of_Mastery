@@ -14,7 +14,7 @@ public class WeaponTable2 extends SuperObject {
         name = "weapontable2";
         collision = true;
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/weapons/table/weapon-table-2.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/tutorial_objects/weapons/weapon-table-2.png"));
             image  = scalingManager.toCompatibleImage(image, panel.tileSize, panel.tileSize);
         }catch (IOException e){
             e.printStackTrace();
