@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public boolean inEncounter = false;
     public int numOfFight = 0;
-    final int FPS = 24;
+    final int FPS = 30;
 
     final Thread gameThread = new Thread(this);
 

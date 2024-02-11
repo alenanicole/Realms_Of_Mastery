@@ -2,6 +2,8 @@ package main;
 
 import object.*;
 
+import java.util.Arrays;
+
 public class ObjectLoader {
     GamePanel panel;
 
@@ -10,9 +12,7 @@ public class ObjectLoader {
     }
 
     public void unloadObjects(){
-        for(int i = 0; i < panel.obj.length; i++){
-            panel.obj[i] = null;
-        }
+        Arrays.fill(panel.obj, null);
     }
     public void setObject(){
         panel.obj[0] = new Chest_obj(panel);
