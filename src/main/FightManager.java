@@ -25,8 +25,7 @@ public class FightManager {
             if(correct){
                 panel.player.bossesSlain++;
             }
-            panel.gameState = panel.tutorialState;
-//            panel.gameState = panel.winState;
+            panel.gameState = panel.winState;
             panel.reset();
             return;
         }

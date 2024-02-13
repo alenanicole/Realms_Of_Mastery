@@ -55,6 +55,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int artificerStoreState = 22;
     public final int purchaseUpgradesState = 23;
 
+    public final int helpState = 24;
+
 
     public boolean inEncounter = false;
     public int numOfFight = 0;
@@ -105,13 +107,7 @@ public class GamePanel extends JPanel implements Runnable{
         npcLoader.loadNPCs();
         objectLoader.tutorialObjects();
         player.getPlayerImage();
-//        gameState = titleState;
-//        gameState = startRunState;
-//        gameState = achievementState;
-//        gameState = tutorialState;
-//        gameState = artificerStoreState;
-
-        gameState = startRunState;
+        gameState = tutorialState;
     }
 
     public void reset() {

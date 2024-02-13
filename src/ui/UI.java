@@ -91,6 +91,9 @@ public class UI {
     PurchaseUpgradesScreen purchaseUpgradesScreen;
 
     SaveScreen saveScreen;
+    WinScreen winScreen;
+
+    HelpScreen helpScreen;
 
     public UI (GamePanel panel){
         this.panel = panel;
@@ -217,6 +220,8 @@ public class UI {
         answerScreen = new WrongAnswerScreen(panel);
         loadingScreen = new LoadingScreen(panel, graphics2D);
         saveScreen = new SaveScreen(panel);
+        winScreen = new WinScreen(panel);
+        helpScreen = new HelpScreen(panel);
 
         weaponMasterStore = new WeaponMasterStore(panel);
         purchaseWeaponScreen = new PurchaseWeaponScreen(panel);
@@ -226,6 +231,8 @@ public class UI {
         purchasePotionScreen = new PurchasePotionScreen(panel);
         artificerStore = new ArtificerStore(panel);
         purchaseUpgradesScreen = new PurchaseUpgradesScreen(panel);
+
+
     }
 
     public void draw(Graphics2D graphics2D) {
@@ -242,7 +249,11 @@ public class UI {
         }
         if(panel.gameState == panel.tutorialState){
             playScreen.draw(graphics2D);
-            tutorialScreen.draw();
+            tutorialScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.helpState){
+            playScreen.draw(graphics2D);
+            helpScreen.draw(graphics2D);
         }
         if (panel.gameState == panel.playState) {
             playScreen.draw(graphics2D);
@@ -340,6 +351,10 @@ public class UI {
             playScreen.draw(graphics2D);
             artificerStore.draw(graphics2D);
             purchaseUpgradesScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.winState){
+            playScreen.draw(graphics2D);
+            winScreen.draw(graphics2D);
         }
     }
 
