@@ -1,9 +1,6 @@
 package main;
 
-import item.HealthPotion;
-import item.RerollPotion;
-import item.SpeedPotion;
-import item.StrengthPotion;
+import item.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -37,6 +34,8 @@ public class KeyHandler implements KeyListener {
             tutorialStateKeyHandler(code);
         }else if(panel.gameState == panel.helpState){
             helpStateKeyHandler(code);
+        }else if(panel.gameState == panel.mapState){
+            mapStateKeyHandler(code);
         }else if(panel.gameState == panel.playState) {
             playStateKeyHandler(code);
         }else if(panel.gameState == panel.startRunState){
@@ -53,6 +52,8 @@ public class KeyHandler implements KeyListener {
             treasureStateKeyHandler(code);
         }else if(panel.gameState == panel.fightState) {
             fightStateKeyHandler(code);
+        }else if(panel.gameState == panel.bossRushState) {
+            bossRushStateKeyHandler(code);
         }else if(panel.gameState == panel.deathState) {
             deathStateKeyHandler(code);
         }else if(panel.gameState == panel.winState){
@@ -69,6 +70,10 @@ public class KeyHandler implements KeyListener {
             artificerStoreStateKeyHandler(code);
         }else if(IntStream.of(panel.purchaseOutfitState, panel.purchasePotionState, panel.purchaseUpgradesState, panel.purchaseWeaponState).anyMatch(j -> panel.gameState == j)){
             purchaseStateKeyHandler(code);
+        }else if(panel.gameState == panel.bossRushStartState){
+            BossRushStartStateKeyHandler(code);
+        }else if(panel.gameState == panel.wrongAnswerState){
+            wrongAnswerHandler(code);
         }
     }
 
@@ -97,12 +102,24 @@ public class KeyHandler implements KeyListener {
 
     public void tutorialStateKeyHandler(int code) {
         if(code == KeyEvent.VK_ENTER){
-            panel.gameState = panel.helpState;
+            panel.gameState = panel.mapState;
+            previousState = panel.tutorialState;
         }
     }
     public void helpStateKeyHandler(int code){
         if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_H){
             panel.gameState = previousState;
+        }
+    }
+
+    public void mapStateKeyHandler(int code){
+        if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_M){
+            if (previousState == panel.tutorialState){
+                panel.gameState = panel.helpState;
+                previousState = panel.playState;
+            }else {
+                panel.gameState = previousState;
+            }
         }
     }
 
@@ -139,6 +156,10 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_H){
             panel.gameState = panel.helpState;
+            previousState = panel.playState;
+        }
+        if(code == KeyEvent.VK_M){
+            panel.gameState = panel.mapState;
             previousState = panel.playState;
         }
     }
@@ -627,6 +648,12 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    private void wrongAnswerHandler(int code){
+        panel.questionManager.setCorrect(true);
+        panel.gameState = panel.bossRushState;
+        panel.update();
+    }
+
     private void fightStateKeyHandler(int code) {
         if(code == KeyEvent.VK_I){
             panel.gameState = panel.inventoryState;
@@ -691,15 +718,66 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    private void bossRushStateKeyHandler(int code) {
+        if(code == KeyEvent.VK_I){
+            panel.gameState = panel.inventoryState;
+            previousState = panel.bossRushState;
+        }
+
+        if(code == KeyEvent.VK_P){
+            panel.gameState = panel.pauseState;
+            previousState = panel.bossRushState;;
+        }
+
+        if(code == KeyEvent.VK_O){
+            panel.gameState = panel.statsState;
+            previousState = panel.bossRushState;
+        }
+
+        if(code == KeyEvent.VK_H){
+            panel.gameState = panel.helpState;
+            previousState = panel.bossRushState;
+        }
+
+        if(code == KeyEvent.VK_ESCAPE){
+            panel.gameState = panel.playState;
+        }
+
+
+
+        if(code == KeyEvent.VK_ENTER && panel.questionManager.getGivenAns() != "" && panel.questionManager.isCorrect()){
+            panel.bossRushManager.validateAns();
+        }
+
+
+        switch (code){
+            case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
+                    KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R, KeyEvent.VK_F, KeyEvent.VK_T, KeyEvent.VK_SLASH, KeyEvent.VK_MINUS -> {
+                if (panel.questionManager.getGivenAns().length() <= 7) {
+                    panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (char)(code));
+                }
+            }
+            case KeyEvent.VK_BACK_SPACE -> {
+                if(panel.questionManager.getGivenAns() != ""){
+                    panel.questionManager.setGivenAns(panel.questionManager.getGivenAns().substring(0, panel.questionManager.getGivenAns().length() - 1));
+                }else{
+                    panel.questionManager.setGivenAns("");
+                }
+            }
+
+        }
+
+    }
+
     public void deathStateKeyHandler(int code) {
         if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.tutorialState;
+            panel.gameState = panel.playState;
         }
     }
 
     public void winStateKeyHandler(int code) {
         if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.tutorialState;
+            panel.gameState = panel.playState;
         }
     }
 
@@ -728,7 +806,7 @@ public class KeyHandler implements KeyListener {
 
     public void weaponStoreStateKeyHandler(int code){
         if(code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.tutorialState;
+            panel.gameState = panel.playState;
         }
 
         if(code == KeyEvent.VK_I){
@@ -773,7 +851,7 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_ENTER){
             if(panel.ui.getWeaponNum() == 3){
-                panel.gameState = panel.tutorialState;
+                panel.gameState = panel.playState;
             }else{
                 panel.gameState = panel.purchaseWeaponState;
                 previousState = panel.weaponStoreState;
@@ -783,7 +861,7 @@ public class KeyHandler implements KeyListener {
 
     public void outfitterStoreStateKeyHandler(int code){
         if(code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.tutorialState;
+            panel.gameState = panel.playState;
         }
 
         if(code == KeyEvent.VK_I){
@@ -836,7 +914,7 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_ENTER){
             if(panel.ui.getOutfitterNum() == 6) {
-                panel.gameState = panel.tutorialState;
+                panel.gameState = panel.playState;
             }else if(panel.ui.getOutfitterNum() == 5){
                 panel.gameState = panel.selectState;
                 previousState = panel.outfitterStoreState;
@@ -849,7 +927,7 @@ public class KeyHandler implements KeyListener {
 
     public void doctorStoreStateKeyHandler(int code){
         if(code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.tutorialState;
+            panel.gameState = panel.playState;
         }
 
         if(code == KeyEvent.VK_I){
@@ -894,7 +972,7 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_ENTER){
             if(panel.ui.getPotionNum() == 4){
-                panel.gameState = panel.tutorialState;
+                panel.gameState = panel.playState;
             }else{
                 panel.gameState = panel.purchasePotionState;
                 previousState = panel.doctorStoreState;
@@ -904,7 +982,7 @@ public class KeyHandler implements KeyListener {
 
     public void artificerStoreStateKeyHandler(int code){
         if(code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.tutorialState;
+            panel.gameState = panel.playState;
         }
 
         if(code == KeyEvent.VK_I){
@@ -949,7 +1027,7 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_ENTER){
             if(panel.ui.getUpgradeNum() == 3){
-                panel.gameState = panel.tutorialState;
+                panel.gameState = panel.playState;
             }else{
                 panel.gameState = panel.purchaseUpgradesState;
                 previousState = panel.artificerStoreState;
@@ -1144,6 +1222,58 @@ public class KeyHandler implements KeyListener {
                         panel.ui.setUseNum(0);
                         break;
                 }
+            }
+        }
+    }
+
+    public void BossRushStartStateKeyHandler(int code){
+        if(code == KeyEvent.VK_ESCAPE) {
+            panel.gameState = previousState;
+        }
+
+        if (code == KeyEvent.VK_W) {
+            panel.ui.setBossRushNum(panel.ui.getBossRushNum() - 1);
+            if (panel.ui.getBossRushNum() < 0) {
+                panel.ui.setBossRushNum(6);
+            }
+        }
+
+        if (code == KeyEvent.VK_S) {
+            panel.ui.setBossRushNum(panel.ui.getBossRushNum() + 1);
+            if (panel.ui.getBossRushNum() > 6) {
+                panel.ui.setBossRushNum(0);
+            }
+        }
+
+        if(panel.ui.getBossRushNum() == 6){
+            switch (code){
+                case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
+                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R, KeyEvent.VK_F, KeyEvent.VK_T, KeyEvent.VK_SLASH, KeyEvent.VK_MINUS -> {
+                    if (panel.bossRushManager.getNumQuestions().length() <= 3) {
+                        panel.bossRushManager.setNumQuestions(panel.bossRushManager.getNumQuestions() + (char)(code));
+                    }
+                }
+                case KeyEvent.VK_BACK_SPACE -> {
+                    if(panel.bossRushManager.getNumQuestions() != ""){
+                        panel.bossRushManager.setNumQuestions(panel.bossRushManager.getNumQuestions().substring(0, panel.bossRushManager.getNumQuestions().length() - 1));
+                    }else{
+                        panel.bossRushManager.setNumQuestions("");
+                    }
+                }
+
+            }
+        }
+
+        if (code == KeyEvent.VK_ENTER) {
+            switch (panel.ui.getBossRushNum()) {
+                case 0 -> panel.bossRushManager.startBossRush("multiplication");
+                case 1 -> panel.bossRushManager.startBossRush("division");
+                case 2 -> panel.bossRushManager.startBossRush("fraction");
+                case 3 -> panel.bossRushManager.startBossRush("wordproblem");
+                case 4 -> {}
+                case 5 -> panel.gameState = panel.playState;
+                case 6 -> {}
+
             }
         }
     }

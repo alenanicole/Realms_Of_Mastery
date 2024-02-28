@@ -56,7 +56,10 @@ public class GamePanel extends JPanel implements Runnable{
     public final int purchaseUpgradesState = 23;
 
     public final int helpState = 24;
-
+    public final int mapState = 25;
+    public final int bossRushStartState = 26;
+    public final int bossRushState = 27;
+    public final int wrongAnswerState = 28;
 
     public boolean inEncounter = false;
     public int numOfFight = 0;
@@ -82,6 +85,7 @@ public class GamePanel extends JPanel implements Runnable{
     public QuestionManager questionManager = new QuestionManager(this);
     public TreasureManager treasureManager = new TreasureManager(this);
     public FightManager fightManager = new FightManager(this);
+    public BossRushManager bossRushManager = new BossRushManager(this);
 
     public UI ui = new UI(this);
     public Entity[] monster = new Entity[20];
@@ -102,12 +106,13 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setUpGame(){
         outfitLoader.intializeStaticOutfits();
+        upgradeLoader.intializeUpgrades();
         itemLoader.intializeStaticItems();
         questionManager.intitializeQuestions();
         npcLoader.loadNPCs();
-        objectLoader.tutorialObjects();
+        objectLoader.centralMapObjects();
         player.getPlayerImage();
-        gameState = tutorialState;
+        gameState = bossRushStartState;
     }
 
     public void reset() {
@@ -191,14 +196,14 @@ public class GamePanel extends JPanel implements Runnable{
         RenderingHints playAntialiasing = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         RenderingHints playRendering = new RenderingHints(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
+                RenderingHints.VALUE_RENDER_SPEED);
 
         RenderingHints storeAntialiasing = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_DEFAULT);
         RenderingHints storeRendering = new RenderingHints(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_DEFAULT);
 
-        if(IntStream.of(selectState, inventoryState, outfitterStoreState, weaponStoreState, doctorStoreState, artificerStoreState).anyMatch(j -> gameState == j)){
+        if(IntStream.of(selectState, inventoryState, outfitterStoreState, weaponStoreState, doctorStoreState, artificerStoreState, mapState).anyMatch(j -> gameState == j)){
             graphics2D.setRenderingHints(storeAntialiasing);
             graphics2D.setRenderingHints(storeRendering);
         }else{

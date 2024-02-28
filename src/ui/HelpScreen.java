@@ -62,6 +62,9 @@ public class HelpScreen extends UI{
         text = "H - Help";
         y += panel.tileSize;
         drawFloat(x, y, text, 3);
+        text = "M - Map";
+        y += panel.tileSize;
+        drawFloat(x, y, text, 3);
         text = "O - Achievements and Stats";
         y += panel.tileSize;
         drawFloat(x, y, text, 3);
@@ -69,7 +72,7 @@ public class HelpScreen extends UI{
 
         graphics2D.setFont(joystix);
         x += panel.tileSize * 10.5;
-        y += panel.tileSize * .5;
+        y -= panel.tileSize * .5;
         graphics2D.setColor(button);
         graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize * 4, panel.tileSize + 10, 5, 5));
         graphics2D.setColor(border);

@@ -77,7 +77,7 @@ public class ObjectLoader {
         panel.obj[14].worldY = 103 * panel.tileSize;
     }
 
-    public void tutorialObjects(){
+    public void centralMapObjects(){
         panel.obj[0] = new PortalBL(panel);
         panel.obj[0].worldX = 76 * panel.tileSize;
         panel.obj[0].worldY = 76 * panel.tileSize;

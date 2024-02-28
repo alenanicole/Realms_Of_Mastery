@@ -50,7 +50,6 @@ public class QuestionManager {
     public void drawTierOne(){
         if (!isAlreadyDrawn()) {
             int randSelector = panel.randGen.getRandomInteger(100, 1);
-//            randSelector = 78;
             if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierOne();
                 currentCategory = "multiplication";
@@ -71,7 +70,6 @@ public class QuestionManager {
     public void drawTierTwo(){
         if (!isAlreadyDrawn()) {
             int randSelector = panel.randGen.getRandomInteger(100, 1);
-//            randSelector = 78;
             if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierTwo();
                 currentCategory = "multiplication";
@@ -92,7 +90,6 @@ public class QuestionManager {
     public void drawTierThree(){
         if (!isAlreadyDrawn()) {
             int randSelector = panel.randGen.getRandomInteger(100, 1);
-//            randSelector = 78;
             if(randSelector >= 1 && randSelector <= 25){
                 multiplication.drawTierThree();
                 currentCategory = "multiplication";
@@ -123,6 +120,78 @@ public class QuestionManager {
         setGivenAns("");
         setDifficultyChosen(false);
         return isCorrect;
+    }
+
+    public void drawTierOne(String category){
+        if (!isAlreadyDrawn()) {
+            switch (category){
+                case "multiplication":
+                    multiplication.drawTierOne();
+                    currentCategory = "multiplication";
+                    break;
+                case "division":
+                    division.drawTierOne();
+                    currentCategory = "division";
+                    break;
+                case "fraction":
+                    fraction.drawTierOne();
+                    currentCategory = "fraction";
+                    break;
+                case "wordproblem":
+                    wordProblem.drawTierOne();
+                    currentCategory = "wordproblem";
+                    break;
+            }
+            setAlreadyDrawn(true);
+        }
+    }
+
+    public void drawTierTwo(String category){
+        if (!isAlreadyDrawn()) {
+            switch (category){
+                case "multiplication":
+                    multiplication.drawTierTwo();
+                    currentCategory = "multiplication";
+                    break;
+                case "division":
+                    division.drawTierTwo();
+                    currentCategory = "division";
+                    break;
+                case "fraction":
+                    fraction.drawTierTwo();
+                    currentCategory = "fraction";
+                    break;
+                case "wordproblem":
+                    wordProblem.drawTierTwo();
+                    currentCategory = "wordproblem";
+                    break;
+            }
+            setAlreadyDrawn(true);
+        }
+    }
+
+    public void drawTierThree(String category){
+        if (!isAlreadyDrawn()) {
+            switch (category){
+                case "multiplication":
+                    multiplication.drawTierThree();
+                    currentCategory = "multiplication";
+                    break;
+                case "division":
+                    division.drawTierThree();
+                    currentCategory = "division";
+                    break;
+                case "fraction":
+                    fraction.drawTierThree();
+                    currentCategory = "fraction";
+                    break;
+                case "wordproblem":
+                    wordProblem.drawTierThree();
+                    currentCategory = "wordproblem";
+                    break;
+            }
+            setAlreadyDrawn(true);
+        }
     }
 
     public String getQuestion() {

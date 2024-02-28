@@ -17,8 +17,8 @@ public class UI {
     Graphics2D graphics2D;
     ScalingManager scalingManager = new ScalingManager();
     public Font joystix;
-    Font joystix_small;
-    Font joystix_smallest;
+    public Font joystix_small;
+    public Font joystix_smallest;
     public Font press_start;
     public Font press_start_small;
     private int titleCommandNum = 0;
@@ -32,6 +32,7 @@ public class UI {
     private int outfitterNum = 0;
     private int potionNum = 0;
     private int upgradeNum = 0;
+    private int bossRushNum = 0;
 
     public Color background, button, border;
     public Color blonde, brownHair, black, redHair;
@@ -50,6 +51,8 @@ public class UI {
     BufferedImage hat, jacket, suit, checker, ragtag;
 
     BufferedImage whiteTrophy, bronzeTrophy, silverTrophy, goldTrophy;
+
+    BufferedImage centralMap;
 
     float alpha = 0.3f;
     int type = AlphaComposite.SRC_OVER;
@@ -92,8 +95,11 @@ public class UI {
 
     SaveScreen saveScreen;
     WinScreen winScreen;
+    MapScreen mapScreen;
 
     HelpScreen helpScreen;
+    BossRushStartScreen bossRushStartScreen;
+    BossRushScreen bossRushScreen;
 
     public UI (GamePanel panel){
         this.panel = panel;
@@ -149,6 +155,8 @@ public class UI {
             silverTrophy = scalingManager.toCompatibleImage(silverTrophy, panel.tileSize, panel.tileSize);
             goldTrophy = ImageIO.read(Objects.requireNonNull(getClass().getResource("/popups/gold_trophy.png")));
             goldTrophy = scalingManager.toCompatibleImage(goldTrophy, panel.tileSize, panel.tileSize);
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -222,6 +230,9 @@ public class UI {
         saveScreen = new SaveScreen(panel);
         winScreen = new WinScreen(panel);
         helpScreen = new HelpScreen(panel);
+        mapScreen = new MapScreen(panel);
+        bossRushStartScreen = new BossRushStartScreen(panel);
+        bossRushScreen = new BossRushScreen(panel);
 
         weaponMasterStore = new WeaponMasterStore(panel);
         purchaseWeaponScreen = new PurchaseWeaponScreen(panel);
@@ -254,6 +265,10 @@ public class UI {
         if(panel.gameState == panel.helpState){
             playScreen.draw(graphics2D);
             helpScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.mapState){
+            playScreen.draw(graphics2D);
+            mapScreen.draw(graphics2D);
         }
         if (panel.gameState == panel.playState) {
             playScreen.draw(graphics2D);
@@ -303,6 +318,19 @@ public class UI {
         if(panel.gameState == panel.startRunState){
             playScreen.draw(graphics2D);
             startRunScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.bossRushStartState){
+            playScreen.draw(graphics2D);
+            bossRushStartScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.bossRushState){
+            playScreen.draw(graphics2D);
+            bossRushScreen.draw(graphics2D);
+        }
+        if(panel.gameState == panel.wrongAnswerState){
+            playScreen.draw(graphics2D);
+            bossRushScreen.draw(graphics2D);
+            answerScreen.draw(graphics2D);
         }
         if(panel.gameState == panel.statsState){
             playScreen.draw(graphics2D);
@@ -497,5 +525,13 @@ public class UI {
 
     public void setUpgradeNum(int upgradeNum) {
         this.upgradeNum = upgradeNum;
+    }
+
+    public int getBossRushNum() {
+        return bossRushNum;
+    }
+
+    public void setBossRushNum(int bossRushNum) {
+        this.bossRushNum = bossRushNum;
     }
 }
