@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public boolean inEncounter = false;
     public int numOfFight = 0;
-    final int FPS = 30;
+    final int FPS = 60;
 
     final Thread gameThread = new Thread(this);
 
@@ -112,7 +112,8 @@ public class GamePanel extends JPanel implements Runnable{
         npcLoader.loadNPCs();
         objectLoader.centralMapObjects();
         player.getPlayerImage();
-        gameState = bossRushStartState;
+        ui.initializeScreens();
+        gameState = titleState;
     }
 
     public void reset() {

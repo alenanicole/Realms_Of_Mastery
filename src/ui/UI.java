@@ -212,7 +212,6 @@ public class UI {
     }
 
     public void initializeScreens(){
-        titleScreen = new TitleScreen(panel);
         selectScreen = new SelectScreen(panel);
         pauseScreen = new PauseScreen(panel);
         playScreen = new PlayScreen(panel);
@@ -250,9 +249,10 @@ public class UI {
         this.graphics2D = graphics2D;
         graphics2D.setFont(joystix);
         graphics2D.setColor(Color.white);
-        initializeScreens();
+
 
         if (panel.gameState == panel.titleState) {
+            titleScreen = new TitleScreen(panel);
             titleScreen.draw(graphics2D);
         }
         if (panel.gameState == panel.selectState) {
