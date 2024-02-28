@@ -120,6 +120,7 @@ public class GamePanel extends JPanel implements Runnable{
         numOfFight = 0;
         tileManager.loadMap("/maps/MainMap.txt");
         objectLoader.unloadObjects();
+        objectLoader.centralMapObjects();
         itemLoader.unloadItems();
         monsterLoader.unloadMonsters();
         npcLoader.loadNPCs();
