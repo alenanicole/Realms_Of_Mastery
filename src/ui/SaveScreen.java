@@ -35,7 +35,7 @@ public class SaveScreen extends UI{
         graphics2D.setColor(border);
         graphics2D.draw(new RoundRectangle2D.Float(x, y, panel.tileSize * 8, panel.tileSize * 6, 30, 30));
 
-        if(panel.keyHandler.previousState != panel.tutorialState){
+        if(panel.keyHandler.previousState != panel.centralMapState){
             text = "Can't save\nright now!";
         }else if(panel.saveAndLoad.isSuccessful()) {
             text = "Save\nSuccessful!";

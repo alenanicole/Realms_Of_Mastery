@@ -42,20 +42,21 @@ public class TutorialScreen extends UI{
         y += panel.tileSize;
         drawFloat(x, y, text, 3);
 
+        y += panel.tileSize;
         graphics2D.setFont(press_start);
         x = (int)(panel.tileSize * 2.5);
         text = "Here you will run through dungeons, find\ntreasure, fight monsters, and slay bosses!" +
                 "\n\nBe sure to visit the shops to buy supplies,\nupgrades, and unlockables!" +
-                "\nYou have enough gold for a sword, go to\nthe Weapon Master to buy one!\n\n" +
+                "\nYou have enough gold for a sword, go to\nthe Weapon Master to buy one" +
+                " and then equip it\nin your inventory (I)!\n\n" +
                 "Head to the portal room to start a run!";
 
 
         for(String line : text.split("\n")){
-            y += panel.tileSize;
+            y += panel.tileSize * .7;
             drawFloat(x, y, line, 3);
 
         }
-
 
         graphics2D.setFont(joystix_small);
         x += panel.tileSize * 14;

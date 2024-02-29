@@ -20,8 +20,6 @@ public class LoadingThread extends Thread implements Runnable{
             panel.ui.loadingScreen.draw();
             if(state == 0){
                 loadRun();
-            }else if(state == 1){
-                reset();
             }
 
             synchronized (panel.gameThread){
@@ -46,20 +44,9 @@ public class LoadingThread extends Thread implements Runnable{
         panel.objectLoader.setObject();
         panel.itemLoader.initializeItems();
         panel.monsterLoader.intializeMonsters();
+        panel.items[1].numHeld = 1;
 //        System.out.println(System.currentTimeMillis());
     }
 
-    public void reset(){
-        panel.numOfFight = 0;
-        panel.tileManager.loadMap("/maps/Map.txt");
-        panel.objectLoader.unloadObjects();
-        panel.itemLoader.unloadItems();
-        panel.monsterLoader.unloadMonsters();
-        panel.npcLoader.loadNPCs();
-        panel.player.currentHealth = panel.player.maxHealth;
-
-        panel.player.worldX = 59 * panel.tileSize;
-        panel.player.worldY = 59 * panel.tileSize;
-    }
 
 }

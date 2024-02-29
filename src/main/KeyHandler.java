@@ -15,7 +15,7 @@ public class KeyHandler implements KeyListener {
 
     public KeyHandler(GamePanel panel){
         this.panel = panel;
-        previousState = panel.playState;
+        previousState = panel.centralMapState;
     }
     @Override
     public void keyTyped(KeyEvent e) {
@@ -38,6 +38,8 @@ public class KeyHandler implements KeyListener {
             mapStateKeyHandler(code);
         }else if(panel.gameState == panel.playState) {
             playStateKeyHandler(code);
+        }else if(panel.gameState == panel.centralMapState){
+            centralMapStateKeyHandler(code);
         }else if(panel.gameState == panel.startRunState){
             startRunStateKeyHandler(code);
         }else if(panel.gameState == panel.pauseState) {
@@ -78,7 +80,6 @@ public class KeyHandler implements KeyListener {
     }
 
 
-
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
@@ -116,7 +117,7 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_M){
             if (previousState == panel.tutorialState){
                 panel.gameState = panel.helpState;
-                previousState = panel.playState;
+                previousState = panel.centralMapState;
             }else {
                 panel.gameState = previousState;
             }
@@ -164,6 +165,47 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    public void centralMapStateKeyHandler(int code){
+        if(code == KeyEvent.VK_W){
+            upPressed = true;
+        }
+
+        if(code == KeyEvent.VK_S){
+            downPressed = true;
+        }
+
+        if(code == KeyEvent.VK_A){
+            leftPressed = true;
+        }
+
+        if(code == KeyEvent.VK_D){
+            rightPressed = true;
+        }
+        if(code == KeyEvent.VK_P){
+            panel.gameState = panel.pauseState;
+            previousState = panel.centralMapState;
+        }
+
+        if(code == KeyEvent.VK_I){
+            panel.gameState = panel.inventoryState;
+            previousState = panel.centralMapState;
+        }
+
+        if(code == KeyEvent.VK_O){
+            panel.gameState = panel.statsState;
+            previousState = panel.centralMapState;
+        }
+
+        if(code == KeyEvent.VK_H){
+            panel.gameState = panel.helpState;
+            previousState = panel.centralMapState;
+        }
+        if(code == KeyEvent.VK_M){
+            panel.gameState = panel.mapState;
+            previousState = panel.centralMapState;
+        }
+    }
+
     public void startRunStateKeyHandler(int code){
         if(code == KeyEvent.VK_D){
             if(panel.ui.getStartRunNum() == 0){
@@ -182,7 +224,7 @@ public class KeyHandler implements KeyListener {
         }
 
         if(code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.tutorialState;
+            panel.gameState = panel.centralMapState;
         }
 
         if(code == KeyEvent.VK_ENTER){
@@ -201,7 +243,7 @@ public class KeyHandler implements KeyListener {
                     }
                     break;
                 case 1:
-                    panel.gameState = panel.tutorialState;
+                    panel.gameState = panel.centralMapState;
                     break;
             }
         }
@@ -229,7 +271,7 @@ public class KeyHandler implements KeyListener {
             switch (panel.ui.getPauseCommandNum()) {
                 case 0 -> panel.gameState = previousState;
                 case 1 -> {
-                    if(previousState == panel.tutorialState){
+                    if(previousState == panel.centralMapState){
                         panel.saveAndLoad.save();
                     }
                     panel.gameState = panel.saveState;
@@ -325,7 +367,7 @@ public class KeyHandler implements KeyListener {
                 }
                 case 1 -> {
                     panel.saveAndLoad.load();
-                    panel.gameState = panel.tutorialState;
+                    panel.gameState = panel.centralMapState;
                 }
                 case 2 -> System.exit(0);
             }
@@ -625,6 +667,7 @@ public class KeyHandler implements KeyListener {
             panel.questionManager.setDifficultyChosen(true);
         }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isCorrect()){
             panel.questionManager.setCorrect(true);
+            panel.questionManager.setAlreadyDrawn(false);
             panel.update();
         }
 
@@ -649,9 +692,12 @@ public class KeyHandler implements KeyListener {
     }
 
     private void wrongAnswerHandler(int code){
-        panel.questionManager.setCorrect(true);
-        panel.gameState = panel.bossRushState;
-        panel.update();
+        if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) {
+            panel.questionManager.setCorrect(true);
+            panel.questionManager.setAlreadyDrawn(false);
+            panel.gameState = panel.bossRushState;
+            panel.update();
+        }
     }
 
     private void fightStateKeyHandler(int code) {
@@ -695,6 +741,7 @@ public class KeyHandler implements KeyListener {
             panel.questionManager.setDifficultyChosen(true);
         }else if(code == KeyEvent.VK_ENTER && !panel.questionManager.isCorrect()){
             panel.questionManager.setCorrect(true);
+            panel.questionManager.setAlreadyDrawn(false);
             panel.update();
         }
 
@@ -745,7 +792,7 @@ public class KeyHandler implements KeyListener {
 
 
 
-        if(code == KeyEvent.VK_ENTER && panel.questionManager.getGivenAns() != "" && panel.questionManager.isCorrect()){
+        if(code == KeyEvent.VK_ENTER && panel.questionManager.getGivenAns() != ""){
             panel.bossRushManager.validateAns();
         }
 
@@ -806,7 +853,7 @@ public class KeyHandler implements KeyListener {
 
     public void weaponStoreStateKeyHandler(int code){
         if(code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.playState;
+            panel.gameState = panel.centralMapState;
         }
 
         if(code == KeyEvent.VK_I){
@@ -851,7 +898,7 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_ENTER){
             if(panel.ui.getWeaponNum() == 3){
-                panel.gameState = panel.playState;
+                panel.gameState = panel.centralMapState;
             }else{
                 panel.gameState = panel.purchaseWeaponState;
                 previousState = panel.weaponStoreState;
@@ -861,7 +908,7 @@ public class KeyHandler implements KeyListener {
 
     public void outfitterStoreStateKeyHandler(int code){
         if(code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.playState;
+            panel.gameState = panel.centralMapState;
         }
 
         if(code == KeyEvent.VK_I){
@@ -914,7 +961,7 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_ENTER){
             if(panel.ui.getOutfitterNum() == 6) {
-                panel.gameState = panel.playState;
+                panel.gameState = panel.centralMapState;
             }else if(panel.ui.getOutfitterNum() == 5){
                 panel.gameState = panel.selectState;
                 previousState = panel.outfitterStoreState;
@@ -927,7 +974,7 @@ public class KeyHandler implements KeyListener {
 
     public void doctorStoreStateKeyHandler(int code){
         if(code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.playState;
+            panel.gameState = panel.centralMapState;
         }
 
         if(code == KeyEvent.VK_I){
@@ -972,7 +1019,7 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_ENTER){
             if(panel.ui.getPotionNum() == 4){
-                panel.gameState = panel.playState;
+                panel.gameState = panel.centralMapState;
             }else{
                 panel.gameState = panel.purchasePotionState;
                 previousState = panel.doctorStoreState;
@@ -982,7 +1029,7 @@ public class KeyHandler implements KeyListener {
 
     public void artificerStoreStateKeyHandler(int code){
         if(code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.playState;
+            panel.gameState = panel.centralMapState;
         }
 
         if(code == KeyEvent.VK_I){
@@ -1027,7 +1074,7 @@ public class KeyHandler implements KeyListener {
 
         if(code == KeyEvent.VK_ENTER){
             if(panel.ui.getUpgradeNum() == 3){
-                panel.gameState = panel.playState;
+                panel.gameState = panel.centralMapState;
             }else{
                 panel.gameState = panel.purchaseUpgradesState;
                 previousState = panel.artificerStoreState;
@@ -1119,7 +1166,7 @@ public class KeyHandler implements KeyListener {
                                 if (panel.upgrades[2].canPurchase && panel.items[0].numHeld >= panel.upgrades[2].price){
                                     panel.items[0].numHeld -= panel.upgrades[2].price;
                                     panel.upgrades[2].numAvailable--;
-                                    panel.player.speed += 2;
+                                    panel.player.speed++;
                                     if(panel.upgrades[2].numAvailable <= 0){
                                         panel.upgrades[2].canPurchase = false;
                                     }
@@ -1228,7 +1275,7 @@ public class KeyHandler implements KeyListener {
 
     public void BossRushStartStateKeyHandler(int code){
         if(code == KeyEvent.VK_ESCAPE) {
-            panel.gameState = previousState;
+            panel.gameState = panel.centralMapState;
         }
 
         if (code == KeyEvent.VK_W) {
@@ -1271,7 +1318,7 @@ public class KeyHandler implements KeyListener {
                 case 2 -> panel.bossRushManager.startBossRush("fraction");
                 case 3 -> panel.bossRushManager.startBossRush("wordproblem");
                 case 4 -> {}
-                case 5 -> panel.gameState = panel.playState;
+                case 5 -> panel.gameState = panel.centralMapState;
                 case 6 -> {}
 
             }

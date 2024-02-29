@@ -112,11 +112,11 @@ public class QuestionManager {
         if(givenAns.equals(correctAns)){
             isCorrect = true;
             setCorrect(true);
+            setAlreadyDrawn(false);
         }else{
             setCorrect(false);
         }
 
-        setAlreadyDrawn(false);
         setGivenAns("");
         setDifficultyChosen(false);
         return isCorrect;

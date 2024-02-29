@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Player extends Entity{
     GamePanel panel;
@@ -61,7 +62,7 @@ public class Player extends Entity{
         collisionAreaDefaultY = collisionArea.y;
 
         maxHealth = 10;
-        currentHealth = 6;
+        currentHealth = 10;
 
         tierOneDamage = 3;
         tierTwoDamage = 5;
@@ -73,14 +74,14 @@ public class Player extends Entity{
     public void setDefaultValues(){
         worldX = panel.tileSize * 59;
         worldY = panel.tileSize * 59;
-        speed = 3;
+        speed = 4;
         direction = "down";
     }
 
     public void getPlayerImage(){
         try {
             // OUTLINE
-            sprite_sheet = ImageIO.read(getClass().getResourceAsStream("/player/outline/" + gender + ".png"));
+            sprite_sheet = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/outline/" + gender + ".png")));
 
             down1 = sprite_sheet.getSubimage(0, 0, panel.originalTileSize, panel.originalTileSize);
             down2 = sprite_sheet.getSubimage(16, 0, panel.originalTileSize, panel.originalTileSize);
@@ -101,7 +102,7 @@ public class Player extends Entity{
             right2 = scalingManager.toCompatibleImage(right2, panel.tileSize, panel.tileSize);
 
             // HAIR
-            sprite_sheet = ImageIO.read(getClass().getResourceAsStream("/player/hair/" + gender + "/" + hairColor + ".png"));
+            sprite_sheet = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/hair/" + gender + "/" + hairColor + ".png")));
 
             down1Hair = sprite_sheet.getSubimage(0, 0, panel.originalTileSize, panel.originalTileSize);
             down2Hair = sprite_sheet.getSubimage(16, 0, panel.originalTileSize, panel.originalTileSize);
@@ -122,7 +123,7 @@ public class Player extends Entity{
             right2Hair = scalingManager.toCompatibleImage(right2Hair, panel.tileSize, panel.tileSize);
 
             //SKIN
-            sprite_sheet = ImageIO.read(getClass().getResourceAsStream("/player/skin/" + gender + "/" + skinColor + ".png"));
+            sprite_sheet = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/skin/" + gender + "/" + skinColor + ".png")));
 
             down1Skin = sprite_sheet.getSubimage(0, 0, panel.originalTileSize, panel.originalTileSize);
             down2Skin = sprite_sheet.getSubimage(16, 0, panel.originalTileSize, panel.originalTileSize);
@@ -143,7 +144,7 @@ public class Player extends Entity{
             right2Skin = scalingManager.toCompatibleImage(right2Skin, panel.tileSize, panel.tileSize);
 
             //SHIRT
-            sprite_sheet = ImageIO.read(getClass().getResourceAsStream("/player/shirt/" + shirtColor + ".png"));
+            sprite_sheet = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/shirt/" + shirtColor + ".png")));
 
             down1Shirt = sprite_sheet.getSubimage(0, 0, panel.originalTileSize, panel.originalTileSize);
             down2Shirt = sprite_sheet.getSubimage(16, 0, panel.originalTileSize, panel.originalTileSize);
@@ -257,7 +258,7 @@ public class Player extends Entity{
                 direction = "down";
             } else if (keyHandler.leftPressed) {
                 direction = "left";
-            } else if (keyHandler.rightPressed) {
+            } else {
                 direction = "right";
             }
 
@@ -307,10 +308,11 @@ public class Player extends Entity{
     private void visitShop(int idx) {
         if(idx != 999){
             switch (idx) {
-                case 1:
-                    panel.gameState = panel.weaponStoreState;
-
-
+                case 0 -> panel.gameState = panel.outfitterStoreState;
+                case 1 -> panel.gameState = panel.weaponStoreState;
+                case 2 -> panel.gameState = panel.doctorStoreState;
+                case 3 -> panel.gameState = panel.artificerStoreState;
+                case 4 -> panel.gameState = panel.bossRushStartState;
             }
         }
     }
@@ -327,28 +329,31 @@ public class Player extends Entity{
         if(idx != 999){
             String objectName = panel.obj[idx].name;
 
-            switch(objectName){
-                case "portal":
-                    panel.gameState = panel.startRunState;
-                    break;
-                case "chest":
-                    if(!panel.obj[idx].opened){
+            switch (objectName) {
+                case "portal" -> panel.gameState = panel.startRunState;
+                case "chest" -> {
+                    if (!panel.obj[idx].opened) {
                         panel.treasureManager.startTreasureCollection(idx);
                     }
-                    break;
-                case "door":
-                    try{
-                        if(panel.items[1].numHeld > 0 && !panel.obj[idx].opened){
+                }
+                case "door" -> {
+                    try {
+                        if (panel.items[1].numHeld > 0 && !panel.obj[idx].opened) {
                             panel.obj[idx].collision = false;
-                            panel.obj[idx].image = ImageIO.read(getClass().getResourceAsStream("/objects/open_door.png"));
+                            panel.obj[idx].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/open_door.png")));
                             panel.obj[idx].image = scalingManager.toCompatibleImage(panel.obj[idx].image, panel.tileSize, panel.tileSize);
                             panel.obj[idx].opened = true;
                             panel.items[1].numHeld--;
                         }
-                    }catch (IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    break;
+                }
+                case "weapontable" -> panel.gameState = panel.weaponStoreState;
+                case "potiontable" -> panel.gameState = panel.doctorStoreState;
+                case "upgradetable" -> panel.gameState = panel.artificerStoreState;
+                case "closetdoor" -> panel.gameState = panel.outfitterStoreState;
+                case "brportal" -> panel.gameState = panel.bossRushStartState;
             }
         }
     }
@@ -357,31 +362,31 @@ public class Player extends Entity{
         if(idx != 999){
             String itemName = panel.items[idx].name;
 
-            switch (itemName){
-                case "coin":
+            switch (itemName) {
+                case "coin" -> {
                     panel.items[0].numHeld += 3;
                     panel.items[idx].found = true;
-                    break;
-                case "key":
+                }
+                case "key" -> {
                     panel.items[1].numHeld++;
                     panel.items[idx].found = true;
-                    break;
-                case "healthPotion":
+                }
+                case "healthPotion" -> {
                     panel.items[2].numHeld++;
                     panel.items[idx].found = true;
-                    break;
-                case "strengthPotion":
+                }
+                case "strengthPotion" -> {
                     panel.items[3].numHeld++;
                     panel.items[idx].found = true;
-                    break;
-                case "speedPotion":
+                }
+                case "speedPotion" -> {
                     panel.items[4].numHeld++;
                     panel.items[idx].found = true;
-                    break;
-                case "rerollPotion":
+                }
+                case "rerollPotion" -> {
                     panel.items[5].numHeld++;
                     panel.items[idx].found = true;
-                    break;
+                }
             }
 
         }

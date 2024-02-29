@@ -11,7 +11,7 @@ public class WeaponTable2 extends SuperObject {
     GamePanel panel;
     public WeaponTable2(GamePanel panel){
         this.panel = panel;
-        name = "weapontable2";
+        name = "weapontable";
         collision = true;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/tutorial_objects/weapons/weapon-table-2.png"));

@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int bossRushStartState = 26;
     public final int bossRushState = 27;
     public final int wrongAnswerState = 28;
-
+    public final int centralMapState = 29;
     public boolean inEncounter = false;
     public int numOfFight = 0;
     final int FPS = 60;
@@ -71,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable{
     public RandomNumGenerator randGen = new RandomNumGenerator();
     public Player player = new Player(this, keyHandler, "brown", "light", "green", "boy");
     public TileManager tileManager = new TileManager(this);
-    public SuperObject[] obj = new SuperObject[20];
+    public SuperObject[] obj = new SuperObject[40];
     public ObjectLoader objectLoader = new ObjectLoader(this);
 
     public SuperItem[] items = new SuperItem[26];
@@ -128,6 +128,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         player.worldX = 59 * tileSize;
         player.worldY = 59 * tileSize;
+        gameState = centralMapState;
     }
 
     public void startGameThread(){
@@ -136,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
-        double drawInterval = 1000000000/FPS;
+        double drawInterval = (double) 1000000000 /FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
         while(gameThread != null){
             update();
@@ -161,8 +162,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update() {
 
-        if (gameState == playState || gameState == tutorialState) {
+        if (gameState == playState || gameState == centralMapState) {
             player.update(0);
+
 
             if(gameState == playState) {
                 for (int i = 0; i < monster.length; i++) {
@@ -171,13 +173,15 @@ public class GamePanel extends JPanel implements Runnable{
                     }
                 }
             }
-            if(gameState == tutorialState) {
+
+            if(gameState == centralMapState) {
                 for (int i = 0; i < npcs.length; i++) {
                     if (npcs[i] != null) {
                         npcs[i].update(i);
                     }
                 }
             }
+
 
         }
 
@@ -222,27 +226,27 @@ public class GamePanel extends JPanel implements Runnable{
 
             tileManager.draw(graphics2D);
 
-            for(int i = 0; i < obj.length; i++){
-                if(obj[i] != null){
-                    obj[i].draw(graphics2D, this);
+            for (SuperObject superObject : obj) {
+                if (superObject != null) {
+                    superObject.draw(graphics2D, this);
                 }
             }
 
-            for(int i = 0; i < items.length; i++){
-                if(items[i] != null && !items[i].found){
-                    items[i].draw(graphics2D, this);
+            for (SuperItem item : items) {
+                if (item != null && !item.found) {
+                    item.draw(graphics2D, this);
                 }
             }
 
-            for(int i = 0; i < monster.length; i++){
-                if(monster[i] != null && !monster[i].dead){
-                    monster[i].draw(graphics2D, this);
+            for (Entity entity : monster) {
+                if (entity != null && !entity.dead) {
+                    entity.draw(graphics2D, this);
                 }
             }
 
-            for(int i = 0; i < npcs.length; i++){
-                if(npcs[i] != null){
-                    npcs[i].draw(graphics2D, this);
+            for (Entity npc : npcs) {
+                if (npc != null) {
+                    npc.draw(graphics2D, this);
                 }
             }
 
