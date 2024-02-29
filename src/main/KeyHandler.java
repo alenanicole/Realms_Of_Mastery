@@ -787,6 +787,10 @@ public class KeyHandler implements KeyListener {
         }
 
         if(code == KeyEvent.VK_ESCAPE){
+            panel.questionManager.setGivenAns("");
+            panel.questionManager.setAlreadyDrawn(false);
+            panel.questionManager.setCorrectAns("");
+            panel.bossRushManager.setNumAttempts(0);
             panel.gameState = panel.playState;
         }
 
@@ -1295,8 +1299,8 @@ public class KeyHandler implements KeyListener {
         if(panel.ui.getBossRushNum() == 6){
             switch (code){
                 case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
-                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R, KeyEvent.VK_F, KeyEvent.VK_T, KeyEvent.VK_SLASH, KeyEvent.VK_MINUS -> {
-                    if (panel.bossRushManager.getNumQuestions().length() <= 3) {
+                        KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9 -> {
+                    if (panel.bossRushManager.getNumQuestions().length() < 3) {
                         panel.bossRushManager.setNumQuestions(panel.bossRushManager.getNumQuestions() + (char)(code));
                     }
                 }
@@ -1311,7 +1315,7 @@ public class KeyHandler implements KeyListener {
             }
         }
 
-        if (code == KeyEvent.VK_ENTER) {
+        if (code == KeyEvent.VK_ENTER && Integer.valueOf(panel.bossRushManager.getNumQuestions()) > 0) {
             switch (panel.ui.getBossRushNum()) {
                 case 0 -> panel.bossRushManager.startBossRush("multiplication");
                 case 1 -> panel.bossRushManager.startBossRush("division");

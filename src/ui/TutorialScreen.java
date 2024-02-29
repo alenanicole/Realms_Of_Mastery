@@ -49,7 +49,8 @@ public class TutorialScreen extends UI{
                 "\n\nBe sure to visit the shops to buy supplies,\nupgrades, and unlockables!" +
                 "\nYou have enough gold for a sword, go to\nthe Weapon Master to buy one" +
                 " and then equip it\nin your inventory (I)!\n\n" +
-                "Head to the portal room to start a run!";
+                "Head to the golden portal room to start a run!\n" +
+                "Or head to the red portal room to start a\nboss rush!";
 
 
         for(String line : text.split("\n")){
@@ -60,7 +61,7 @@ public class TutorialScreen extends UI{
 
         graphics2D.setFont(joystix_small);
         x += panel.tileSize * 14;
-        y -= panel.tileSize * .5;
+        y -= panel.tileSize * .7;
         graphics2D.setColor(button);
         graphics2D.fill(new RoundRectangle2D.Float(x, y, panel.tileSize, panel.tileSize + 10, 5, 5));
         graphics2D.setColor(border);

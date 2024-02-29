@@ -128,7 +128,6 @@ public class GamePanel extends JPanel implements Runnable{
 
         player.worldX = 59 * tileSize;
         player.worldY = 59 * tileSize;
-        gameState = centralMapState;
     }
 
     public void startGameThread(){

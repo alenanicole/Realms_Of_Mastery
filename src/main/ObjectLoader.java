@@ -72,9 +72,9 @@ public class ObjectLoader {
         panel.obj[13].worldY = 67 * panel.tileSize;
 
         // Test chest
-//        panel.obj[14] = new Chest_obj(panel);
-//        panel.obj[14].worldX = 59 * panel.tileSize;
-//        panel.obj[14].worldY = 103 * panel.tileSize;
+        panel.obj[14] = new Chest_obj(panel);
+        panel.obj[14].worldX = 59 * panel.tileSize;
+        panel.obj[14].worldY = 103 * panel.tileSize;
     }
 
     public void centralMapObjects(){

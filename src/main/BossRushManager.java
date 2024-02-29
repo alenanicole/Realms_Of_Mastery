@@ -24,7 +24,7 @@ public class BossRushManager {
 
     public void endBossRush(){
         setNumAttempts(0);
-        panel.gameState = panel.playState;
+        panel.gameState = panel.centralMapState;
     }
 
     public void validateAns(){

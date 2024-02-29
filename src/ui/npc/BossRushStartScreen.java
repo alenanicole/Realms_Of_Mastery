@@ -50,7 +50,7 @@ public class BossRushStartScreen extends UI {
             graphics2D.draw(new RoundRectangle2D.Float(x + panel.tileSize * 5, (int)(y - panel.tileSize * .4), panel.tileSize, panel.tileSize/2, 5, 5));
         }
 
-        x += (panel.tileSize * 5)+ 15;
+        x += (panel.tileSize * 5)+ 5;
         drawFloat(x, y, String.valueOf(panel.bossRushManager.getNumQuestions()), 3);
 
 

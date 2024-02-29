@@ -19,7 +19,7 @@ public class ItemLoader {
     }
 
     public void unloadItems(){
-        panel.items[1].numHeld = 1;
+        panel.items[1].numHeld = 0;
         panel.items[2].numHeld = 0;
         panel.items[3].numHeld = 0;
         panel.items[4].numHeld = 0;
