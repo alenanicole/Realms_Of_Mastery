@@ -75,6 +75,7 @@ public class Player extends Entity{
         worldX = panel.tileSize * 59;
         worldY = panel.tileSize * 59;
         speed = 4;
+        currentSpeed = 4;
         direction = "down";
     }
 
@@ -283,12 +284,21 @@ public class Player extends Entity{
                 }
             }
 
+            if(panel.gameState == panel.centralMapState){
+                if (worldX >= 15.5 * panel.tileSize && worldX <= 38.5 * panel.tileSize && worldY >= 90 * panel.tileSize && worldY <= 104 * panel.tileSize) {
+                    currentSpeed = 1;
+                }
+                else{
+                    currentSpeed = speed;
+                }
+            }
+
             if(!collision){
                 switch (direction) {
-                    case "up" -> worldY -= speed;
-                    case "down" -> worldY += speed;
-                    case "left" -> worldX -= speed;
-                    case "right" -> worldX += speed;
+                    case "up" -> worldY -= currentSpeed;
+                    case "down" -> worldY += currentSpeed;
+                    case "left" -> worldX -= currentSpeed;
+                    case "right" -> worldX += currentSpeed;
                 }
             }
 
@@ -334,6 +344,11 @@ public class Player extends Entity{
                 case "chest" -> {
                     if (!panel.obj[idx].opened) {
                         panel.treasureManager.startTreasureCollection(idx);
+                    }
+                }
+                case "super_chest" ->{
+                    if (!panel.obj[idx].opened) {
+                        panel.superTreasureManager.startTreasureCollection(idx);
                     }
                 }
                 case "door" -> {

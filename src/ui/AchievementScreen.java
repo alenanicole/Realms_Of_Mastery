@@ -248,5 +248,14 @@ public class AchievementScreen extends UI{
         y += panel.tileSize * 2;
         text = "------------------------------------------";
         drawFloat(x,y, text, 3);
+
+        graphics2D.setFont(joystix_small);
+        y += panel.tileSize * .8;
+        x = (int) (panel.tileSize * 2.2);
+        text = "<";
+        drawFloat(x, y, text, 3);
+        x += panel.tileSize * 15;
+        text = ">";
+        drawFloat(x, y, text, 3);
     }
 }

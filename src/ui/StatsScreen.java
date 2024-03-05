@@ -61,7 +61,7 @@ public class StatsScreen extends UI{
         text = "Current Health: " + panel.player.currentHealth;
         drawFloat(x, y, text, 3);
         y+= panel.tileSize;
-        text = "Speed: " + panel.player.speed;
+        text = "Speed: " + panel.player.currentSpeed;
         drawFloat(x,y,text, 3);
 
         x = panel.tileSize * 3;
@@ -99,6 +99,14 @@ public class StatsScreen extends UI{
         drawFloat(x, y, text, 3);
 
 
+        graphics2D.setFont(joystix_small);
+        y += panel.tileSize * 4.8;
+        x = (int) (panel.tileSize * 2.2);
+        text = "<";
+        drawFloat(x, y, text, 3);
+        x += panel.tileSize * 15;
+        text = ">";
+        drawFloat(x, y, text, 3);
 
 
     }

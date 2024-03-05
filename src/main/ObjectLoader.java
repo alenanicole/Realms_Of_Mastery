@@ -72,9 +72,9 @@ public class ObjectLoader {
         panel.obj[13].worldY = 67 * panel.tileSize;
 
         // Test chest
-        panel.obj[14] = new Chest_obj(panel);
-        panel.obj[14].worldX = 59 * panel.tileSize;
-        panel.obj[14].worldY = 103 * panel.tileSize;
+//        panel.obj[14] = new Chest_obj(panel);
+//        panel.obj[14].worldX = 59 * panel.tileSize;
+//        panel.obj[14].worldY = 103 * panel.tileSize;
     }
 
     public void centralMapObjects(){
@@ -215,5 +215,25 @@ public class ObjectLoader {
         panel.obj[33] = new BRPortalTR(panel);
         panel.obj[33].worldX = 41 * panel.tileSize;
         panel.obj[33].worldY = 64 * panel.tileSize;
+
+        panel.obj[34] = new Chest_Super(panel);
+        panel.obj[34].worldX = 23 * panel.tileSize;
+        panel.obj[34].worldY = 21 * panel.tileSize;
+        panel.obj[34].value = 150;
+
+        panel.obj[35] = new Chest_Super(panel);
+        panel.obj[35].worldX = (int) (93.5 * panel.tileSize);
+        panel.obj[35].worldY = (int) (20.5 * panel.tileSize);
+        panel.obj[35].value = 50;
+
+        panel.obj[36] = new Chest_Super(panel);
+        panel.obj[36].worldX = (int) (102.5 * panel.tileSize);
+        panel.obj[36].worldY = 100 * panel.tileSize;
+        panel.obj[36].value = 50;
+
+        panel.obj[37] = new Chest_Super(panel);
+        panel.obj[37].worldX = (int) (27 * panel.tileSize);
+        panel.obj[37].worldY = (int) (96.5 * panel.tileSize);
+        panel.obj[37].value = 100;
     }
 }

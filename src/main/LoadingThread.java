@@ -43,6 +43,7 @@ public class LoadingThread extends Thread implements Runnable{
         panel.objectLoader.unloadObjects();
         panel.objectLoader.setObject();
         panel.itemLoader.initializeItems();
+        panel.monsterLoader.unloadMonsters();
         panel.monsterLoader.intializeMonsters();
         panel.items[1].numHeld = 1;
 //        System.out.println(System.currentTimeMillis());

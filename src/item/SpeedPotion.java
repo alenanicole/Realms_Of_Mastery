@@ -32,7 +32,7 @@ public class SpeedPotion extends SuperItem{
             @Override
             public void run()
             {
-                panel.player.speed += 2;
+                panel.player.currentSpeed = panel.player.speed + 2;
                 inUse = true;
 
                 try {
@@ -41,7 +41,7 @@ public class SpeedPotion extends SuperItem{
                     throw new RuntimeException(e);
                 }
 
-                panel.player.speed -= 2;
+                panel.player.currentSpeed = panel.player.speed;
                 inUse = false;
             }
         }).start();

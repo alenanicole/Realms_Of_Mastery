@@ -14,6 +14,7 @@ public class SuperObject {
     public Rectangle collisionArea = new Rectangle(0, 0, 48, 48);
     public int collisionAreaDefaultX = 0;
     public int collisionAreaDefaultY = 0;
+    public int value = 0;
 
 
     public void draw(Graphics2D graphics2D, GamePanel panel){

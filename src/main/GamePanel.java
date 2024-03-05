@@ -61,6 +61,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int bossRushState = 27;
     public final int wrongAnswerState = 28;
     public final int centralMapState = 29;
+    public final int superTreasureState = 30;
+    public final int endBossRushState = 31;
     public boolean inEncounter = false;
     public int numOfFight = 0;
     final int FPS = 60;
@@ -86,6 +88,7 @@ public class GamePanel extends JPanel implements Runnable{
     public TreasureManager treasureManager = new TreasureManager(this);
     public FightManager fightManager = new FightManager(this);
     public BossRushManager bossRushManager = new BossRushManager(this);
+    public SuperTreasureManager superTreasureManager = new SuperTreasureManager(this);
 
     public UI ui = new UI(this);
     public Entity[] monster = new Entity[20];
@@ -110,10 +113,12 @@ public class GamePanel extends JPanel implements Runnable{
         itemLoader.intializeStaticItems();
         questionManager.intitializeQuestions();
         npcLoader.loadNPCs();
+        monsterLoader.centralMapMonsters();
         objectLoader.centralMapObjects();
         player.getPlayerImage();
         ui.initializeScreens();
         gameState = titleState;
+        gameState = superTreasureState;
     }
 
     public void reset() {
@@ -121,8 +126,14 @@ public class GamePanel extends JPanel implements Runnable{
         tileManager.loadMap("/maps/MainMap.txt");
         objectLoader.unloadObjects();
         objectLoader.centralMapObjects();
+        // Reset super chests
+        obj[34].opened = false;
+        obj[35].opened = false;
+        obj[36].opened = false;
+        obj[37].opened = false;
         itemLoader.unloadItems();
         monsterLoader.unloadMonsters();
+        monsterLoader.centralMapMonsters();
         npcLoader.loadNPCs();
         player.currentHealth = player.maxHealth;
 
@@ -179,6 +190,11 @@ public class GamePanel extends JPanel implements Runnable{
                         npcs[i].update(i);
                     }
                 }
+                for (int i = 0; i < monster.length; i++) {
+                    if (monster[i] != null && !monster[i].dead) {
+                        monster[i].update(i);
+                    }
+                }
             }
 
 
@@ -196,7 +212,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void paintComponent(Graphics graphic){
         super.paintComponent(graphic);
-
         Graphics2D graphics2D = (Graphics2D) graphic.create();
         RenderingHints playAntialiasing = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);

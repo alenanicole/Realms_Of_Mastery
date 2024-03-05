@@ -50,12 +50,16 @@ public class KeyHandler implements KeyListener {
             inventoryStateKeyHandler(code);
         }else if(panel.gameState == panel.useState){
             useStateKeyHandler(code);
-        }else if(panel.gameState == panel.treasureState){
+        }else if(panel.gameState == panel.treasureState) {
             treasureStateKeyHandler(code);
+        }else if(panel.gameState == panel.superTreasureState){
+            superTreasureStateKeyHandler(code);
         }else if(panel.gameState == panel.fightState) {
             fightStateKeyHandler(code);
         }else if(panel.gameState == panel.bossRushState) {
             bossRushStateKeyHandler(code);
+        }else if(panel.gameState == panel.endBossRushState){
+            endBossRushStateKeyHandler(code);
         }else if(panel.gameState == panel.deathState) {
             deathStateKeyHandler(code);
         }else if(panel.gameState == panel.winState){
@@ -691,11 +695,60 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    private void superTreasureStateKeyHandler(int code) {
+        if(code == KeyEvent.VK_I){
+            panel.gameState = panel.inventoryState;
+            previousState = panel.superTreasureState;
+        }
+
+        if(code == KeyEvent.VK_P){
+            panel.gameState = panel.pauseState;
+            previousState = panel.superTreasureState;
+        }
+
+        if(code == KeyEvent.VK_O){
+            panel.gameState = panel.statsState;
+            previousState = panel.superTreasureState;
+        }
+
+        if(code == KeyEvent.VK_H){
+            panel.gameState = panel.helpState;
+            previousState = panel.superTreasureState;
+        }
+
+
+        if(code == KeyEvent.VK_ENTER && panel.questionManager.getGivenAns() != ""){
+            previousState = panel.superTreasureState;
+            panel.superTreasureManager.validateAns();
+        }
+
+        switch (code){
+            case KeyEvent.VK_0, KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
+                    KeyEvent.VK_6, KeyEvent.VK_7, KeyEvent.VK_8, KeyEvent.VK_9, KeyEvent.VK_R, KeyEvent.VK_F, KeyEvent.VK_T, KeyEvent.VK_SLASH, KeyEvent.VK_MINUS-> {
+                if (panel.questionManager.getGivenAns().length() <= 7) {
+                    panel.questionManager.setGivenAns(panel.questionManager.getGivenAns() + (char)(code));
+                }
+            }
+            case KeyEvent.VK_BACK_SPACE -> {
+                if(panel.questionManager.getGivenAns() != ""){
+                    panel.questionManager.setGivenAns(panel.questionManager.getGivenAns().substring(0, panel.questionManager.getGivenAns().length() - 1));
+                }else{
+                    panel.questionManager.setGivenAns("");
+                }
+            }
+
+        }
+
+    }
     private void wrongAnswerHandler(int code){
         if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE) {
             panel.questionManager.setCorrect(true);
             panel.questionManager.setAlreadyDrawn(false);
-            panel.gameState = panel.bossRushState;
+            if(previousState == panel.superTreasureState){
+                panel.gameState = panel.centralMapState;
+            }else {
+                panel.gameState = previousState;
+            }
             panel.update();
         }
     }
@@ -791,12 +844,16 @@ public class KeyHandler implements KeyListener {
             panel.questionManager.setAlreadyDrawn(false);
             panel.questionManager.setCorrectAns("");
             panel.bossRushManager.setNumAttempts(0);
-            panel.gameState = panel.playState;
+            panel.questionManager.setCorrect(true);
+            panel.bossRushManager.setNumCorrect(0);
+            panel.bossRushManager.setNumIncorrect(0);
+            panel.gameState = panel.centralMapState;
         }
 
 
 
         if(code == KeyEvent.VK_ENTER && panel.questionManager.getGivenAns() != ""){
+            previousState = panel.bossRushState;
             panel.bossRushManager.validateAns();
         }
 
@@ -822,13 +879,26 @@ public class KeyHandler implements KeyListener {
 
     public void deathStateKeyHandler(int code) {
         if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.playState;
+            panel.gameState = panel.centralMapState;
         }
     }
 
     public void winStateKeyHandler(int code) {
         if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE){
-            panel.gameState = panel.playState;
+            panel.gameState = panel.centralMapState;
+        }
+    }
+
+    public void endBossRushStateKeyHandler(int code) {
+        if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE){
+            panel.questionManager.setGivenAns("");
+            panel.questionManager.setAlreadyDrawn(false);
+            panel.questionManager.setCorrectAns("");
+            panel.bossRushManager.setNumAttempts(0);
+            panel.questionManager.setCorrect(true);
+            panel.bossRushManager.setNumCorrect(0);
+            panel.bossRushManager.setNumIncorrect(0);
+            panel.gameState = panel.centralMapState;
         }
     }
 
@@ -1171,6 +1241,7 @@ public class KeyHandler implements KeyListener {
                                     panel.items[0].numHeld -= panel.upgrades[2].price;
                                     panel.upgrades[2].numAvailable--;
                                     panel.player.speed++;
+                                    panel.player.currentSpeed = panel.player.speed;
                                     if(panel.upgrades[2].numAvailable <= 0){
                                         panel.upgrades[2].canPurchase = false;
                                     }

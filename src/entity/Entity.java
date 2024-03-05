@@ -10,6 +10,7 @@ public class Entity {
     public GamePanel panel;
     public int worldX, worldY;
     public volatile int speed;
+    public volatile int currentSpeed;
 
     public BufferedImage sprite_sheet, up1, up2, down1, down2, left1, left2, right1, right2;
 

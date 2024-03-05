@@ -100,6 +100,9 @@ public class UI {
     HelpScreen helpScreen;
     BossRushStartScreen bossRushStartScreen;
     BossRushScreen bossRushScreen;
+    EndBossRushScreen endBossRushScreen;
+
+    SuperTreasureScreen superTreasureScreen;
 
     public UI (GamePanel panel){
         this.panel = panel;
@@ -232,6 +235,8 @@ public class UI {
         mapScreen = new MapScreen(panel);
         bossRushStartScreen = new BossRushStartScreen(panel);
         bossRushScreen = new BossRushScreen(panel);
+        endBossRushScreen = new EndBossRushScreen(panel);
+        superTreasureScreen = new SuperTreasureScreen(panel);
 
         weaponMasterStore = new WeaponMasterStore(panel);
         purchaseWeaponScreen = new PurchaseWeaponScreen(panel);
@@ -270,7 +275,7 @@ public class UI {
             playScreen.draw(graphics2D);
             mapScreen.draw(graphics2D);
         }
-        if (panel.gameState == panel.playState) {
+        if (panel.gameState == panel.playState || panel.gameState == panel.centralMapState) {
             playScreen.draw(graphics2D);
         }
         if (panel.gameState == panel.pauseState) {
@@ -311,6 +316,10 @@ public class UI {
                 answerScreen.draw(graphics2D);
             }
         }
+        if(panel.gameState == panel.superTreasureState){
+            playScreen.draw(graphics2D);
+            superTreasureScreen.draw(graphics2D);
+        }
         if(panel.gameState == panel.deathState){
             playScreen.draw(graphics2D);
             deathScreen.draw(graphics2D);
@@ -327,9 +336,17 @@ public class UI {
             playScreen.draw(graphics2D);
             bossRushScreen.draw(graphics2D);
         }
+        if(panel.gameState == panel.endBossRushState){
+            playScreen.draw(graphics2D);
+            endBossRushScreen.draw(graphics2D);
+        }
         if(panel.gameState == panel.wrongAnswerState){
             playScreen.draw(graphics2D);
-            bossRushScreen.draw(graphics2D);
+            if(panel.keyHandler.previousState == panel.superTreasureState) {
+                superTreasureScreen.draw(graphics2D);
+            }else{
+                bossRushScreen.draw(graphics2D);
+            }
             answerScreen.draw(graphics2D);
         }
         if(panel.gameState == panel.statsState){

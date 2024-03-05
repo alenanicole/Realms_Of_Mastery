@@ -22,7 +22,7 @@ public class TileManager {
     }
 
     public void getTileImage(){
-            loadImage(0, "grass", false, true);
+            loadImage(0, "grass", false, false);
             loadImage(1, "water", true, true);
             loadImage(2, "wall", true, true);
             loadImage(3, "path", false, true);
