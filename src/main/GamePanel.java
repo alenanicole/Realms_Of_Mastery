@@ -118,7 +118,6 @@ public class GamePanel extends JPanel implements Runnable{
         player.getPlayerImage();
         ui.initializeScreens();
         gameState = titleState;
-        gameState = superTreasureState;
     }
 
     public void reset() {
