@@ -80,7 +80,7 @@ public class BossRushScreen extends UI{
                 if (text.charAt(i) == ' '){
                     last_space = i;
                 }
-                if(i > 0 && i % 30 == 0 || i == text.length() - 1) {
+                if(i > 0 && i % 27 == 0 || i == text.length() - 1) {
                     if(last_space == i) {
                         line = text.substring(begin, current_char_num + 1);
                         begin = current_char_num + 1;

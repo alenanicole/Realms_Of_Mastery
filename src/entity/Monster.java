@@ -85,7 +85,7 @@ public class Monster extends Entity{
     public void update(int idx){
         setAction();
         collision = false;
-        panel.collisionManager.checkTile(this);
+        panel.collisionManager.checkTileNPC(this);
         panel.collisionManager.checkObject(this, false);
         panel.collisionManager.checkPlayer(this, true, idx);
 

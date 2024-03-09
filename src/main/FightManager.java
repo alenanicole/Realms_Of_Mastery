@@ -30,22 +30,12 @@ public class FightManager {
             return;
         }
         if(correct) {
-            if(panel.ui.getDifficultyNum() == 0) {
-                numCoins = panel.randGen.getRandomInteger(5, 1);
-                panel.items[0].numHeld += numCoins;
-                panel.player.goldCollected += numCoins;
-            }else if(panel.ui.getDifficultyNum() == 1){
-                numCoins = panel.randGen.getRandomInteger(10, 1);
-                panel.items[0].numHeld += numCoins;
-                panel.player.goldCollected += numCoins;
-            }else{
-                numCoins = panel.randGen.getRandomInteger(15, 5);
-                panel.items[0].numHeld += numCoins;
-                panel.player.goldCollected += numCoins;
-                int rand = panel.randGen.getRandomInteger(100, 1);
-                if(rand >= 1 && rand <= 10){
-                    panel.items[1].numHeld++;
-                }
+            numCoins = panel.randGen.getRandomInteger(10, 5);
+            panel.items[0].numHeld += numCoins;
+            panel.player.goldCollected += numCoins;
+            int rand = panel.randGen.getRandomInteger(100, 1);
+            if(rand >= 1 && rand <= 10){
+                panel.items[1].numHeld++;
             }
 
             panel.monster[idx].dead = true;

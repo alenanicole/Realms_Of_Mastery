@@ -59,7 +59,7 @@ public class MonsterLoader {
                 randY = (int) floor(random() * (119 + 1) + 0);
                 tileNum = panel.tileManager.mapTileNum[randX][randY];
             }while(tileNum == 9 || panel.tileManager.tile[tileNum].collisionNPC
-            || randX < 17 || randX > 36 || randY < 15 || randY > 35);
+            || randX < 18 || randX > 35 || randY < 17 || randY > 34);
 
             panel.monster[i].worldX = randX * panel.tileSize;
             panel.monster[i].worldY = randY * panel.tileSize;

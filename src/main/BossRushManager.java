@@ -10,6 +10,7 @@ public class BossRushManager {
     private int numAttempts = 0;
     private int numCorrect = 0;
     private int numIncorrect = 0;
+    int numCoins = 0;
     private String category = "multiplication";
 
     public BossRushManager(GamePanel panel)
@@ -24,6 +25,10 @@ public class BossRushManager {
 
     public void endBossRush(){
         setNumAttempts(0);
+
+        numCoins = numCorrect * 2;
+        panel.items[0].numHeld += numCoins;
+        panel.player.goldCollected += numCoins;
         panel.gameState = panel.endBossRushState;
     }
 
