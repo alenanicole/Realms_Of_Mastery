@@ -4,3 +4,27 @@ Texas is about 9 times bigger than South Carolina. If South Carolina is about 30
 270000
 Makai is saving up to buy the newest phone for $900. How many $100 bills will he need to save?
 9
+If there are 7 students in a class and each student buys 50 notebooks, how many notebooks do they buy in total?
+350
+A store sells 8 packs of batteries. Each pack has 100 batteries. How many batteries are sold altogether?
+800
+There are 4 containers. Each container holds 3000 marbles. How many marbles are there altogether?
+12000
+Sarah has 9 bags of candy. Each bag has 70 candies. How many candies does she have altogether?
+630
+A truck can carry 6 crates. Each crate holds 500 oranges. How many oranges can the truck carry altogether?
+3000
+In a theater, each row has 30 seats, and there are 8 rows. How many seats are there in total?
+240
+A factory makes 5 sets of furniture. Each set has 150 pieces. How many pieces of furniture are made altogether?
+750
+Jenny bought 3 packs of balloons. Each pack has 200 balloons. How many balloons does she have altogether?
+600
+In a warehouse, there are 2 shelves. Each shelf has 400 boxes. How many boxes are there altogether?
+800
+A stadium has 7 sections. Each section has 200 seats. How many seats are there in total?
+1400
+A farmer has 4 fields. Each field has 300 cows. How many cows does the farmer have altogether?
+1200
+A toy store sells 6 boxes of action figures. Each box has 50 action figures. How many action figures are sold altogether?
+300
