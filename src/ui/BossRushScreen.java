@@ -16,7 +16,6 @@ public class BossRushScreen extends UI{
     public BossRushScreen(GamePanel panel) {
         super(panel);
         this.panel = panel;
-
     }
 
     public void drawFloat(int x, int y, String text, int offset){

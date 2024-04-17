@@ -45,7 +45,7 @@ public class MonsterLoader {
     }
 
     public void centralMapMonsters(){
-        for(int i = 0; i < 4; i++){
+        for(int i = 1; i < 5; i++){
             randSelect = (int) floor(random() * (3 - 0 + 1) + 0);
             switch (randSelect) {
                 case 0 -> panel.monster[i] = new Skeleton(panel);

@@ -39,7 +39,7 @@ public class FightManager {
             }
 
             panel.monster[idx].dead = true;
-            panel.gameState = panel.playState;
+            panel.gameState = panel.keyHandler.previousState;
             panel.player.monstersDefeated++;
         }else{
             panel.gameState = panel.deathState;

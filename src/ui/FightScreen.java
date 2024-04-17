@@ -21,6 +21,11 @@ public class FightScreen extends UI{
         super(panel);
         this.panel = panel;
 
+
+
+    }
+
+    public void draw(int idx){
         if(panel.weapons[0].equipped){
             equipped = panel.weapons[0];
         }else if(panel.weapons[1].equipped){
@@ -33,9 +38,6 @@ public class FightScreen extends UI{
         tier2 = equipped.tier2;
         tier3 = equipped.tier3;
 
-    }
-
-    public void draw(int idx){
         int y = panel.screenHeight - panel.tileSize * 2;
         int x = panel.screenWidth - panel.tileSize * 2;
         boolean lastHeart = false;
